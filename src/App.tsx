@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { UserRoute } from './Routes/User/UserRoutes';
 import { AdminRoute } from './Routes/Admin/AdminRoute';
+import NotFound from './Pages/Common/Notfound';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <Routes>
               <Route path='/*' element={ <UserRoute/>}/>
               <Route path='/admin/*' element={<AdminRoute/>}/>
+              <Route path='*' element={<NotFound />} />
           </Routes>
     </Router>
   {/* </ToastContainer> */}

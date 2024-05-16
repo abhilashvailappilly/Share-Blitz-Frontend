@@ -1,246 +1,249 @@
-import Api from "../Service/axios";
-import BuyerEndpoint from "../Service/endpoints/buyerEndpoint";
+import { apiCall } from "./userApiCall";
+import userEndpoint from "../../Service/Endpoints/userEndpoints";
+import userRoutes from "../../Service/Endpoints/userEndpoints";
+import postRoutes from "../../Service/Endpoints/postEndpoints";
+import { toast } from "react-toastify";
 
 
-interface BookingDetails {
-    _id: string,
-    buyerId: string,
-    propertyId: string,
-    bookingDate: Date,
-    endDate: Date,
-    startDate: Date,
-    paymentSuccess: false
+
+interface RegisterUserData {
+    name: string;
+    userName: string;
+    email: string;
+    mobile: string;
+    password: string;
+}
+interface UserLoginData {
+    email:string
+    password:string
 }
 
-//@dec      Register user
-//method    POST
-// export const postRegister = (userData) => {
-//     return new Promise((resolve, reject) => {
-//         try {
-//             apiCall("post", userUrl.register, userData).then((response)=>{
-//                 resolve(response);
-//             })
-//         } catch (error) {
-//             resolve({status:500, message: "Somethings wrong."})
-//         }
-//     })
-// }
 
-//@dec      Register user
-//method    POST
-export const postRegister = async (userData :) => {
+
+// @dec      Register user
+// method    POST
+export const Register = async (userData :RegisterUserData) => {
     try {
-        const res = await apiCall('post',userUrl.register,userData)
+        const res = await apiCall('post',userRoutes.userSignup,userData,false)
+        console.log('reg res',res)
         const token  = res?.data?.token
         localStorage.setItem('userOtp',token)
+        localStorage.setItem('userOtpEmail',userData.email)
+
+        console.log("post register :",userData)
         return res
-    } catch (error) {
-        console.log(error)
+    } catch (error:any) {
+        console.log('Error:', error);
+
     }
 }
 
-export const signup = async (name: string, email: string, password: string) => {
+// @dec      Register user
+// method    POST
+export const VerifyOtp = async (otp :number) => {
     try {
-        const res = await Api.post(BuyerEndpoint.buyerSignup, { name, email, password })
-        const token = res.data.token
-        localStorage.setItem('buyerotp', token)
-        return res
-    } catch (error) {
-        console.log(error)
-    }
-};
+        const token = localStorage.getItem('userOtp')
+        const res = await apiCall('post',userRoutes.userVerifyOtp,{otp},
+            
+                 {
+                    Authorization:`Bearer ${token}`
+                   }
+                
+            
+        )
+        console.log('verify otp ;',res)
 
-export const forgotPassword = async (email: string) => {
-    try {
-        const res = await Api.post(BuyerEndpoint.buyerForgotPassword, { email });
-        const token = res.data.token
-        localStorage.setItem('buyerotpforgotpassword', token)
-        return res
-    } catch (error) {
-        console.log(error)
-    }
-}
-
-export const verifyOtp = async (otp: string) => {
-    try {
-        const token = localStorage.getItem('buyerotp')
-        const res = await Api.post(BuyerEndpoint.buyerVerifyOtp, { otp }, {
-            headers: {
-                'authorization': `Bearer ${token}`
-            }
-        });
         if (res.data.success) {
-            localStorage.removeItem('buyerotp')
+            localStorage.removeItem('userOtp')
+            localStorage.removeItem('userOtpEmail')
         }
         return res
+       
     } catch (error) {
-        console.log(error);
+        console.log(error)
     }
-};
+}
+ 
 
-export const verifyOtpForgotPassword = async (otp: string) => {
+// @dec      Resend otp 
+// method    POST
+export const ResendOtp = async () => {
     try {
-        const token = localStorage.getItem('buyerotpforgotpassword')
-        const res = await Api.post(BuyerEndpoint.buyerVerifyOtpForgotPassword, { otp }, {
-            headers: {
-                'authorization': `Bearer ${token}`
-            }
-        });
+        const token = localStorage.getItem('userOtp')
+        const res = await apiCall('post',userRoutes.userResendOtp,{},
+            
+                 {
+                    Authorization:`Bearer ${token}`
+                   }
+                
+            
+        )
+        console.log('send otp ;',res)
+
+
+        if (res.data.success) {
+            localStorage.removeItem('userOtp')
+            const token  = res?.data?.token
+            localStorage.setItem('userOtp',token)
+        }
+        return res.data
+       
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+// @dec     Login user
+// method    POST
+export const LoginUser = async (loginData :UserLoginData) => {
+    try {
+        const res = await apiCall('post',userRoutes.userLogin,loginData,false)
+        console.log('reg res',res)
+        if(res.data.success) {
+            toast.success(res.data.message)
+        } 
+        // toast.error(res.data.message)
+        // const token  = res?.data?.token
+        // localStorage.setItem('userOtp',token)
+        // console.log("post register :",userData)
+        return res
+    } catch (error:any) {
+        console.log('Error:', error);
+
+    }
+}
+
+// @dec     Google register user
+// method    POST
+ export const Gsignup = async (name: string,userName:string, email: string, picture: string) => {
+                try {
+                    const res = await apiCall('post',userRoutes.userGsignup,{name,userName,email,picture},false)
+                    return res
+                } catch (error) {
+                    console.log(error)
+                }
+ }
+
+ // @dec     Google login user
+// method    POST
+export const Glogin = async ( email: string) => {
+    try {
+        const res = await apiCall('post',userRoutes.userGlogin,{email},false)
         return res
     } catch (error) {
         console.log(error)
     }
 }
 
-export const otpResend = async () => {
+ // @dec     Get User by id
+// method    get
+export const getUser = async ( userId: string) => {
     try {
-        const token = localStorage.getItem('buyerotp')
-        const res = await Api.post(BuyerEndpoint.buyerResendOtp, '', {
-            headers: {
-                'authorization': `Bearer ${token}`,
-            }
-        });
-        const tokens = res.data.token
-        localStorage.setItem('buyerotp', tokens)
-        return res
-    } catch (error) {
-        console.log(error)
-    }
-};
-
-export const resetPassword = async (email: string, password: string) => {
-    try {
-        const token = localStorage.getItem('buyerotpforgotpassword')
-        console.log('token api',token)
-        const res = await Api.post(BuyerEndpoint.buyerResetPassword, { email, password },{
-            headers: {
-                'authorization': `Bearer ${token}`
-            }
-        })
-        localStorage.removeItem('buyerotpforgotpassword')
-        return res
+        const res = await apiCall('get',postRoutes.getUser,{userId},false)
+        // console.log('get usr ;',res.data)
+        return res?.data?.user
     } catch (error) {
         console.log(error)
     }
 }
 
-export const login = async (email: string, password: string) => {
+ // @dec   Like post
+// method    POST
+export const likePost = async ( userId: string,postId:string) => {
     try {
-        const res = await Api.post(BuyerEndpoint.buyerLogin, { email, password })
-        return res
-    } catch (error) {
-        console.log(error)
-    }
-};
-
-export const buyerLogout = async () => {
-    try {
-        const res = await Api.post(BuyerEndpoint.buyerLogout)
-        return res
-    } catch (error) {
-        console.log(error)
-    }
-};
-
-export const gsignup = async (name: string, email: string, password: string) => {
-    try {
-        const res = await Api.post(BuyerEndpoint.buyerGsignup, { name, email, password })
-        return res
+        // const res = await apiCall('post',userRoutes.userGlogin,{userId,postId},false)
+        return {success:true}
     } catch (error) {
         console.log(error)
     }
 }
 
-export const profile = async () => {
+ // @dec   unLike post
+// method    POST
+export const unlikePost = async ( userId: string,postId:string) => {
     try {
-        const res = await Api.get(BuyerEndpoint.buyerProfile);
-        return res
+        // const res = await apiCall('post',userRoutes.userGlogin,{userId,postId},false)
+        return {success:true}
     } catch (error) {
         console.log(error)
     }
 }
 
-export const editProfile = async (formData: FormData) => {
+ // @dec   remove saved post
+// method    POST
+export const removeSavedPost = async ( userId: string,postId:string) => {
     try {
-        const res = await Api.put(BuyerEndpoint.buyerEditProfile, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            }
-        })
-        return res
+        console.log('remove saved post')
+        // const res = await apiCall('post',userRoutes.userGlogin,{userId,postId},false)
+        // return res
+        return {success:true}
+
     } catch (error) {
         console.log(error)
     }
 }
 
-export const singlePropertyList = async (id: string) => {
+ // @dec   save post
+// method    POST
+export const savePost = async ( userId: string,postId:string) => {
     try {
-        const res = await Api.get(`/buyer/singleProperty/${id}`);
-        return res
+        console.log(' saved post')
+        // const res = await apiCall('post',userRoutes.userGlogin,{userId,postId},false)
+        // return res
+        return {success:true}
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+ 
+
+export const followUser = async ( userId: string,followUserId:string) => {
+    try {
+        console.log(' Follow user')
+        // const res = await apiCall('post',userRoutes.userGlogin,{userId,followUserId},false)
+        // return res
+        return {success:true}
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+export const unfollowUser = async ( userId: string,unFollowUserId:string) => {
+    try {
+        console.log(' unfollow usser')
+        // const res = await apiCall('post',userRoutes.userGlogin,{userId,unFollowUserId},false)
+        // return res
+        return {success:true}
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+export const getConnections = async ( userId: string) => {
+    try {
+        console.log(' get connections')
+        // const res = await apiCall('post',userRoutes.userGlogin,{userId},false)
+        return {success:true}
+    } catch (error) {
+        console.log(error)
+    }
+}
+interface postDataI  {
+    userId: string,
+    imageUrl:string,
+    caption: string,
+    hashtags:string[]
+  };
+export const createPost = async ( postData:postDataI) => {
+    try {
+        console.log(' create post')
+        const res = await apiCall('post',postRoutes.createPost,{postData},false)
+        console.log('post response ',res)
+        return res.data
     } catch (error) {
         console.log(error)
     }
 }
 
-export const getMessages = async (conversationId: string) => {
-    try {
-        const res = await Api.get(`${BuyerEndpoint.buyerGetMessages}?conversationId=${conversationId}`)
-        return res
-    } catch (error) {
-        console.log(error)
-    }
-}
-
-export const newConversation = async (sellerId: string) => {
-    try {
-        const res = await Api.post(`${BuyerEndpoint.buyerNewConversation}?sellerId=${sellerId}`)
-        return res
-    } catch (error) {
-        console.log(error)
-    }
-}
-
-export const newMessage = async (message: string, conversationId: string, sellerId: string) => {
-    try {
-        const res = await Api.post(BuyerEndpoint.buyerNewMessage, { message, conversationId, senderId: sellerId });
-        return res
-    } catch (error) {
-        console.log(error)
-    }
-}
-
-export const book = async (id: string, buyerId: string, startDate: Date, endDate: Date) => {
-    try {
-        const res = await Api.post(BuyerEndpoint.buyerBook, { propertyId: id, buyerId: buyerId, startDate: startDate, endDate: endDate });
-        return res
-    } catch (error) {
-        console.log(error)
-    }
-}
-
-export const getCheckout = async (bookingId: string) => {
-    try {
-        const res = await Api.get(`/book/getCheckout/${bookingId}`)
-        return res
-    } catch (error) {
-        console.log(error)
-    }
-}
-
-export const proceedForPayment = async (booking: BookingDetails) => {
-    try {
-        const res = await Api.post(BuyerEndpoint.buyerProceedForPayment, { bookingDetails: booking })
-        return res
-    } catch (error) {
-        console.log(error)
-    }
-}
-
-export const confirmBooking = async (bookingId: string) => {
-    try {
-        const res = await Api.put(BuyerEndpoint.buyerConfirmPayment, { bookingId })
-        return res
-    } catch (error) {
-        console.log(error)
-    }
-}

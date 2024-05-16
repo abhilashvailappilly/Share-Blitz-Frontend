@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import {toast} from 'react-toastify'
-import { useNavigate } from 'react-router-dom';
-// import 
-
+import { useNavigate,Link } from 'react-router-dom';
+import { userRegistrationValidation } from '../../../utils/validation/user';
+import SignUpForm from '../../../Components/User/Google/GoogleAuthSignUp';
+import { Register } from '../../../Api/user/userApiMethod';
 const SignupComponent: React.FC = () => {
 
   const [formData,setFormData] = useState({
@@ -30,31 +31,18 @@ const SignupComponent: React.FC = () => {
     e.preventDefault();console.log('worked the submit')
   
 
-    try {console.log(formData)
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      const mobileRegex = /^[0-9]{10}$/;
-      if (name.trim().length < 4) {
-        toast.error("Name should have more than 3 letters !!!");
-        return;
-      } else if (userName.trim().length < 4) {
-        toast.error("Name should have more than 3 letters !!!");
-        return;
-      } 
-      else if (!emailRegex.test(email)) {
-        toast.error("Please enter valid email!!!");
-        return;
-      } else if (!mobileRegex.test(mobile)){
-        toast.error('Invalid mobile number')
-      } else if (password.trim().length < 6) {
-        toast.error("Please enter valid password !!!");
-        return;
-      } else if (password.trim().includes(' ')) {
-        toast.error("Password cannot contain space !!!");
-        return;
-      }  
-       else if (password !== confirmPassword) {
-        toast.error("Passwords miss match !!!");
-        return;
+    try { 
+
+      if(userRegistrationValidation(formData)){
+        const userResponse = await Register(formData)
+        console.log('user response ;',userResponse)
+        if(userResponse?.data?.success){
+          navigate('/otp')
+        } else {
+          toast.error(userResponse?.data?.message)
+          // navigate('/signup')
+        }
+        
       }
     } catch (error) {
       console.log(error);
@@ -158,15 +146,17 @@ const SignupComponent: React.FC = () => {
                 
                 <input required className="pl-2 w-full outline-none border-none" type="password" value={confirmPassword}  onChange={onChange}  name="confirmPassword" id="confirmPassword" placeholder="Confirm Password" />
               </div>
+                 
               {error ? (
                   <div className="text-red-700">{`! ${error}`}</div>
                 ) : null}
              
-              <button type="submit"  className="block w-full bg-indigo-600 mt-5 py-2 rounded-2xl hover:bg-indigo-700 hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2" >Login</button>
+              <button type="submit"  className="block w-full bg-indigo-600 mt-5 py-2 rounded-2xl hover:bg-indigo-700 hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2" >Register</button>
               <div className="flex justify-between mt-4">
                 <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all">Forgot Password ?</span>
-                <a href="#" className="text-sm ml-2 hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all">Don't have an account yet?</a>
+                <Link to="/login" className="text-sm ml-2 hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all">Login to existing account </Link>
               </div>
+              <SignUpForm/>
             </form>
           </div>
         </div>

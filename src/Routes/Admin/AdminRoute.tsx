@@ -1,12 +1,25 @@
 import { Route,Routes } from "react-router-dom";
-import Login from '../../Pages/User/Login/Login'
+import Home from "../../Pages/Admin/Home/Home";
+import AdminLoggedIn from "../../Components/Admin/adminLoggedIn";
+import AdminLoggedOut from "../../Components/Admin/adminLoggedOut";
+import Users from "../../Pages/Admin/User/User";
+import NotFound from "../../Pages/Common/Notfound";
 export const AdminRoute = () =>{
     return (
         <Routes>
-            {/* <Route path="" element={<Home/>}/> */}
-            <Route>
-                <Route path="login" element={<Login/>}/>
-            </Route>
-        </Routes>
+        {/* <Route path="" element={<Home/>}/> */}
+        {/* <Route path="/" element={<AdminLoggedOut/>}>
+           
+        </Route> */}
+        <Route path="" element={<AdminLoggedIn />}>
+            <Route path="/" element={<Home/>}/>
+            <Route path="home" element={<Home/>}/>
+            <Route path='users' element={<Users />} />
+            <Route path='*' element={<NotFound />} />
+
+            {/* <Route path='profile' element={<Profile />} /> */}
+           
+        </Route>
+    </Routes>
     ) 
 }

@@ -1,9 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-    buyerInfo: localStorage.getItem('buyerInfo') ? JSON.parse(localStorage.getItem('buyerInfo') as string) : null,
+    userInfo: localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo') as string) : null,
     adminInfo: localStorage.getItem('adminInfo') ? JSON.parse(localStorage.getItem('adminInfo') as string) : null,
-    sellerInfo: localStorage.getItem('sellerInfo') ? JSON.parse(localStorage.getItem('buyerInfo') as string) : null,
 }
 
 const authSlice = createSlice({
@@ -11,31 +10,24 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         setCredentials: (state, action) => {
-            state.buyerInfo = action.payload
-            localStorage.setItem('buyerInfo', JSON.stringify(action.payload))
+            state.userInfo = action.payload
+            localStorage.setItem('userInfo', JSON.stringify(action.payload))
         },
-        logout: (state) => {
-            state.buyerInfo = null
-            localStorage.removeItem('buyerInfo')
+        logout: (state) => { 
+            state.userInfo = null
+            localStorage.removeItem('userInfo')
+            localStorage.removeItem('userToken')
         },
         setAdminCredentials: (state, action) => {
             state.adminInfo = action.payload
             localStorage.setItem('adminInfo', JSON.stringify(action.payload))
         },
-        admLogout: (state) => {
+        adminLogout: (state) => {
             state.adminInfo = null
             localStorage.removeItem('adminInfo')
-        },
-        setSellerCredentials:(state,action)=>{
-            state.sellerInfo=action.payload
-            localStorage.setItem('sellerInfo',JSON.stringify(action.payload))
-        },
-        sellLogout:(state)=>{
-            state.sellerInfo=null
-            localStorage.removeItem('sellerInfo')
         }
     }
 })
 
-export const { setCredentials, logout, setAdminCredentials, admLogout, setSellerCredentials, sellLogout } = authSlice.actions;
+export const { setCredentials, logout, setAdminCredentials, adminLogout } = authSlice.actions;
 export default authSlice.reducer

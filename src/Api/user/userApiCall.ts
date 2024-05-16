@@ -1,5 +1,8 @@
 import axios, { AxiosResponse, AxiosError } from "axios";
-
+import {api as API} from '../../Service/axios'
+import { toast } from "react-toastify";
+import { BASE_URL } from "../../utils/constants/url";
+// import {persistor} from '../../Store/store'
 interface RegisterUserData {
     name: string;
     userName: string;
@@ -7,14 +10,29 @@ interface RegisterUserData {
     mobile: string;
     password: string;
 }
+ 
+export const clearUser = () => {
+        toast.error('clr usr')
+    localStorage.removeItem('userInfo')
+    localStorage.removeItem('userAuthToken')
+    // persistor.purge();
+    window.location.href="/login";
+  };
 
-export const apiCall = async (method: string, url: string, data: RegisterUserData): Promise<any> => {
+export const apiCall = async (method: string, url: string, data: any,header:any): Promise<any> => {
     try {
         let response: AxiosResponse<any>;
-
+        console.log('api call ',url , data)
         if (method === "post") {
+            if(header)
+                response = await axios.post(`${BASE_URL}${url}`,data,{headers:header})
+            else
             response = await API.post(url, data);
+     
         } else if (method === "get") {
+            // if(header)
+            //     response = await axios.get(`${BASE_URL}${url}`,{params:data},{headers:header})
+            // else
             response = await API.get(url, { params: data });
         } else if (method === "patch") {
             response = await API.patch(url, data);
@@ -25,38 +43,34 @@ export const apiCall = async (method: string, url: string, data: RegisterUserDat
         } else {
             throw new Error("Unsupported HTTP method");
         }
-
-        return response.data;
+        console.log('api call',response.data)
+        return response;
     } catch (error) {
         console.log( 'Api call error :',error)
-        // if (axios.isAxiosError(error)) {
-        //     const axiosError: AxiosError = error;
+        if (axios.isAxiosError(error)) {
+            const axiosError: AxiosError = error;
+            if (axiosError.response?.status === 409) {
+                toast.error(error?.response?.data?.message)
+               
+             }
+             if(axiosError.response?.status === 403){
+                toast.error( error?.response?.data?.message)
+                localStorage.removeItem('userInfo')
+                localStorage.removeItem('userAuthToken')
+                clearUser()
+                // let dispatch = useDispatch()
+                // let navigate = useNavigate()
+                // dispatch(logout())
+                // navigate('/login')
+             }
+             if(axiosError.response?.status === 401){
+                toast.error( error?.response?.data?.message)
+             }
 
-        //     if (axiosError.response?.status === 403) {
-        //         localStorage.setItem(userAuth, "");
-        //         localStorage.setItem(refreshToken, "");
-        //         clearUser();
-        //         window.location.reload("/login");
-        //     }
-
-        //     if (axiosError.response?.status === 401) {
-        //         try {
-        //             const refreshResponse = await refreshAccessToken(axiosError);
-        //             return refreshResponse.data;
-        //         } catch (refreshError) {
-        //             const refreshAxiosError: AxiosError = refreshError;
-
-        //             if (refreshAxiosError.response?.status === 401) {
-        //                 clearUser();
-        //             } else {
-        //                 throw refreshError;
-        //             }
-        //         }
-        //     } else {
-        //         throw axiosError.response?.data;
-        //     }
-        // } else {
-        //     throw error;
-        // }
+     
+      
+        } else {
+            throw error;
+        }
     }
 };

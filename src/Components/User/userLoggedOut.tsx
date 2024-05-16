@@ -10,7 +10,7 @@ interface RootState {
 const UserLoggedOut = () => {
     const userInfo = useSelector((state: RootState) => state.auth);
     return (
-        userInfo.userInfo ? <Navigate to='/' /> : <Outlet />
+        userInfo.userInfo ? <Navigate to='/home' /> : <Outlet />
     ) 
 }
 

@@ -1,13 +1,14 @@
 const userRoutes={
-    userSignup:'/user/verifyMail',
+    userSignup:'/user/createUser',
     userForgotPassword:'/user/forgotPassword',
-    userVerifyOtp:'/user/verifyOtp',
+    userVerifyOtp:'/api/user/verifyOtp',
     userVerifyOtpForgotPassword:'/user/verifyOtpForgotPassword',
-    userResendOtp:'/user/resendOtp',
+    userResendOtp:'/api/user/resendOtp',
     userResetPassword:'/user/resetPassword',
     userLogin:'/user/login',
     userLogout:'/user/logout',
     userGsignup:'/user/gsignup',
+    userGlogin:'/user/glogin',
     userProfile:'/user/profile',
     userEditProfile:'/user/editprofile',
 }
