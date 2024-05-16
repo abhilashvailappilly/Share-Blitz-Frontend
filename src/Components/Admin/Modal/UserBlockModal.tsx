@@ -7,13 +7,14 @@ interface Props {
     isOpen: boolean;
     closeModal: () => void;
     updatedUsers: (userId: string, newStatus: boolean) => void;
+    isBlocked:boolean
     userId: string;
 }
 
-const UserBlockModal: React.FC<Props> = ({ isOpen, closeModal, updatedUsers, userId }) => {
+const UserBlockModal: React.FC<Props> = ({ isOpen, closeModal, updatedUsers,isBlocked, userId }) => {
 
     const handleBlockToggle = async(userId: string) => {
-        updatedUsers(userId, true);
+        updatedUsers(userId,!isBlocked);
         const toogleStatus = await toogleUserStatus(userId)
         if(toogleStatus.success) {
             toast.success(`User ${toogleStatus.updatedStatus ? 'Unblocked ' : 'Blocked'} Successfully `)

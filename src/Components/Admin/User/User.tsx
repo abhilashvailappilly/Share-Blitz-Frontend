@@ -27,7 +27,7 @@ function UserManagement() {
     useEffect(() => {
         getAllUsers()
             .then(async (response) => {
-                setUsers([...users, ...response.usersData]);
+                setUsers([...users,...response.usersData]);
                 setTotal(response.usersData.length);
                 setLoading(false);
             })
@@ -43,6 +43,8 @@ function UserManagement() {
             }
             return user;
         });
+        console.log(updatedUsers)
+        console.table(updatedUsers)
         setUsers(updatedUsers);
     };
 

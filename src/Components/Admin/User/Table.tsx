@@ -76,7 +76,7 @@ function TableData({ user, updatedUsers }: Props) {
                 )}
             </td>
 
-            <UserBlockModal isOpen={isOpen} closeModal={toggleModal} updatedUsers={updatedUsers} userId={user._id} />
+            <UserBlockModal isOpen={isOpen} closeModal={toggleModal} updatedUsers={updatedUsers} isBlocked = {user.isBlocked} userId={user._id} />
         </tr>
     );
 }
