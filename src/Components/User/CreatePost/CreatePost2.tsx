@@ -5,7 +5,7 @@ import CropImage from "../../options/CropImage";
 import uploadCloudinary from "../../../hooks/Cloudinary"
 import { useDispatch, useSelector } from "react-redux";
 // import { postCreatePost } from "../../services/apiMethods";
-import { createPost } from "../../../Api/user/userApiMethod";
+import { createPost } from "../../../Api/user/authApiMethod";
 import { useNavigate } from "react-router-dom";
 import { FaSpinner } from "react-icons/fa";
 import Loader from "../../icons/Loader";
@@ -17,6 +17,7 @@ import { toast } from "react-toastify";
 interface CreatePostProps {
   setClose: (value: boolean) => void;
 }
+
 
 function CreatePost() {
   const navigate = useNavigate();
@@ -122,7 +123,7 @@ function CreatePost() {
 
   return (
     <>
-  <div className="h-screen place-items-center grid">
+  <div className="h-full place-items-center grid">
       {selectedImg ? (
         <CropImage
           imgUrl={image}

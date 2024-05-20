@@ -5,14 +5,14 @@ interface Post {
 }
 
 interface PostState {
-  posts: Post[];
+  myPosts: Post[];
   newPost: Post | null;
   loadedPosts: Post[];
   lastPost: boolean;
 }
 
 const initialState: PostState = {
-  posts: [],
+  myPosts: [],
   newPost: null,
   loadedPosts: [],
   lastPost: false,
@@ -22,11 +22,15 @@ const postSlice = createSlice({
   name: "post",
   initialState,
   reducers: {
-    setUserPosts: (state, action: PayloadAction<{ posts: Post[] }>) => {
-      state.posts = action.payload.posts;
+    setUserPosts: (state, action: PayloadAction<Post[] >) => {
+      console.log('action.....:',action)
+      state.myPosts = action.payload;
+    },
+    clearUserPosts: (state) => {
+      state.myPosts = [];
     },
     updateUserPosts: (state, action: PayloadAction<{ post: Post }>) => {
-      state.posts.unshift(action.payload.post);
+      state.myPosts.unshift(action.payload.post);
     },
     addNewPost: (state, action: PayloadAction<Post>) => {
       state.newPost = action.payload;
@@ -35,7 +39,7 @@ const postSlice = createSlice({
       state.newPost = null;
     },
     removeUserPosts: (state) => {
-      state.posts = [];
+      state.myPosts = [];
     },
     setLoadedPosts: (state, action: PayloadAction<Post[]>) => {
       state.loadedPosts = [...state.loadedPosts, ...action.payload];
@@ -65,6 +69,7 @@ export const {
   setLoadedPosts,
   addCreatedPost,
   clearLoadedPosts,
+  clearUserPosts
 } = postSlice.actions;
 
 export default postSlice.reducer;

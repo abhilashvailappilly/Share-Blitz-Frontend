@@ -3,7 +3,7 @@ import axios from 'axios';
 import {   useGoogleLogin,UseGoogleLoginOptionsImplicitFlow  } from '@react-oauth/google';
 import { toast } from 'react-toastify';
 
-import { Glogin } from '../../../Api/user/userApiMethod';
+import { Glogin } from '../../../Api/user/authApiMethod';
 import { setCredentials } from '../../../Store/user/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';

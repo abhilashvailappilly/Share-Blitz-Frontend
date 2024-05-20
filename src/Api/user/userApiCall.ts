@@ -30,9 +30,7 @@ export const apiCall = async (method: string, url: string, data: any,header:any)
             response = await API.post(url, data);
      
         } else if (method === "get") {
-            // if(header)
-            //     response = await axios.get(`${BASE_URL}${url}`,{params:data},{headers:header})
-            // else
+            
             response = await API.get(url, { params: data });
         } else if (method === "patch") {
             response = await API.patch(url, data);
@@ -43,12 +41,13 @@ export const apiCall = async (method: string, url: string, data: any,header:any)
         } else {
             throw new Error("Unsupported HTTP method");
         }
-        console.log('api call',response.data)
+        console.log('api call response',response.data)
         return response;
     } catch (error) {
         console.log( 'Api call error :',error)
         if (axios.isAxiosError(error)) {
             const axiosError: AxiosError = error;
+            console.log('error',error)
             if (axiosError.response?.status === 409) {
                 toast.error(error?.response?.data?.message)
                
@@ -64,7 +63,9 @@ export const apiCall = async (method: string, url: string, data: any,header:any)
                 // navigate('/login')
              }
              if(axiosError.response?.status === 401){
+
                 toast.error( error?.response?.data?.message)
+                clearUser()
              }
 
      

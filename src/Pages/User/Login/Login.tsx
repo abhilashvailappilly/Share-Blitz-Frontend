@@ -4,7 +4,7 @@ import { Link,useNavigate } from 'react-router-dom';
 import GoogleLogin from '../../../Components/User/Google/GoogleAuthSignIn';
 import { UseDispatch, useDispatch } from 'react-redux'; 
 import { validateEmail, validatePassword } from '../../../utils/validation/user';
-import { LoginUser } from '../../../Api/user/userApiMethod';
+import { LoginUser } from '../../../Api/user/authApiMethod';
 import { setCredentials,setAdminCredentials } from '../../../Store/user/userSlice';
 import { toast } from 'react-toastify';
 const LoginComponent: React.FC = () => {
@@ -85,7 +85,7 @@ const LoginComponent: React.FC = () => {
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
                 </svg>
-                <input className="pl-2 w-full outline-none border-none" type="password" value={loginDetails.password} onChange={handleChange} name="password" id="password" placeholder="Password" />
+                <input className="pl-2 w-full outline-none border-none"  type="password" value={loginDetails.password} onChange={handleChange} name="password" id="password" placeholder="Password" />
               </div>
               <button type="submit" className="block w-full bg-indigo-600 mt-5 py-2 rounded-2xl hover:bg-indigo-700 hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2">Login</button>
               <div className="flex justify-between mt-4">

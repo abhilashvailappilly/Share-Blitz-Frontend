@@ -14,7 +14,7 @@ import ConnectionBtn from "../../icons/ConnectionBtn";
 import ProfilePic from "../Profile/ProfilePic";
 import NameField from "../Profile/ProfileName";
 import { RootState } from "../../../Store/store";
-import { getUser } from "../../../Api/user/userApiMethod";
+import { getUser } from "../../../Api/user/authApiMethod";
 // import store from '../../../Store/store'
 
 interface Post {

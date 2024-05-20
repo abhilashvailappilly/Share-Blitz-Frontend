@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { likePost, unlikePost } from '../../Api/user/userApiMethod';
+import { likePost, unlikePost } from '../../Api/user/authApiMethod';
 import { showError } from '../../hooks/errorManagement';
 import { RootState } from '../../Store/store';
 
