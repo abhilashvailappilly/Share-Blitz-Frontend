@@ -36,7 +36,7 @@ const UserBlockModal: React.FC<Props> = ({ isOpen, closeModal, updatedUsers,isBl
               } flex align-center fixed inset-0 z-10  overflow-y-auto overflow-x-hidden arial-mo top-0 right-0 left-0  justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full `}
             >
                  {/* Blurred background */}
-    <div className={`${isOpen ? 'fixed inset-0 bg-gray-900 opacity-60 blur-lg' : ''}`}></div>
+              <div className={`${isOpen ? 'fixed inset-0 bg-gray-900 opacity-60 blur-lg' : ''}`}></div>
 
               <div className="relative p-4 w-full max-w-md max-h-full">
                 <div className="relative bg-white rounded-lg shadow dark:bg-gray-700" >

@@ -11,7 +11,7 @@ import { getAllPosts } from '../../../Api/user/postApiMethod';
 import { setLoadedPosts ,clearLoadedPosts} from '../../../Store/user/postSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../Store/store';
-
+import Sidebar2 from '../../../Components/User/Sidebar/Sidebar2';
 
 interface Post {
     _id:string
@@ -38,14 +38,10 @@ const Home2: React.FC = () => {
     {name:"test user",profilePic:"https://buffer.com/library/content/images/2023/10/free-images.jpg"},
     {name:"test user",profilePic:"https://buffer.com/library/content/images/2023/10/free-images.jpg"},
   ];
-//   const loadedPosts: Post[] = [
-//     {_id: "123", userId: "663b8069c916cd4405814325", description: 'abhilash',image:"https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg"}, 
-//     {_id: "123", userId: "663b8069c916cd4405814325", description: 'abhilash',image:"https://buffer.com/library/content/images/2023/10/free-images.jpg"},
-//   ];
+
 
   const loadedPosts2 : Post[] =  useSelector((state : RootState) => state?.post?.loadedPosts);
   console.log('........loaded',loadedPosts2)
-//   const loadedPosts = useSelector((state) => state?.userPosts?.loadedPosts);
 
   const openEditor = useRef<HTMLDivElement>(null);
   const closeEditor = useRef<HTMLDivElement>(null);
@@ -114,9 +110,9 @@ const Home2: React.FC = () => {
 
       <div className="flex">
         <Navbar/>
-      <Sidebar setShowPost={setShowPosts} setShowCreatePost={setShowCreatePost}/>
-      {/* <div className="dashboard--content">
-       <div className='w-3/4 flex flex-col'> */}
+      {/* <Sidebar setShowPost={setShowPosts} setShowCreatePost={setShowCreatePost}/> */}
+      <Sidebar2 />
+    
        <div className="md:ml-auto">
         {/* <PostContainer> */}
         <div
@@ -136,7 +132,7 @@ const Home2: React.FC = () => {
           );
         })}
 
-{showCreatePost && <CreatePost  />}
+
        </div>
        </div>
 

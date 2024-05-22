@@ -38,3 +38,16 @@ const res = await apiCall('get',postRoutes.getAllPosts,{limit},false)
 
     }
 }
+
+ // @dec   save post
+// method    POST
+export const savePost = async ( userId: string,postId:string) => {
+    try {
+        console.log(' saved post')
+        const res = await apiCall('patch',postRoutes.savePost,{userId,postId},false)
+        return res.data
+
+    } catch (error) {
+        console.log(error)
+    }
+}

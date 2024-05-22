@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { followUser, getConnections, unfollowUser  } from '../../Api/user/userApiMethod';
+import { followUser, getConnections, unfollowUser  } from '../../Api/user/authApiMethod';
 import { showError } from '../../hooks/errorManagement';
 
 interface User {

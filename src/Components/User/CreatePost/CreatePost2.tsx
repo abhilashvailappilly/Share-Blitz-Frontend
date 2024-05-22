@@ -5,18 +5,19 @@ import CropImage from "../../options/CropImage";
 import uploadCloudinary from "../../../hooks/Cloudinary"
 import { useDispatch, useSelector } from "react-redux";
 // import { postCreatePost } from "../../services/apiMethods";
-import { createPost } from "../../../Api/user/userApiMethod";
+import { createPost } from "../../../Api/user/authApiMethod";
 import { useNavigate } from "react-router-dom";
 import { FaSpinner } from "react-icons/fa";
 import Loader from "../../icons/Loader";
 
 import "./CreatePost.css";
-import { addCreatedPost,updateUserPosts,setLoadedPosts } from "../../../Store/user/postSlice";
+import { addCreatedPost,updateUserPosts,setLoadedPosts, addNewUserPosts } from "../../../Store/user/postSlice";
 import { RootState } from "../../../Store/store";
 import { toast } from "react-toastify";
 interface CreatePostProps {
   setClose: (value: boolean) => void;
 }
+
 
 function CreatePost() {
   const navigate = useNavigate();
@@ -105,9 +106,10 @@ function CreatePost() {
        if(createNewPost.success) {
         toast.success('Post created successfully')
         console.log(createNewPost)
-          dispatch(updateUserPosts(createNewPost.postData));
+          // dispatch(updateUserPosts(createNewPost.postData));
           dispatch(setLoadedPosts([createNewPost.postData]));
-          dispatch(addCreatedPost(createNewPost.postData));
+          dispatch(addCreatedPost([createNewPost.postData]));
+          // dispatch(addNewUserPosts(createNewPost.postData));
           clearComponent();
        } else {
         toast.error(createNewPost?.message)
@@ -122,7 +124,7 @@ function CreatePost() {
 
   return (
     <>
-  <div className="h-screen place-items-center grid">
+  <div className="h-full place-items-center grid">
       {selectedImg ? (
         <CropImage
           imgUrl={image}
@@ -142,7 +144,7 @@ function CreatePost() {
         <><div className="w-fit h-fit ">
         <div className="w-full md:w-auto h-auto items-center md:flex-1 relative rounded-md  justify-center">
 
-                <img src={bg} alt="" className="w-64 h-64 self-center " />
+                <img src={bg} alt="" className="w-28 h-28 self-center " />
 
                 <input
                   type="file"

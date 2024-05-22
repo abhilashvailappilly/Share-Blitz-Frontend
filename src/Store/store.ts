@@ -2,18 +2,14 @@ import {configureStore} from '@reduxjs/toolkit'
 import authReducer from './user/userSlice'
 import postReducer from './user/postSlice'
 import { combineReducers } from '@reduxjs/toolkit'
+import ProfileDataInterface from '../Types/User/userProfile'
 export interface RootState {
     auth: {
-        userInfo: {
-            _id:string
-            
-        }
+        userInfo: ProfileDataInterface
         adminInfo:string
     }
     post:{
-        posts:{
-
-        }
+        myPosts:[]
         newPost:[]
         loadedPosts:[]
         lastPost:{}

@@ -5,7 +5,7 @@ import { GoogleLogin, CredentialResponse ,useGoogleLogin,UseGoogleLoginOptionsIm
 import { jwtDecode } from 'jwt-decode';
 import { toast } from 'react-toastify';
 
-import { Gsignup } from '../../../Api/user/userApiMethod';
+import { Gsignup } from '../../../Api/user/authApiMethod';
 import { setCredentials } from '../../../Store/user/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';

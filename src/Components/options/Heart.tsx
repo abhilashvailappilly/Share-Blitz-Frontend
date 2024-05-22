@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { likePost, unlikePost } from '../../Api/user/userApiMethod';
+import { likePost, unlikePost } from '../../Api/user/authApiMethod';
 import { showError } from '../../hooks/errorManagement';
 import { RootState } from '../../Store/store';
+import { toast } from 'react-toastify';
 
 interface ErrorObject {
   message?: string;
@@ -39,6 +40,7 @@ const Heart: React.FC<HeartProps> = ({ size, color, post, setPost }) => {
   }, [userInfo, post]);
 
   const likeOrUnlike = async () => {
+    toast.success('post liked')
     try {
       if (isRed) {
         const response = await unlikePost(userInfo?._id, post?._id);

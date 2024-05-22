@@ -2,7 +2,7 @@
 
 import React, { useState ,useEffect} from 'react';
 import { toast } from 'react-toastify';
-import { ResendOtp, VerifyOtp } from '../../../Api/user/userApiMethod';
+import { ResendOtp, VerifyOtp } from '../../../Api/user/authApiMethod';
 import { useNavigate } from 'react-router-dom';
 
 

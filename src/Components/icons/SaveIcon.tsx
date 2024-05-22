@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { removeSavedPost, savePost } from '../../Api/user/userApiMethod';
+import { removeSavedPost } from '../../Api/user/authApiMethod';
+import { savePost } from '../../Api/user/postApiMethod';
 
 interface SaveIcnProps {
   size: { width: number; height: number };

@@ -1,6 +1,8 @@
 import { Route,Routes } from "react-router-dom";
 import Login from '../../Pages/User/Login/Login'
 import Home from "../../Pages/User/Home/Home2";
+// import CreatePost from "../../Components/User/CreatePost/CreatePost2";
+import CreatePost from "../../Pages/User/CreatePost/CreatePost";
 import UserLoggedOut from "../../Components/User/userLoggedOut";
 import UserLoggedIn from "../../Components/User/userLoggedIn";
 import Profile from "../../Pages/User/Profile/Profile";
@@ -21,6 +23,7 @@ export const UserRoute = () =>{
             </Route>
             <Route path="" element={<UserLoggedIn />}>
                 <Route path="home" element={<Home/>}/>
+                <Route path="createPost" element={<CreatePost/>}/>
                 <Route path='profile' element={<Profile />} />
                 <Route path='*' element={<NotFound />} />
 
