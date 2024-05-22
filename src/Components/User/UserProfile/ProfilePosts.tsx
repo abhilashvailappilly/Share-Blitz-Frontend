@@ -1,3 +1,7 @@
+import { useState } from "react"
+import SingleImageModal from "../Modal/SingleImageModal"
+import MyPost from "./MyPost"
+
 interface Posts {
     _id:string
     userId:string
@@ -12,13 +16,27 @@ interface ProfilePostsProps {
   
   const ProfilePosts: React.FC<ProfilePostsProps> = ({ posts }) => {
     console.log(posts)
+    const [show ,setShow] = useState(false)
     return (
       <div className=" w-full h-96 bg-blue-700 overflow-auto ">
     <div className="w-full h-full grid  grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-3 bg-white overflow-auto no-scrollbar">
 
-        { 
+    {posts && posts.length > 0 ? (
+          posts.map((post: Posts, index: number) => {
+            return (
+                <div key={index}>
+            <MyPost  post={post}/>
+              </div>
+            );
+          })
+        ) : (
+          <div className="col-span-4 flex justify-center text-center items-center text-gray-500">
+            <h1 className="font-extrabold text-black">No posts available</h1>
+          </div>
+        )}
+
+        {/* { 
             posts && posts.length > 0 &&  posts?.map((post: Posts, index: number) => {
-    //    {showPosts &&loadedPosts2?.map((post: Post, index: number) => {
 
         return (
         <div key={index} className="h-72 w-full bg-red-400 border-3 border-white border overflow-hidden">
@@ -28,54 +46,9 @@ interface ProfilePostsProps {
         </div>
             )
        })
-        }
+        } */}
       
-        {/* <div className="h-72 w-full bg-red-400 border-3 border-white border overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1527692282582-538da08c9d00?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-            className="object-cover h-full w-full"
-            alt="" />
-        </div>
-         <div className="h-72 w-full bg-red-400 overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1527692282582-538da08c9d00?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-            className="object-cover h-full w-full"
-            alt="" />
-        </div>
-        <div className="h-72 w-full bg-red-400 border-3 border-white border overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1527692282582-538da08c9d00?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-            className="object-cover h-full w-full"
-            alt="" />
-        </div>
-        <div className="h-72 w-full bg-red-400 border-3 border-white border overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1527692282582-538da08c9d00?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-            className="object-cover h-full w-full"
-            alt="" />
-        </div>
-         <div className="h-72 w-full bg-red-400 overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1527692282582-538da08c9d00?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-            className="object-cover h-full w-full"
-            alt="" />
-        </div>
-         <div className="h-72 w-full bg-red-400 overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1527692282582-538da08c9d00?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-            className="object-cover h-full w-full"
-            alt="" />
-        </div>
-  
-        <div className="h-72 w-full bg-red-400 border-3 border-white border overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1527692282582-538da08c9d00?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-            className="object-cover h-full w-full"
-            alt="" />
-        </div>
-         <div className="h-72 w-full bg-red-400 overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1527692282582-538da08c9d00?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-            className="object-cover h-full w-full"
-            alt="" />
-        </div>
-         <div className="h-72 w-full bg-red-400 overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1527692282582-538da08c9d00?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-            className="object-cover h-full w-full"
-            alt="" />
-        </div> */}
+       
   
     </div>
   </div>

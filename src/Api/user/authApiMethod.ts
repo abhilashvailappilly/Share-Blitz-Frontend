@@ -184,19 +184,7 @@ export const removeSavedPost = async ( userId: string,postId:string) => {
     }
 }
 
- // @dec   save post
-// method    POST
-export const savePost = async ( userId: string,postId:string) => {
-    try {
-        console.log(' saved post')
-        // const res = await apiCall('post',userRoutes.userGlogin,{userId,postId},false)
-        // return res
-        return {success:true}
 
-    } catch (error) {
-        console.log(error)
-    }
-}
  
 
 export const followUser = async ( userId: string,followUserId:string) => {

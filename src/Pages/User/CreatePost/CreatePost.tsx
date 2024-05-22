@@ -5,16 +5,16 @@ import { toast } from 'react-toastify'
 const CreatePost = () => {
     toast.success('worked')
   return (
-    <div className='w-full h-full bg-green-500 flex'>
+    <div className='w-full h-full  bg-white flex '>
         <Sidebar2/>
-      <div>
+     
       <div
           id="post-container"
-          className='w-full h-screen flex justify-center items-center overflow-hidden'
+          className='w-full  flex justify-center items-center '
         >
-      {/* <CreatePost1/> */}
+      <CreatePost1/>
       </div>
-      </div>
+     
     </div>
   )
 }

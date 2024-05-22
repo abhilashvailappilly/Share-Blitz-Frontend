@@ -6,8 +6,9 @@ import uploadCloudinary from '../../../hooks/Cloudinary';
 import { EditUserProfile } from '../../../Api/user/userApiMethod';
 import { HashLoader } from 'react-spinners';
 import ProfileDataInterface from '../../../Types/User/userProfile';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../Store/store';
+import { setCredentials } from '../../../Store/user/userSlice';
 interface EditProfileModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -33,7 +34,7 @@ const [selectedImg, setSelectedImg] = useState<boolean>(false); // for image
 const [croppedImg, setCroppedImg] = useState<string | null>(null);
 const [profileImage,setProfileImageDisplay] = useState<string | "" > ("")
 const [loading, setLoading] = useState<boolean>(false); // state to set the loading
-
+const dispatch = useDispatch()
  
 
 const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,6 +91,7 @@ const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
        if( editProfile.success) {
         toast.success('Profile updated successfully')
         console.log( editProfile)
+        dispatch(setCredentials(editProfile.userData))
           // dispatch(updateUserPosts(createNewPost.postData));
           // dispatch(setLoadedPosts([createNewPost.postData]));
           // dispatch(addCreatedPost(createNewPost.postData));

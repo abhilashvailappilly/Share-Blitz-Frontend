@@ -6,7 +6,7 @@ import { apiCall } from "./userApiCall"
 export const getUserPosts = async (userId : string) => {
     try {
         console.log(" get all post :",userId) 
-const res = await apiCall('get',profileRoutes.getUserPosts,{userId},false)
+    const res = await apiCall('get',profileRoutes.getUserPosts,{userId},false)
       console.log('get all user posts ',res.data)
         return res.data
     } catch (error:any) {

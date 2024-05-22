@@ -1,9 +1,11 @@
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import IconBxEdit from "../../icons/EditIcon"
 import EditProfileModal from "../Modal/EditProfileModal"
 import { useState,useEffect } from "react"
 import { RootState } from "../../../Store/store"
 import ProfileDataInterface from "../../../Types/User/userProfile"
+import { toast } from "react-toastify"
+import { getUser } from "../../../Api/user/authApiMethod"
 const ProfileBackground = () => {
   const [openEditProfile,setOpenEditProfile] = useState(false)
   const toggleEditProfileModal = ()=>{
@@ -21,23 +23,21 @@ const ProfileBackground = () => {
   const [name,setName]=useState(user?.name);
   
 
-
   useEffect(()=>{
-    // const fetchUserData=async()=>{
-    //   try{
-    //     const res=await getP()
-    //     console.log('res',res?.data.buyerProfile)
-    //     if(res?.data?.buyerProfile){
-    //       setEmail(res.data.buyerProfile.email);
-    //       setName(res.data.buyerProfile.name);
-    //       setImage(res.data.buyerProfile.image || user);
-    //     }
-    //   }catch(error){
-    //     console.log(error)
-    //   }
-    // }
-    // fetchUserData()
-  },[]);
+    const fetchUserData=async()=>{
+      try{
+        const res=await getUser(user._id)
+        if(res){
+         
+          setName(res.name);
+          setImage(res.profileImageUrl);
+        }
+      }catch(error){
+        console.log(error)
+      }
+    }
+    fetchUserData()
+  },[toggleEditProfileModal]);
 
 
   return (

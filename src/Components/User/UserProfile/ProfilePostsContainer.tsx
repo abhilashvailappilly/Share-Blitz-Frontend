@@ -51,10 +51,10 @@ const ProfilePostsContainer = () => {
       active.myPosts &&     <ProfilePosts posts = {myPosts}/>
     }
      {
-      active.savedPosts &&     <ProfilePosts posts = {myPosts}/>
+      active.savedPosts &&     <ProfilePosts posts = {[]}/>
     }
      {
-      active.taggedPosts &&     <ProfilePosts posts = {myPosts}/>
+      active.taggedPosts &&     <ProfilePosts posts = {[]}/>
     }
     </>
   )

@@ -23,13 +23,20 @@ const postSlice = createSlice({
   initialState,
   reducers: {
     setUserPosts: (state, action: PayloadAction<Post[] >) => {
-      console.log('action.....:',action)
       state.myPosts = action.payload;
+    },
+    addNewUserPosts: (state, action: PayloadAction<{post:Post}>) => {
+      console.log('action payload :',action.payload)
+      state.myPosts.push(action.payload.post);
+
+      // state.myPosts = [...state.myPosts,...action.payload];
+      
     },
     clearUserPosts: (state) => {
       state.myPosts = [];
     },
     updateUserPosts: (state, action: PayloadAction<{ post: Post }>) => {
+      console.log("my posts : ",action.payload.post)
       state.myPosts.unshift(action.payload.post);
     },
     addNewPost: (state, action: PayloadAction<Post>) => {
@@ -43,14 +50,10 @@ const postSlice = createSlice({
     },
     setLoadedPosts: (state, action: PayloadAction<Post[]>) => {
       state.loadedPosts = [...state.loadedPosts, ...action.payload];
-      console.log('action . pay',action)
-      console.log('action . pay',action.payload)
-      // if (action.payload.length < 5) {
-      //   // state.lastPost = true;
-      // }
+     
     },
     addCreatedPost: (state, action: PayloadAction<Post>) => {
-      state.loadedPosts = [action.payload, ...state.loadedPosts];
+      state.myPosts = [action.payload, ...state.myPosts];
     },
     clearLoadedPosts: (state) => {
       state.loadedPosts = [];
@@ -69,7 +72,8 @@ export const {
   setLoadedPosts,
   addCreatedPost,
   clearLoadedPosts,
-  clearUserPosts
+  clearUserPosts,
+  addNewUserPosts
 } = postSlice.actions;
 
 export default postSlice.reducer;

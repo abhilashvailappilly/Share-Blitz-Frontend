@@ -111,10 +111,7 @@ const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, open
     }
   }, [error]);
 
-  // useEffect(()=>{
-	// console.log('post user ;; :',postUser)
-
-  // })
+ 
 
   const seeProfile = () => {
     navigate(`/profile/${postUser?.username}`);

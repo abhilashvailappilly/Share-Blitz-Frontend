@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {toast} from 'react-toastify'
 import { useNavigate,Link } from 'react-router-dom';
 import { userRegistrationValidation } from '../../../utils/validation/user';
@@ -14,6 +14,24 @@ const SignupComponent: React.FC = () => {
     password:'',
     confirmPassword:''
   })
+  const [validationError,setValidationError] = useState({
+    name:'',
+    userName:'',
+    email:'',
+    mobile:'',
+    password:'',
+    confirmPassword:''
+  })
+
+    // setInterval(()=>{
+    //   setValidationError({  name:'',
+    //   userName:'',
+    //   email:'',
+    //   mobile:'',
+    //   password:'',
+    //   confirmPassword:''})
+    // },3000)
+ 
   const [error,setError] = useState(null);
   const navigate = useNavigate();
   const {name,userName,email,mobile,password,confirmPassword} = formData;
@@ -28,12 +46,12 @@ const SignupComponent: React.FC = () => {
   
 
   const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();console.log('worked the submit')
+    e.preventDefault();
   
 
     try { 
 
-      if(userRegistrationValidation(formData)){
+      if(userRegistrationValidation(formData ,validationError,setValidationError)){
         const userResponse = await Register(formData)
         console.log('user response ;',userResponse)
         if(userResponse?.data?.success){
@@ -79,7 +97,7 @@ const SignupComponent: React.FC = () => {
             <form className="bg-white rounded-md shadow-2xl p-5" onSubmit={handleSubmit}>
               <h1 className="text-gray-800 font-bold text-2xl mb-1">Create a new account</h1>
               <p className="text-sm font-normal text-gray-600 mb-8">Welcome Back</p>
-              <div className="flex items-center border-2 mb-4 py-2 px-3 rounded-2xl">
+              <div className="flex items-center border-2 mb-1 py-2 px-3 rounded-2xl">
                         <svg
                 viewBox="0 0 1024 1024"
                 fill="currentColor"
@@ -90,6 +108,7 @@ const SignupComponent: React.FC = () => {
     </svg>
                 <input id="name" className="pl-2 w-full outline-none border-none"  value={name} onChange={onChange} type="text" name="name" placeholder="Enter your name " />
               </div>
+                <span className='text-red-600 '>{validationError.name}</span>
 
               <div className="flex items-center border-2 mb-4 py-2 px-3 rounded-2xl">
                         <svg
@@ -103,14 +122,14 @@ const SignupComponent: React.FC = () => {
               </svg>
                 <input id="username"  className="pl-2 w-full outline-none border-none" type="text" value={userName}  onChange={onChange}  name="userName" placeholder="Enter your user name " />
               </div>
-
+              <span className='text-red-600 '>{validationError.userName}</span>
               <div className="flex items-center border-2 mb-4 py-2 px-3 rounded-2xl">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
                 </svg>
                 <input id="email"  className="pl-2 w-full outline-none border-none" type="email" value={email}  onChange={onChange}  name="email" placeholder="Enter your email Address" />
               </div>
-
+              <span className='text-red-600 '>{validationError.email}</span>
               <div className="flex items-center border-2 mb-4 py-2 px-3 rounded-2xl">
                   <svg
                     fill="currentColor"
@@ -127,26 +146,29 @@ const SignupComponent: React.FC = () => {
                   </svg>
                 <input className="pl-2 w-full outline-none border-none" type="tel" name="mobile" value={mobile}  onChange={onChange}  id="mobile" placeholder="Enter mobile Number" />
               </div> 
+              <span className='text-red-600 '>{validationError.mobile}</span>
 
 
-              <div className="flex items-center border-2 mb-4 py-2 px-3 rounded-2xl">
+              <div className="flex items-center border-2 mb-1 py-2 px-3 rounded-2xl">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
                 </svg>
                 <input  className="pl-2 w-full outline-none border-none" type="password" name="password" value={password}  onChange={onChange}  id="password" placeholder="Password" />
               </div>
+              <span className='text-red-600 '>{validationError.password}</span>
 
               {/* <label className="mb-2 block text-xs font-semibold">
                   Password
                 </label> */}
-              <div className="flex items-center border-2 mb-4 py-2 px-3 rounded-2xl">
+              <div className="flex items-center border-2 mb-1 py-2 px-3 rounded-2xl">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
                 </svg>
                 
                 <input  className="pl-2 w-full outline-none border-none" type="password" value={confirmPassword}  onChange={onChange}  name="confirmPassword" id="confirmPassword" placeholder="Confirm Password" />
               </div>
-                 
+              <span className='text-red-600 '>{validationError.confirmPassword}</span>
+            
               {error ? (
                   <div className="text-red-700">{`! ${error}`}</div>
                 ) : null}
