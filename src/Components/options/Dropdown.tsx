@@ -9,6 +9,7 @@ import { RootState } from '../../Store/store';
 import { PostI } from '../../Types/User/Post';
 import AlertDialog from '../User/Modal/Alert';
 import ReportReasonModal from '../User/Modal/ReportReason';
+import { BlockPost, ReportPost } from '../../Api/user/postApiMethod';
 
 
 
@@ -36,7 +37,12 @@ const Dropdown: React.FC<DropdownProps> = ({ post, postUser, openEditor, setSele
   const [openReportReasonModal ,setOpenReportReason] = useState(false)
 //   const currentUser = useSelector<any>((state) => state?.user?.userData);
   const currentUser = useSelector((state: RootState) => state.auth.userInfo);
-  
+    // Delete post section
+    const [deleteModal, setDeleteModal] = useState(false);
+
+    // Report post section
+    const [reportModal, setReportModal] = useState(false);
+    const [blockModal,setBlockModal] = useState(false)
 
   const [error, setError] = useState<string>('');
   useEffect(() => {
@@ -93,17 +99,31 @@ const Dropdown: React.FC<DropdownProps> = ({ post, postUser, openEditor, setSele
    
     setOpenReportReason(false)
     const response = await ReportPost(post._id,reason)
+    if(response.success){
+      toast.success("Post reported ")
+    } else { 
+      toast.error(response?.message)
+    }
   }
 
-  // Delete post section
-  const [deleteModal, setDeleteModal] = useState(false);
-
-  // Report post section
-  const [reportModal, setReportModal] = useState(false);
 
   const closeReportAlertModal =()=>{
     setReportModal(false)
   }
+
+  const handleBlock = ()=>{
+    setBlockModal(true)
+  }
+  const blockPost = async() => {
+    setBlockModal(false)
+    const blockPost = await BlockPost(post._id)
+    if(blockPost.success) {
+      toast.success('Post blocked')
+    } else {
+      toast.error(blockPost.message)
+    }
+  }
+
 
   return (
     <>
@@ -186,7 +206,7 @@ const Dropdown: React.FC<DropdownProps> = ({ post, postUser, openEditor, setSele
 
                   <li>
                     <button 
-                     onClick={() => {toast.success('Post Blocked'),setReportModal(true)}}
+                     onClick={handleBlock}
                     className="block px-4 py-2 w-full text-left text-red-500 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                       Block
                     </button>

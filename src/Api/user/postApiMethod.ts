@@ -86,11 +86,22 @@ export const commentOnPost = async ( postId:string,comment:string) => {
     }
 }
 
- // @dec   comment on post
+ // @dec    Report post
 // method    POST
 export const ReportPost = async ( postId:string,reason:string) => {
     try {
         const res = await apiCall('post',postRoutes.reportPost,{postId,reason},false)
+        return res.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+ // @dec    Block post
+// method    POST
+export const BlockPost = async ( postId:string) => {
+    try {
+        const res = await apiCall('patch',postRoutes.blockPost,{postId},false)
         return res.data
     } catch (error) {
         console.log(error)
