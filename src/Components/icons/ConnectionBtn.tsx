@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { followUser, getConnections, unfollowUser  } from '../../Api/user/authApiMethod';
+import {  getConnections, unfollowUser  } from '../../Api/user/authApiMethod';
 import { showError } from '../../hooks/errorManagement';
+import { followUser } from '../../Api/user/userApiMethod';
 
 interface User {
   _id: string;
@@ -63,24 +64,26 @@ const ConnectionBtn: React.FC<ConnectionBtnProps> = ({ user, color, width, heigh
 //       });
 //   }, [currentUser]);
 
-  const follow = () => {
+  const follow = async () => {
     console.log('follow worked')
-    followUser(currentUser?._id, user?._id)
-      .then((response : ApiResponse) => {
-        setFollowing(response.userConnection.following);
-        setFollowers(response.followeeConnection.followers);
-      })
-      .catch((error:Error) => {
-        console.log('err follow ;',error)
-        if (error) {
-          if (typeof error === 'string') {
-              setError({ message: error });
-          } else {
-              setError(error);
-          }
-      }
-        // setError(error?.message || 'An error occurred while following the user.');
-      });
+
+    const followUserResponse = await followUser(user._id)
+    // followUser(currentUser?._id, user?._id)
+    //   .then((response : ApiResponse) => {
+    //     setFollowing(response.userConnection.following);
+    //     setFollowers(response.followeeConnection.followers);
+    //   })
+    //   .catch((error:Error) => {
+    //     console.log('err follow ;',error)
+    //     if (error) {
+    //       if (typeof error === 'string') {
+    //           setError({ message: error });
+    //       } else {
+    //           setError(error);
+    //       }
+    //   }
+    //     // setError(error?.message || 'An error occurred while following the user.');
+    //   });
   };
 
   const unfollow = () => {

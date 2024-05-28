@@ -4,15 +4,16 @@ import { useNavigate } from 'react-router-dom';
 interface CommentIcnProps {
   size: { width: number; height: number };
   post: { _id: string }; // Adjust type as per your post structure
+  setShow:(value:boolean)=>void
 }
 
-const CommentIcn: React.FC<CommentIcnProps> = ({ size, post }) => {
+const CommentIcn: React.FC<CommentIcnProps> = ({ size, post,setShow }) => {
   const navigate = useNavigate();
 
   return (
     <>
       <svg
-        onClick={() => navigate(`/post/${post?._id}`)}
+        onClick={() =>setShow(true) }
         className="mt-1 cursor-pointer ml-2 border-black"
         width={size?.width}
         height={size?.height}

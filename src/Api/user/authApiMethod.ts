@@ -1,6 +1,6 @@
 import { apiCall } from "./userApiCall";
-import userEndpoint from "../../Service/Endpoints/userEndpoints";
-import userRoutes from "../../Service/Endpoints/userEndpoints";
+import userEndpoint from "../../Service/Endpoints/authEndpoints";
+import userRoutes from "../../Service/Endpoints/authEndpoints";
 import postRoutes from "../../Service/Endpoints/postEndpoints";
 import { toast } from "react-toastify";
 
@@ -141,30 +141,21 @@ export const Glogin = async ( email: string) => {
 export const getUser = async ( userId: string) => {
     try {
         const res = await apiCall('get',postRoutes.getUser,{userId},false)
-        // console.log('get usr ;',res.data)
-        return res?.data?.user
+        console.log('get usr ;',res.data)
+        return res?.data
     } catch (error) {
         console.log(error)
     }
 }
 
- // @dec   Like post
-// method    POST
-export const likePost = async ( userId: string,postId:string) => {
-    try {
-        // const res = await apiCall('post',userRoutes.userGlogin,{userId,postId},false)
-        return {success:true}
-    } catch (error) {
-        console.log(error)
-    }
-}
+
 
  // @dec   unLike post
 // method    POST
-export const unlikePost = async ( userId: string,postId:string) => {
+export const unlikePost = async ( postId:string) => {
     try {
-        // const res = await apiCall('post',userRoutes.userGlogin,{userId,postId},false)
-        return {success:true}
+        const res = await apiCall('post',userRoutes.userGlogin,{postId},false)
+        return res.data
     } catch (error) {
         console.log(error)
     }

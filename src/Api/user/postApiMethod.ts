@@ -51,3 +51,48 @@ export const savePost = async ( userId: string,postId:string) => {
         console.log(error)
     }
 }
+
+ // @dec   Like post
+// method    POST
+export const likePost = async ( postId:string) => {
+    try {
+        const res = await apiCall('post',postRoutes.likePost,{postId},false)
+        return res.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+ // @dec   unlike post
+// method    POST
+export const unlikePost = async ( postId:string) => {
+    try {
+        const res = await apiCall('delete',postRoutes.unlikePost,{postId},false)
+        return res.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+ // @dec   comment on post
+// method    POST
+export const commentOnPost = async ( postId:string,comment:string) => {
+    try {
+        const res = await apiCall('post',postRoutes.commentOnPost,{postId,comment},false)
+        return res.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+ // @dec   comment on post
+// method    POST
+export const ReportPost = async ( postId:string,reason:string) => {
+    try {
+        const res = await apiCall('post',postRoutes.reportPost,{postId,reason},false)
+        return res.data
+    } catch (error) {
+        console.log(error)
+    }
+}

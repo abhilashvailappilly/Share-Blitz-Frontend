@@ -19,7 +19,7 @@ const ProfileBackground = () => {
   const user:ProfileDataInterface  = useSelector((state:RootState) => state.auth.userInfo)
   const myPosts:any[]  = useSelector((state:RootState) => state.post.myPosts)
   console.log(user)
-  const [image, setImage] = useState<string | null>(user.profileImageUrl || "https://e0.pxfuel.com/wallpapers/105/23/desktop-wallpaper-compromised-character-gaming-profile-dark-cute-cartoon-boys-thumbnail.jpg");
+  const [image, setImage] = useState<string >(user.profileImageUrl );
   const [name,setName]=useState(user?.name);
   
 
@@ -29,8 +29,9 @@ const ProfileBackground = () => {
         const res=await getUser(user._id)
         if(res){
          
-          setName(res.name);
-          setImage(res.profileImageUrl);
+          setName(res.user.name);
+
+          setImage(res.user.profileImageUrl);
         }
       }catch(error){
         console.log(error)
@@ -48,7 +49,7 @@ const ProfileBackground = () => {
     <img src="https://www.landscapesuncovered.com/wp-content/uploads/2015/02/Snowclouds-and-shadows.jpg" alt="bgimage" className="w-full h-full rounded-lg object-cover" />
     
     <div className="rounded-full bg-green-500 w-40 h-40 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/5  border-black border-4 overflow-hidden">
-      <img src={image ||' https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4eMoz7DH8l_Q-iCzSc1xyu_C2iryWh2O9_FcDBpY04w&s'} alt="Character"
+      <img src={image || "Profile Image"} alt="Character"
            className="w-full h-full hover:scale-110 transition-transform duration-300 object-cover" />
     </div>
    

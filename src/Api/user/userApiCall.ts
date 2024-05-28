@@ -15,7 +15,6 @@ export const clearUser = () => {
         toast.error('clr usr')
     localStorage.removeItem('userInfo')
     localStorage.removeItem('userAuthToken')
-    // persistor.purge();
     window.location.href="/login";
   };
 
@@ -57,10 +56,7 @@ export const apiCall = async (method: string, url: string, data: any,header:any)
                 localStorage.removeItem('userInfo')
                 localStorage.removeItem('userAuthToken')
                 clearUser()
-                // let dispatch = useDispatch()
-                // let navigate = useNavigate()
-                // dispatch(logout())
-                // navigate('/login')
+               
              }
              if(axiosError.response?.status === 401){
 

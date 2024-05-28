@@ -38,8 +38,7 @@ const SingleImageModal =({show,setShow ,post} : SingleImageModalPropsInterface )
       try{
         const res=await getUser(post.userId)
         if(res){
-         
-          setUserData(res);
+          setUserData(res.user);
         
         }
       }catch(error){
@@ -51,6 +50,10 @@ const SingleImageModal =({show,setShow ,post} : SingleImageModalPropsInterface )
  
   const handleClose = ()=>{
     setShow(false)
+  }
+
+  const addLike = ()=>{
+    toast.info("Add like")
   }
 
   return (
@@ -81,7 +84,7 @@ const SingleImageModal =({show,setShow ,post} : SingleImageModalPropsInterface )
             <div className="w-full flex bg-white h-10">
                <div className="w-1/3 h-full bg-green-100 flex justify-between">
               <div className="w-full mr-3">
-              <Heart size={{ width: 34, height: 36 }} color={'red'} post={post} setPost={setPost}  />
+              <Heart size={{ width: 34, height: 36 }} color={'red'} post={post} setPost={setPost} addLike={addLike}  />
               <span className="font-bold">{post?.like}</span> likes
               </div>
               <div className="w-full">

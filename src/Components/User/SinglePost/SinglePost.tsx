@@ -15,22 +15,36 @@ import ProfilePic from "../Profile/ProfilePic";
 import NameField from "../Profile/ProfileName";
 import { RootState } from "../../../Store/store";
 import { getUser } from "../../../Api/user/authApiMethod";
+import CommentModal from "../Modal/CommentModal";
+import { PostI } from "../../../Types/User/Post";
+import { Like } from "../../../Types/User/Post";
 // import store from '../../../Store/store'
 
-interface Post {
-  _id: string;
-  userId: string;
-  image: string;
-  description: string;
-  // likes: string[]; 
-}
-interface Post2 {
-  _id:string
-  userId:string
-  caption:string
-  imageUrl:string
-  tag:string[] 
-}
+// interface Like {
+//   userId: string;
+//   likedAt: string; // Include a timestamp or any additional fields if needed
+// }
+
+// interface LikesDetails {
+//   likes: Like[];
+// }
+
+// interface Post {
+//   _id: string;
+//   userId: string;
+//   image: string;
+//   description: string;
+//   likesDetails: LikesDetails;
+// }
+
+// interface Post2 {
+//   _id: string;
+//   userId: string;
+//   caption: string;
+//   imageUrl: string;
+//   tag: string[];
+//   likesDetails: LikesDetails;
+// }
 
 interface User {
   _id: string;
@@ -40,29 +54,21 @@ interface User {
 }
 
 interface Props {
-  postData: Post;
-  setSelectedPost: React.Dispatch<React.SetStateAction<Post | null>>;
+  postData: PostI;
+  setSelectedPost: React.Dispatch<React.SetStateAction<PostI | null>>;
   openEditor: () => void;
-  setLikePost: React.Dispatch<React.SetStateAction<Post | null>>;
+  setLikePost: React.Dispatch<React.SetStateAction<PostI| null>>;
   likeModal: React.RefObject<HTMLButtonElement>;
 }
 
 interface SinglePostProps {
   likeModal: React.RefObject<HTMLDivElement>;
-  setLikePost: Dispatch<SetStateAction<Post2 | undefined>>;
-  setSelectedPost: Dispatch<SetStateAction<Post2 | undefined>>;
-  postData: Post2;
+  setLikePost: Dispatch<SetStateAction<PostI | undefined>>;
+  setSelectedPost: Dispatch<SetStateAction<PostI | undefined>>;
+  postData: PostI;
   openEditor: React.RefObject<HTMLDivElement>;
 }
-// const SinglePost: React.FC<SinglePostProps> = ({
-//   likeModal,
-//   setLikePost,
-//   setSelectedPost,
-//   postData,
-//   openEditor
-// }) => {
-//   // Component logic
-// };
+
 
 const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, openEditor, setLikePost, likeModal })=> {
   const dispatch = useDispatch();
@@ -70,28 +76,37 @@ const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, open
   const user = useSelector((state: RootState) => state.auth.userInfo);
 
   const [owner, setOwner] = useState<boolean>(false);
-  const [post, setPost] = useState<Post2>(postData);
+  const [commentModal,setCommentModal] = useState(false)
+  const [post, setPost] = useState<PostI>(postData);
   const [likes, setLikes] = useState<string[]>([]);
   const [followers, setFollowers] = useState<string[]>([]);
   const [postUser, setPostUser] = useState<User | null>(null);
   const [error, setError] = useState<string>('');
 
-  useEffect(() => {
-        // user?._id === postDat?._id ? setOwner(false) : setOwner(true); // change to true later
-    console.log(post.caption)
-    getUser(post?.userId)
-      .then((response: User) => {
-        setPostUser(response);
-		console.log('response user details :',response)
-    console.log(post.caption,response?.name)
+  const addLike = (newLike: Like[] | []) => {
+    setPost(prevState  => ({
+      ...prevState,
+      likesDetails: {
+        ...prevState.likesDetails,
+        likes:newLike
+      }
+    }));
+  };
 
-        user?._id === response?._id ? setOwner(false) : setOwner(true); // change to true later
+  useEffect(() => {
+    
+    getUser(post?.userId)
+      .then((response:{success:Boolean,user:User}) => {
+        setPostUser(response?.user);
+
+
+        user?._id === response?.user?._id ? setOwner(false) : setOwner(true); // change to true later
       })
       .catch((error: Error) => {
         setError(error.message);
       });
 
-    setLikes(['10','12']);
+    // setLikes(['10','12']);
     // setLikes(post?.likes);
   }, [post, user, postData, postUser?._id]);
 
@@ -119,11 +134,11 @@ const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, open
   };
 
   const showLikes = () => {
-  console.log('show like worked')
+  // console.log('show like worked')
   };
 
   const handleClickOnUserName =()=>{
-	console.log('handleClickOnUserName worked')
+	  console.log('handleClickOnUserName worked')
   }
   return (
     <>
@@ -153,20 +168,23 @@ const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, open
           </div>
           <div className="mt-1">
           <span onClick={showLikes} className="pl-2 text-black font-bold text-sm  select-none"> 
-            100 likes
+           {post?.likesDetails?.likes.length || 0} Likes
           </span>
 
            
             <div className="p-2 text-xl flex gap-5 mt-5 font-bold">
-              <Heart size={{ width: 34, height: 36 }} color={'red'} post={post} setPost={setPost} />
-              <CommentIcn size={{ width: 33, height: 31 }} post={post} />
+              <Heart size={{ width: 34, height: 36 }} color={'red'} post={post} setPost={setPost} addLike={addLike} />
+              <CommentIcn size={{ width: 33, height: 31 }} post={post} setShow={setCommentModal} />
               {user?._id !== post?.userId ? (
                 <SaveIcn size={{ width: 36, height: 37 }} post={post} setError={setError} />
               ) : null}
             </div>
+              <span className="hover:cursor-pointer hover:scale-110" onClick={()=>setCommentModal(true)}>View all {post?.commentsDetails?.comments.length} comments</span>
           </div>
         </div>
       </div>
+      {commentModal && postUser && <CommentModal user={postUser} post={post}  show={commentModal} setShow={setCommentModal}/>}
+      
     </>
   );
 }

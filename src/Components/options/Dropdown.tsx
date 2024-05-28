@@ -6,22 +6,13 @@ import { useNavigate } from 'react-router-dom';
 // import Confirmation from '../modal/Confirmation';
 // import ReportModal from '../modal/ReportModal';
 import { RootState } from '../../Store/store';
+import { PostI } from '../../Types/User/Post';
+import AlertDialog from '../User/Modal/Alert';
+import ReportReasonModal from '../User/Modal/ReportReason';
 
-// interface Post {
-//     _id: string;
-//   userId: string;
-//   image: string;
-//   description: string;
-//   // Add more properties as needed
-// }
 
-interface Post {
-    _id:string
-    userId:string
-    caption:string
-    imageUrl:string
-    tag:string[] 
-}
+
+
 
 interface User {
   _id: string;
@@ -30,10 +21,10 @@ interface User {
 }
 
 interface DropdownProps {
-  post: Post;
+  post: PostI;
   postUser: User | null;
   openEditor: React.RefObject<HTMLDivElement>;
-  setSelectedPost: Dispatch<SetStateAction<Post | undefined>>;
+  setSelectedPost: Dispatch<SetStateAction<PostI | undefined>>;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({ post, postUser, openEditor, setSelectedPost }) => {
@@ -42,6 +33,7 @@ const Dropdown: React.FC<DropdownProps> = ({ post, postUser, openEditor, setSele
   const navigate = useNavigate();
 
   const [owner, setOwner] = useState(false);
+  const [openReportReasonModal ,setOpenReportReason] = useState(false)
 //   const currentUser = useSelector<any>((state) => state?.user?.userData);
   const currentUser = useSelector((state: RootState) => state.auth.userInfo);
   
@@ -89,11 +81,29 @@ const Dropdown: React.FC<DropdownProps> = ({ post, postUser, openEditor, setSele
     };
   }, []);
 
+  const handleClickReport = ()=>{
+    setReportModal(true)
+  }
+  const openReportReason =()=>{
+    setReportModal(false)
+    setOpenReportReason(true) 
+
+  }
+  const reportPost = async (reason : string)=>{
+   
+    setOpenReportReason(false)
+    const response = await ReportPost(post._id,reason)
+  }
+
   // Delete post section
   const [deleteModal, setDeleteModal] = useState(false);
 
   // Report post section
   const [reportModal, setReportModal] = useState(false);
+
+  const closeReportAlertModal =()=>{
+    setReportModal(false)
+  }
 
   return (
     <>
@@ -167,7 +177,7 @@ const Dropdown: React.FC<DropdownProps> = ({ post, postUser, openEditor, setSele
                 <>
                   <li>
                     <button
-                      onClick={() => {toast.success('Post repoted'),setReportModal(true)}}
+                      onClick={handleClickReport}
                       className="block px-4 py-2 w-full text-left text-red-500 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                     >
                       Report
@@ -187,6 +197,8 @@ const Dropdown: React.FC<DropdownProps> = ({ post, postUser, openEditor, setSele
           </div>
         )}
       </div>
+      {reportModal && <AlertDialog message="Are your sure to report the post" submitFunction={openReportReason} cancelFunction={closeReportAlertModal}/>}
+      {openReportReasonModal && <ReportReasonModal cancelFunction={()=>setReportModal(false)} submitFunction={reportPost}/>}
     </>
   );
 };

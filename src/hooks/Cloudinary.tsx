@@ -5,8 +5,8 @@ const upload =async (imgData: string, setErr: (error: string) => void) => {
     const image = await fetch(imgData);
     const blob = await image.blob();
     const file = new File([blob], "filename.png", { type: blob.type });
-    console.log('file',file)
-    console.log('image',image)
+    // console.log('file',file)
+    // console.log('image',image)
  
     const formData = new FormData();
     formData.append("file", file);

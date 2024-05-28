@@ -107,7 +107,7 @@ function CreatePost() {
         toast.success('Post created successfully')
         console.log(createNewPost)
           // dispatch(updateUserPosts(createNewPost.postData));
-          dispatch(setLoadedPosts([createNewPost.postData]));
+          // dispatch(setLoadedPosts([createNewPost.postData]));
           dispatch(addCreatedPost([createNewPost.postData]));
           // dispatch(addNewUserPosts(createNewPost.postData));
           clearComponent();

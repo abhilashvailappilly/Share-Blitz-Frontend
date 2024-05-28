@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { likePost, unlikePost } from '../../Api/user/authApiMethod';
+// import { likePost, unlikePost } from '../../Api/user/authApiMethod';
+import { likePost,unlikePost } from '../../Api/user/postApiMethod';
 import { showError } from '../../hooks/errorManagement';
 import { RootState } from '../../Store/store';
 import { toast } from 'react-toastify';
@@ -8,18 +9,22 @@ import { toast } from 'react-toastify';
 interface ErrorObject {
   message?: string;
 }
-
+interface Like {
+  userId: string;
+  likedAt: string; // Include a timestamp or any additional fields if needed
+}
 interface HeartProps {
   size: { width: number; height: number };
   color: string;
   post: any; // Adjust type as per your post structure
-  setPost: React.Dispatch<React.SetStateAction<any>>; // Adjust type as per your post structure
+  setPost: React.Dispatch<React.SetStateAction<any>>; 
+  addLike: (newLike: Like[] | []) => void;
 }
 interface User {
     _id:string
 }
 
-const Heart: React.FC<HeartProps> = ({ size, color, post, setPost }) => {
+const Heart: React.FC<HeartProps> = ({ size, color, post, setPost ,addLike}) => {
   const [isRed, setIsRed] = useState<boolean>(false);
   // const user : User = useSelector((state: RootState) => state.auth.userInfo as User);
   const {userInfo} = useSelector((state: RootState)=>state.auth)
@@ -36,21 +41,31 @@ const Heart: React.FC<HeartProps> = ({ size, color, post, setPost }) => {
     if(color==='red'){
       setIsRed(true)
     }
-    setIsRed(post?.likes?.includes(userInfo?._id));
+
+    setIsRed(post?.likesDetails?.likes?.some((user :{userId:string} )=> user.userId == userInfo?._id));
   }, [userInfo, post]);
 
   const likeOrUnlike = async () => {
-    toast.success('post liked')
     try {
       if (isRed) {
-        const response = await unlikePost(userInfo?._id, post?._id);
-        setPost(response);
+        const response = await unlikePost( post?._id);
+        if(response.success){
+          toast.success('UnLiked the post !!')
+          addLike(response?.postData?.likes)
+        } else {
+          toast.error(response?.message)
+        }
+        
       } else {
-        const response = await likePost(userInfo?._id, post?._id);
-        setPost(response);
+        const response = await likePost( post?._id);
+        if(response.success){
+          toast.success('Liked the post !!')
+          addLike(response?.postData?.likes)
+        } else {
+          toast.error(response?.message)
+        }
       }
     } catch (error : any) {
-      // setError(typeof error === 'string' ? { message: error } : error);
       setError(error)
     }
   };
