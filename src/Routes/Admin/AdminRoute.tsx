@@ -4,6 +4,7 @@ import AdminLoggedIn from "../../Components/Admin/adminLoggedIn";
 import AdminLoggedOut from "../../Components/Admin/adminLoggedOut";
 import Users from "../../Pages/Admin/User/User";
 import NotFound from "../../Pages/Common/Notfound";
+import ReportsPage from "../../Pages/Admin/Reports/Reports";
 export const AdminRoute = () =>{
     return (
         <Routes>
@@ -15,6 +16,7 @@ export const AdminRoute = () =>{
             <Route path="/" element={<Home/>}/>
             <Route path="home" element={<Home/>}/>
             <Route path='users' element={<Users />} />
+            <Route path='reports' element={<ReportsPage />} />
             <Route path='*' element={<NotFound />} />
 
             {/* <Route path='profile' element={<Profile />} /> */}

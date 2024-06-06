@@ -1,6 +1,8 @@
 import { useState } from "react"
 import SingleImageModal from "../Modal/SingleImageModal"
 import MyPost from "./MyPost"
+import { PostI } from "../../../Types/User/Post"
+import { toast } from "react-toastify"
 
 interface Posts {
     _id:string
@@ -11,18 +13,19 @@ interface Posts {
     like : number
 }
 interface ProfilePostsProps {
-    posts:Posts[];
+    posts:PostI[];
   }
   
   const ProfilePosts: React.FC<ProfilePostsProps> = ({ posts }) => {
     console.log(posts)
+    // toast.info(posts.length)
     const [show ,setShow] = useState(false)
     return (
       <div className=" w-full h-96 bg-blue-700 overflow-auto ">
     <div className="w-full h-full grid  grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-3 bg-white overflow-auto no-scrollbar">
 
     {posts && posts.length > 0 ? (
-          posts.map((post: Posts, index: number) => {
+          posts.map((post: PostI, index: number) => {
             return (
                 <div key={index}>
             <MyPost  post={post}/>

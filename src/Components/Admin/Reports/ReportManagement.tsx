@@ -1,8 +1,10 @@
 import  { useEffect, useState } from 'react';
-import { getAllUsers } from '../../../Api/admin/adminApiMethod';
+import { getAllReportedPosts, getAllUsers } from '../../../Api/admin/adminApiMethod';
 import TableData from './Table';
 import { useDispatch } from 'react-redux';
 import {HashLoader} from 'react-spinners'
+import { toast } from 'react-toastify';
+import { ReportsInterface } from '../../../Types/Admin/Reports';
 
 
 interface User {
@@ -15,37 +17,50 @@ interface User {
     mobile: string;
 }
 
-function UserManagement() {
+function ReportManagement() {
     const dispatch = useDispatch();
 
     const [loading, setLoading] = useState<boolean>(true);
     const [users, setUsers] = useState<User[]>([]);
+    const [reports, setReports] = useState<ReportsInterface[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [usersPerPage] = useState<number>(10); 
     const [total, setTotal] = useState<number>(0);
 
     useEffect(() => {
-        getAllUsers()
-            .then(async (response) => {
-                setUsers([...users,...response.usersData]);
-                setTotal(response.usersData.length);
-                setLoading(false);
-            })
-            .catch((error) => {
-                setLoading(false);
-            });
+        fetchReportData()
+       
     }, [dispatch, currentPage, usersPerPage]);
 
+    const fetchReportData = async ()=>{
+        try {
+          const response = await getAllReportedPosts()
+          console.log('response report',response)
+          if(response.success){
+            setReports(response.reportedPosts)
+                setTotal(response.reportedPosts.length);
+                setLoading(false);
+          } else {
+            toast.error(response.message)
+          } 
+
+                setLoading(false);
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const updateUserStatus = (userId: string, newStatus: boolean) => {
-        const updatedUsers = users.map(user => {
+        const updatedUsers = reports.map(user => {
             if (user._id === userId) {
-                return { ...user, isBlocked: newStatus };
+                return { ...user, actionTaken: newStatus };
             }
             return user;
         });
         console.log(updatedUsers)
         console.table(updatedUsers)
-        setUsers(updatedUsers);
+        setReports(updatedUsers);
     };
 
     // Pagination logic
@@ -66,7 +81,7 @@ function UserManagement() {
     return (
         <section className="container px-4 mx-auto flex flex-col justify-center items-center min-h-screen ">
             <div className="flex items-center gap-x-3">
-                <h2 className="text-lg font-bold text-green-700 dark:text-white">USER MANAGEMENT</h2>
+                <h2 className="text-lg font-bold text-green-700 dark:text-white">Report MANAGEMENT</h2>
             </div>
 
             <div className="flex flex-col mt-6">
@@ -78,37 +93,37 @@ function UserManagement() {
                                     <tr>
                                         <th scope="col" className="px-4 py-3.5 text-sm font-bold text-left rtl:text-right dark:text-gray-400">
                                             <div className="flex items-center">
-                                                <span>Profile</span>
+                                                <span>Post</span>
                                             </div>
                                         </th>
                                         <th scope="col" className="px-12 py-3.5 text-sm font-bold text-left rtl:text-right  dark:text-gray-400">
                                             <div className="flex items-center">
-                                                <span>Name</span>
+                                                <span>User name</span>
                                                 <svg className="h-3" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg"></svg>
                                             </div>
                                         </th>
                                         <th scope="col" className="px-4 py-3.5 text-sm font-bold text-left rtl:text-right  dark:text-gray-400">
                                             <div className="flex items-center">
-                                                <span>Contact</span>
+                                                <span>Reason</span>
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-4 h-4"></svg>
                                             </div>
                                         </th>
                                         <th scope="col" className="px-4  py-3.5 text-sm font-bold text-left rtl:text-right  dark:text-gray-400">
                                             <div className="flex items-center">
-                                                <span>Status</span>
+                                                <span>Action taken</span>
                                             </div>
                                         </th>
                                         <th scope="col" className="px-4 py-3.5 text-sm font-bold text-left rtl:text-right  dark:text-gray-400">Action</th>
 
-                                        <th scope="col" className="relative py-3.5  px-4">
+                                        {/* <th scope="col" className="relative py-3.5  px-4">
                                             <span className="sr-only">Edit</span>
-                                        </th>
+                                        </th> */}
                                     </tr>
                                 </thead>
                                 {/* <tbody className="bg-dark divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900 border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"> */}
                                 <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                    {currentUsers.map((user, index) => (
-                                        <TableData key={index} user={user} updatedUsers={updateUserStatus} />
+                                    {reports.map((reports, index) => (
+                                        <TableData key={index} report={reports} updatedUsers={updateUserStatus} setLoading={setLoading} />
                                     ))}
                                 </tbody>
                             </table>
@@ -147,4 +162,4 @@ function UserManagement() {
     );
 }
 
-export default UserManagement;
+export default ReportManagement;

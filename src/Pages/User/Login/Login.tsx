@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 // import { Navigate } from 'react-router-dom';
 import { Link,useNavigate } from 'react-router-dom';
 import GoogleLogin from '../../../Components/User/Google/GoogleAuthSignIn';
-import { UseDispatch, useDispatch } from 'react-redux'; 
+import {  useDispatch } from 'react-redux'; 
 import { validateEmail, validatePassword } from '../../../utils/validation/user';
 import { LoginUser } from '../../../Api/user/authApiMethod';
 import { setCredentials,setAdminCredentials } from '../../../Store/user/userSlice';
+import { setFollowerss,setFollowings } from '../../../Store/user/connectionSlice';
 import { toast } from 'react-toastify';
+import { getConnections } from '../../../Api/user/userApiMethod';
 const LoginComponent: React.FC = () => {
 
   const navigate = useNavigate()
@@ -27,13 +29,18 @@ const LoginComponent: React.FC = () => {
     e.preventDefault()
     if(validateEmail(loginDetails.email) && validatePassword(loginDetails.password)){
         const login = await LoginUser(loginDetails);
-        console.log('Login data',login)
         if(login.data.success){
+      console.log('ser----------------------------------------------------------- follw')
+
           if(login.data.user.role === 'USER'){
             dispatch(setCredentials(login?.data?.user))
-            console.log(login.data)
             localStorage.setItem('userInfo', JSON.stringify(login?.data?.user))
             localStorage.setItem('userAuthToken', JSON.stringify(login?.data?.token))
+            const connections = await getConnections(login?.data?.user._id) 
+            dispatch(setFollowerss(connections.connections?.followings))
+            dispatch(setFollowings(connections.connections?.followings))
+            sessionStorage.setItem('followings', connections.connections?.followings);
+            sessionStorage.setItem('followers',connections.connections?.followers );
             navigate('/home')
           } else {
             dispatch(setAdminCredentials(login?.data?.user))

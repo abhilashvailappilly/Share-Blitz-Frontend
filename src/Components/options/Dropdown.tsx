@@ -109,6 +109,7 @@ const Dropdown: React.FC<DropdownProps> = ({ post, postUser, openEditor, setSele
 
   const closeReportAlertModal =()=>{
     setReportModal(false)
+    setOpenReportReason(false)
   }
 
   const handleBlock = ()=>{
@@ -218,7 +219,7 @@ const Dropdown: React.FC<DropdownProps> = ({ post, postUser, openEditor, setSele
         )}
       </div>
       {reportModal && <AlertDialog message="Are your sure to report the post" submitFunction={openReportReason} cancelFunction={closeReportAlertModal}/>}
-      {openReportReasonModal && <ReportReasonModal cancelFunction={()=>setReportModal(false)} submitFunction={reportPost}/>}
+      {openReportReasonModal && <ReportReasonModal cancelFunction={closeReportAlertModal} submitFunction={reportPost}/>}
     </>
   );
 };

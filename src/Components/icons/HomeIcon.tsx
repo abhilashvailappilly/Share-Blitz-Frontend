@@ -1,11 +1,11 @@
 // icon:home | Ant Design Icons https://ant.design/components/icon/ | Ant Design
 import * as React from "react";
 
-function IconHome(props: React.SVGProps<SVGSVGElement>) {
+function HomeIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       viewBox="0 0 1024 1024"
-      fill="currentColor"
+      fill="black"
       height="2em"
       width="2em"
       {...props}
@@ -15,4 +15,4 @@ function IconHome(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-export default IconHome;
+export default HomeIcon;

@@ -27,10 +27,7 @@ const postSlice = createSlice({
     },
     addNewUserPosts: (state, action: PayloadAction<{post:Post}>) => {
       console.log('action payload :',action.payload)
-      state.myPosts.push(action.payload.post);
-
-      // state.myPosts = [...state.myPosts,...action.payload];
-      
+      state.myPosts.push(action.payload.post);   
     },
     clearUserPosts: (state) => {
       state.myPosts = [];

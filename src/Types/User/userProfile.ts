@@ -13,6 +13,7 @@ export default interface ProfileDataInterface {
     location:string
     loginType:String
     isVerified:Boolean
+    isPrivate:Boolean
     isBlocked:Boolean
     isDeleted:Boolean 
     creationTime:Date

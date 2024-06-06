@@ -63,7 +63,7 @@ const handleClickComment = async()=>{
     <>
        <div className={`${
                 show ? 'block' : 'hidden'}
-       fixed inset-0 flex items-center justify-center bg-black bg-opacity-110 backdrop-blur-sm  z-50`}>
+       fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm  z-50`}>
       <div className="bg-white rounded-lg overflow-hidden   h-[500px]  w-11/12 md:w-3/4 lg:w-1/2">
         <div className="flex w-full h-1/6 justify-between items-center  border-black">
 

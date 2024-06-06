@@ -1,4 +1,3 @@
-// icon:users | Fontawesome https://fontawesome.com/ | Fontawesome
 import * as React from "react";
 
 function IconUsers(props: React.SVGProps<SVGSVGElement>) {

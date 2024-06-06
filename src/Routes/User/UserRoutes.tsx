@@ -10,6 +10,7 @@ import { Navigate } from "react-router-dom";
 import SignupComponent from "../../Pages/User/Signup/Signup";
 import Otp from "../../Pages/User/Otp/Otp"
 import NotFound from "../../Pages/Common/Notfound";
+import SearchPage from "../../Pages/User/Search/SearchPage";
 export const UserRoute = () =>{
     console.log("User route worked")
     return (
@@ -23,8 +24,9 @@ export const UserRoute = () =>{
             </Route>
             <Route path="" element={<UserLoggedIn />}>
                 <Route path="home" element={<Home/>}/>
+                <Route path="search" element={<SearchPage/>}/>
                 <Route path="createPost" element={<CreatePost/>}/>
-                <Route path='profile' element={<Profile />} />
+                <Route path='profile/:userId' element={<Profile />} />
                 <Route path='*' element={<NotFound />} />
 
                

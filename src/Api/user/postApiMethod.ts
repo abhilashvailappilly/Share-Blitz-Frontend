@@ -30,7 +30,7 @@ interface UserLoginData {
 export const getAllPosts = async (limit:number) => {
     try {
         console.log(" get all post :",limit) 
-const res = await apiCall('get',postRoutes.getAllPosts,{limit},false)
+    const res = await apiCall('get',postRoutes.getAllPosts,{limit},false)
       console.log('get all posts ',res.data)
         return res.data
     } catch (error:any) {
@@ -38,6 +38,19 @@ const res = await apiCall('get',postRoutes.getAllPosts,{limit},false)
 
     }
 }
+
+// @dec      get posts
+// method    Get
+// export const getPostById = async (postId:string) => {
+//     try {
+//         const res = await apiCall('get',postRoutes.getAllPosts,{postId},false)
+//         console.log('get  post by id ',res.data)
+//         return res.data
+//     } catch (error:any) {
+//         console.log('Error:', error);
+
+//     }
+// }
 
  // @dec   save post
 // method    POST
@@ -105,5 +118,19 @@ export const BlockPost = async ( postId:string) => {
         return res.data
     } catch (error) {
         console.log(error)
+    }
+}
+
+// @dec      get a particular users posts
+// method    Get
+export const GetUserPosts = async (userId : string) => {
+    try {
+        console.log(" get user post :",userId) 
+    const res = await apiCall('get',postRoutes.getUserPosts,{userId},false)
+      console.log('get  user posts ',res.data)
+        return res.data
+    } catch (error:any) {
+        console.log('Error:', error);
+
     }
 }

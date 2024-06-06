@@ -1,6 +1,7 @@
 import { useState } from "react"
 import SingleImageModal from "../Modal/SingleImageModal"
 import { toast } from "react-toastify"
+import { PostI } from "../../../Types/User/Post"
 interface Post {
     _id:string
     userId:string
@@ -10,7 +11,7 @@ interface Post {
     like : number
 }
 interface MyPostInterface{
-    post:Post
+    post:PostI
 }
 const MyPost = ({post }:MyPostInterface) => {
     const [show ,setShow] = useState(false)

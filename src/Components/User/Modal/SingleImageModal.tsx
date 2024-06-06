@@ -10,14 +10,8 @@ import SaveIcn from "../../icons/SaveIcon";
 import Heart from "../../options/Heart";
 import CommentIcn from "../../icons/CommentIcon";
 import { toast } from "react-toastify";
-interface PostI {
-    _id:string
-    imageUrl:string 
-    caption :string
-    userId:string
-    like:number
-    hashtags:string[]
-}
+import { PostI } from "../../../Types/User/Post";
+
 interface SingleImageModalPropsInterface {
     show : boolean
     setShow:(value:boolean)=>void
@@ -61,6 +55,7 @@ const SingleImageModal =({show,setShow ,post} : SingleImageModalPropsInterface )
        <div className={`${
                 show ? 'block' : 'hidden'}
        fixed inset-0 flex items-center justify-center bg-black bg-opacity-110 backdrop-blur-sm z-50`}>
+        
       <div className="bg-white rounded-lg overflow-hidden w-11/12 md:w-3/4 lg:w-1/2">
         <div className="flex justify-between items-center p-4 border-b">
 
@@ -85,10 +80,11 @@ const SingleImageModal =({show,setShow ,post} : SingleImageModalPropsInterface )
                <div className="w-1/3 h-full bg-green-100 flex justify-between">
               <div className="w-full mr-3">
               <Heart size={{ width: 34, height: 36 }} color={'red'} post={post} setPost={setPost} addLike={addLike}  />
-              <span className="font-bold">{post?.like}</span> likes
+              <span className="font-bold">10</span> likes
+              {/* <span className="font-bold">{post?.like}</span> likes */}
               </div>
               <div className="w-full">
-              <CommentIcn size={{ width: 33, height: 31 }} post={post} />
+              <CommentIcn size={{ width: 33, height: 31 }} post={post} setShow={setShow} />
               </div>
               <FaShare className="text-black text-2xl"/>
                </div>

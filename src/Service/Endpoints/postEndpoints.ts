@@ -8,7 +8,9 @@ const postRoutes={
     unlikePost:'/post/unlikePost',
     commentOnPost:'/post/commentOnPost',
     reportPost :'/post/reportPost',
-    blockPost:'/post/blockPost'
+    blockPost:'/post/blockPost',
+    getUserPosts:'/post/getUserPosts',
+
 }
 
 export default postRoutes;

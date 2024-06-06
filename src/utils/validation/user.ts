@@ -47,6 +47,9 @@ export const userRegistrationValidation = (userData:any,validationError:valiatio
 }
 export const validateEmail = (email:string)=>{
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if(!email){
+                toast.error("Provide valid credentials");
+        }
          if (!emailRegex.test(email)) {
               //   toast.error("Please enter valid email!!!");
                 return false;
@@ -54,8 +57,8 @@ export const validateEmail = (email:string)=>{
         return true
 }
 export const validatePassword = (password:string)=>{
-         if (password.trim().length < 8 ) {
-              //   toast.error("Password length should be minimum 8 !!!");
+         if (!password&&password.trim().length < 8 ) {
+                toast.error("Password length should be minimum 8 !!!");
                 return false;
          }
          if ( password.includes(' ')) {

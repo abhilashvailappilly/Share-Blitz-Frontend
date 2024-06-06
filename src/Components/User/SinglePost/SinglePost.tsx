@@ -18,6 +18,7 @@ import { getUser } from "../../../Api/user/authApiMethod";
 import CommentModal from "../Modal/CommentModal";
 import { PostI } from "../../../Types/User/Post";
 import { Like } from "../../../Types/User/Post";
+import PostLikesModal from "../Modal/PostLikesModal";
 // import store from '../../../Store/store'
 
 // interface Like {
@@ -78,7 +79,7 @@ const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, open
   const [owner, setOwner] = useState<boolean>(false);
   const [commentModal,setCommentModal] = useState(false)
   const [post, setPost] = useState<PostI>(postData);
-  const [likes, setLikes] = useState<string[]>([]);
+  const [showLikeModal, setShowLikeModal] = useState<boolean>(false);
   const [followers, setFollowers] = useState<string[]>([]);
   const [postUser, setPostUser] = useState<User | null>(null);
   const [error, setError] = useState<string>('');
@@ -105,9 +106,8 @@ const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, open
       .catch((error: Error) => {
         setError(error.message);
       });
-
-    // setLikes(['10','12']);
-    // setLikes(post?.likes);
+ 
+    
   }, [post, user, postData, postUser?._id]);
 
   useEffect(() => { 
@@ -129,12 +129,12 @@ const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, open
  
 
   const seeProfile = () => {
-    navigate(`/profile/${postUser?.username}`);
-    toast.success('see profile worked')
+    navigate(`/profile/${postUser?._id}`)
   };
 
   const showLikes = () => {
   // console.log('show like worked')
+  setShowLikeModal(true)
   };
 
   const handleClickOnUserName =()=>{
@@ -166,25 +166,24 @@ const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, open
           <div className="m-2">
             <CaptionWithShowMore text={post.caption} styleProps={'text-black text-base '} />
           </div>
-          <div className="mt-1">
-          <span onClick={showLikes} className="pl-2 text-black font-bold text-sm  select-none"> 
-           {post?.likesDetails?.likes.length || 0} Likes
-          </span>
-
-           
-            <div className="p-2 text-xl flex gap-5 mt-5 font-bold">
+          <div className="mt-1 flex flex-col">
+                     
+            <div className="p-2 text-xl flex gap-5 mt-0 font-bold">
               <Heart size={{ width: 34, height: 36 }} color={'red'} post={post} setPost={setPost} addLike={addLike} />
               <CommentIcn size={{ width: 33, height: 31 }} post={post} setShow={setCommentModal} />
               {user?._id !== post?.userId ? (
                 <SaveIcn size={{ width: 36, height: 37 }} post={post} setError={setError} />
               ) : null}
             </div>
-              <span className="hover:cursor-pointer hover:scale-110" onClick={()=>setCommentModal(true)}>View all {post?.commentsDetails?.comments.length} comments</span>
+            <span onClick={showLikes} className="pl-2 hover:cursor-pointer hover:scale-95 hover:font-bold text-black font-bold text-sm  select-none"> 
+                 {post?.likesDetails?.likes.length || 0} Likes
+            </span>
+              <span className="hover:cursor-pointer hover:scale-100 hover:font-bold" onClick={()=>setCommentModal(true)}>View all {post?.commentsDetails?.comments.length} comments</span>
           </div>
         </div>
       </div>
       {commentModal && postUser && <CommentModal user={postUser} post={post}  show={commentModal} setShow={setCommentModal}/>}
-      
+      {showLikeModal && <PostLikesModal likesData ={post?.likesDetails} closeModal={setShowLikeModal} /> }
     </>
   );
 }

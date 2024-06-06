@@ -32,7 +32,7 @@ export const EditUserProfile = async ( userData:userDataI) => {
     }
 }
 
-export const followUser = async ( targetId: string) => {
+export const FollowUser = async ( targetId: string) => {
     try {
         console.log(' Follow user')
         const res = await apiCall('post',userRoutes.followUser,{targetId},false)
@@ -43,13 +43,41 @@ export const followUser = async ( targetId: string) => {
         console.log(error)
     }
 }
-export const unfollowUser = async ( userId: string,unFollowUserId:string) => {
+export const UnFollowUser = async ( targetUserId:string) => {
     try {
         console.log(' unfollow usser')
-        const res = await apiCall('delete',userRoutes.unFollowUser ,{userId,unFollowUserId},false)
-        // return res
-        return {success:true}
+        const res = await apiCall('delete',userRoutes.unFollowUser ,{targetUserId},false)
+        return res.data
 
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const getConnections = async ( userId: string) => {
+    try {
+        console.log(' get connections')
+        const res = await apiCall('get',userRoutes.getConnections,{userId},false)
+        return res.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const checkIsFriend = async ( targetUserId : string) => {
+    try {
+        console.log(' get connections')
+        const res = await apiCall('get',userRoutes.checkIsFriend,{targetUserId},false)
+        return res.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const SearchUser = async ( searchInput : string) => {
+    try {
+        const res = await apiCall('get',userRoutes.searchUser,{searchInput},false)
+        return res.data
     } catch (error) {
         console.log(error)
     }

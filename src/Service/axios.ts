@@ -5,7 +5,6 @@ import { BASE_URL } from "../utils/constants/url";
 export const api = axios.create({
   baseURL: `${BASE_URL}/api`,
 });
-// const user = JSON.parse(localStorage.getItem('user'));
 
 api.interceptors.request.use(
   async (config) => {

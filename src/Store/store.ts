@@ -1,8 +1,10 @@
 import {configureStore} from '@reduxjs/toolkit'
 import authReducer from './user/userSlice'
 import postReducer from './user/postSlice'
+import connectionReducer from './user/connectionSlice'
 import { combineReducers } from '@reduxjs/toolkit'
 import ProfileDataInterface from '../Types/User/userProfile'
+import { FollowingsInterface } from '../Types/User/Connections'
 export interface RootState {
     auth: {
         userInfo: ProfileDataInterface
@@ -14,12 +16,16 @@ export interface RootState {
         loadedPosts:[]
         lastPost:{}
     }
+    connections:{
+        followers :[]
+        followings : FollowingsInterface[]
+    }
 }
 
 const rootReducer = combineReducers({
     auth: authReducer,
-    post: postReducer, // Include the postSlice reducer
-    // Add other reducers if you have them
+    post: postReducer, 
+    connections:connectionReducer
 });
 
 const store=configureStore({

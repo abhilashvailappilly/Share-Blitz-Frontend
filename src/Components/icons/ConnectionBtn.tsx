@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import {  getConnections, unfollowUser  } from '../../Api/user/authApiMethod';
+import {   unfollowUser  } from '../../Api/user/authApiMethod';
+// import { getConnection/ } from '../../Api/user/userApiMethod';
 import { showError } from '../../hooks/errorManagement';
-import { followUser } from '../../Api/user/userApiMethod';
+import { FollowUser, checkIsFriend } from '../../Api/user/userApiMethod';
+import { FollowingsInterface } from '../../Types/User/Connections';
+import { toast } from 'react-toastify';
+import ProfileDataInterface from '../../Types/User/userProfile';
+import { RootState } from '../../Store/store';
 
 interface User {
   _id: string;
@@ -30,8 +35,11 @@ interface ApiResponse {
   
 
 const ConnectionBtn: React.FC<ConnectionBtnProps> = ({ user, color, width, height, setFollowers }) => {
-  const currentUser = useSelector((state: any) => state?.user?.userData);
-  const [following, setFollowing] = useState<string[]>([]);
+  const userInfo: ProfileDataInterface = useSelector((state: RootState) => state.auth.userInfo)
+  const followersData: FollowingsInterface[] = useSelector((state: RootState) => state.connections.followings)
+
+  const [following, setFollowing] = useState<FollowingsInterface[]>([]);
+  const [isFriend,setIsFriend] = useState<Boolean>(false)
 //   const [error, setError] = useState<string>('');
   const [error, setError] = useState<ErrorObject|null>(null); // Change type to string | ErrorObject
 
@@ -54,27 +62,36 @@ const ConnectionBtn: React.FC<ConnectionBtnProps> = ({ user, color, width, heigh
     }
   }, [error]);
 
-//   useEffect(() => {
-//     getConnections(currentUser?._id)
-//       .then((connection: { following: React.SetStateAction<string[]>; }) => {
-//         setFollowing(connection.following);
-//       })
-//       .catch((error: { message: any; }) => {
-//         setError(error?.message || 'An error occurred while fetching connections.');
-//       });
-//   }, [currentUser]);
+  useEffect(()=>{
+    checkFriend()
+  })
+
+  const checkFriend = async ()=>{
+    const friend = await checkIsFriend(user._id)
+    if(friend.success){
+      setIsFriend(friend.isFriend)
+    }
+  }
+
 
   const follow = async () => {
-    console.log('follow worked')
 
-    const followUserResponse = await followUser(user._id)
-    // followUser(currentUser?._id, user?._id)
-    //   .then((response : ApiResponse) => {
+    const followUserResponse = await FollowUser(user._id)
+   if(followUserResponse.success){
+    toast.success("Followed user")
+   } else {
+    toast.error(followUserResponse.message)
+   }
+  };
+
+  const unfollow = () => {
+    console.log('un follow worked')
+    // unfollowUser(currentUser?._id, user?._id)
+    //   .then((response:any) => {
     //     setFollowing(response.userConnection.following);
     //     setFollowers(response.followeeConnection.followers);
     //   })
     //   .catch((error:Error) => {
-    //     console.log('err follow ;',error)
     //     if (error) {
     //       if (typeof error === 'string') {
     //           setError({ message: error });
@@ -82,32 +99,12 @@ const ConnectionBtn: React.FC<ConnectionBtnProps> = ({ user, color, width, heigh
     //           setError(error);
     //       }
     //   }
-    //     // setError(error?.message || 'An error occurred while following the user.');
+    //     // setError(error?.message || 'An error occurred while unfollowing the user.');
     //   });
-  };
-
-  const unfollow = () => {
-    console.log('un follow worked')
-    unfollowUser(currentUser?._id, user?._id)
-      .then((response:any) => {
-        setFollowing(response.userConnection.following);
-        setFollowers(response.followeeConnection.followers);
-      })
-      .catch((error:Error) => {
-        if (error) {
-          if (typeof error === 'string') {
-              setError({ message: error });
-          } else {
-              setError(error);
-          }
-      }
-        // setError(error?.message || 'An error occurred while unfollowing the user.');
-      });
-  };
-
+  };console.log("Followers data :",followersData)
   return (
     <>
-      {!following?.includes(user?._id) ? (
+      {!isFriend? (
         <button
           className={`w-${width || 36} h-${height || 9} rounded-lg bg-${color || 'black'} font-medium hover:bg-${
             color !== 'white' ? 'slate-800' : 'stone-700'

@@ -1,5 +1,4 @@
 import { apiCall } from "./userApiCall";
-import userEndpoint from "../../Service/Endpoints/authEndpoints";
 import userRoutes from "../../Service/Endpoints/authEndpoints";
 import postRoutes from "../../Service/Endpoints/postEndpoints";
 import { toast } from "react-toastify";
@@ -200,15 +199,7 @@ export const unfollowUser = async ( userId: string,unFollowUserId:string) => {
         console.log(error)
     }
 }
-export const getConnections = async ( userId: string) => {
-    try {
-        console.log(' get connections')
-        // const res = await apiCall('post',userRoutes.userGlogin,{userId},false)
-        return {success:true}
-    } catch (error) {
-        console.log(error)
-    }
-}
+
 interface postDataI  {
     userId: string,
     imageUrl:string,

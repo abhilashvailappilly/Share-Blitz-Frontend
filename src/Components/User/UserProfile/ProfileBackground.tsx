@@ -1,10 +1,9 @@
-import { useDispatch, useSelector } from "react-redux"
+import {  useSelector } from "react-redux"
 import IconBxEdit from "../../icons/EditIcon"
 import EditProfileModal from "../Modal/EditProfileModal"
 import { useState,useEffect } from "react"
 import { RootState } from "../../../Store/store"
 import ProfileDataInterface from "../../../Types/User/userProfile"
-import { toast } from "react-toastify"
 import { getUser } from "../../../Api/user/authApiMethod"
 const ProfileBackground = () => {
   const [openEditProfile,setOpenEditProfile] = useState(false)
@@ -18,7 +17,6 @@ const ProfileBackground = () => {
 
   const user:ProfileDataInterface  = useSelector((state:RootState) => state.auth.userInfo)
   const myPosts:any[]  = useSelector((state:RootState) => state.post.myPosts)
-  console.log(user)
   const [image, setImage] = useState<string >(user.profileImageUrl );
   const [name,setName]=useState(user?.name);
   
@@ -91,7 +89,7 @@ const ProfileBackground = () => {
 
            
     </div>
-  </div>
+  </div> 
 </div>
 <EditProfileModal isOpen={openEditProfile} onClose={toggleEditProfileModal} />
 

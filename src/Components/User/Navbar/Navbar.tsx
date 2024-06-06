@@ -1,6 +1,11 @@
+import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
+import ProfileDataInterface from "../../../Types/User/userProfile"
+import { RootState } from "../../../Store/store"
+
 
 const Navbar = () => {
+    const userData:ProfileDataInterface = useSelector((state:RootState) => state.auth.userInfo)
 
     const navigate = useNavigate()
 
@@ -115,7 +120,7 @@ const Navbar = () => {
         Messages
             <div className="tooltip-arrow" data-popper-arrow></div>
         </div>
-        <button onClick={()=>handleNavigation('/profile')} data-tooltip-target="tooltip-profile" type="button" className="inline-flex flex-col items-center justify-center px-5 rounded-e-full hover:cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 group">
+        <button onClick={()=>handleNavigation(`/profile/${userData._id}`)} data-tooltip-target="tooltip-profile" type="button" className="inline-flex flex-col items-center justify-center px-5 rounded-e-full hover:cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 group">
         <svg
             viewBox="0 0 24 24"
             fill="currentColor"
