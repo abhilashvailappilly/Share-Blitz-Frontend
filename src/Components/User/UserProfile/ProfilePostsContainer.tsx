@@ -8,7 +8,6 @@ import { getUser } from "../../../Api/user/authApiMethod"
 import { checkIsFriend, getConnections } from "../../../Api/user/userApiMethod"
 import { PostI } from "../../../Types/User/Post"
 import { GetUserPosts } from "../../../Api/user/postApiMethod"
-import { toast } from "react-toastify"
 import PrivateAccount from "../AnotherUserProfile/PrivateText"
 import LockIcon from "../../icons/LockIcon"
 
@@ -68,11 +67,6 @@ const ProfilePostsContainer = () => {
     }
   },[profileUserData]) 
 
-  useEffect(()=>{
-    toast.info(userPosts.length)
-  },[userPosts]) 
-
-
   const checkFriend = async ()=>{
     if(!profileUserData?._id){
       return 
@@ -86,7 +80,6 @@ const ProfilePostsContainer = () => {
     try {
       const res = await GetUserPosts(userId)
       if (res.success) { 
-        console.log('res--post',res)
         setUserPosts(res.userPosts) 
       } else {
         // toast.error(res.message)
@@ -119,7 +112,7 @@ const ProfilePostsContainer = () => {
    }
     </div>
     {active.myPosts && (
-        (isPrivate && isFriend) || !isPrivate ? (
+        (isPrivate && isFriend) || !isPrivate || isAdmin? (
           <ProfilePosts posts={userPosts} />
         ) : (
           <PrivateAccount>
@@ -131,7 +124,7 @@ const ProfilePostsContainer = () => {
       active.savedPosts && isAdmin &&     <ProfilePosts posts = {userPosts}/>
     }
     {active.taggedPosts && (
-        (isPrivate && isFriend) || !isPrivate ? (
+        (isPrivate && isFriend) || !isPrivate || isAdmin? (
           <ProfilePosts posts={[]} />
         ) : (
           <PrivateAccount>

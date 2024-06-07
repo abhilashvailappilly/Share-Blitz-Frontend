@@ -45,6 +45,7 @@ const LoginComponent: React.FC = () => {
           } else {
             dispatch(setAdminCredentials(login?.data?.user))
             localStorage.setItem('adminInfo', JSON.stringify(login?.data?.user))
+            localStorage.setItem('adminAuthToken', JSON.stringify(login?.data?.token))
             navigate('/admin/home')
           }
           toast.success('Login successfull !')

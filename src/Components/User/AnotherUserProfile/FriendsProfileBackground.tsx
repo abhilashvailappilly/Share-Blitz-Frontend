@@ -20,7 +20,7 @@ const FriendsProfileBackground = () => {
   const [isAdmin ,setIsAdmin] = useState<Boolean>(false)
   const [isFriend,setIsFriend] = useState<Boolean>(false)
   const [isRequested,setIsRequested] = useState<Boolean>(false)
-  const [bio, setBio] = useState(""); // Assuming bio is part of the user data
+  const [bio, setBio] = useState(""); 
 //   const [profileUserData,setProfileUserData] = useState<{_id:String,name:string,userName:string,profileImageUrl:string,bio:string}>() 
 const [profileUserData, setProfileUserData] = useState<{
     _id: string;

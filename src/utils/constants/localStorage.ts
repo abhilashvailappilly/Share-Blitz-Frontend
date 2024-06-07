@@ -1,4 +1,5 @@
 export const userAuthToken = 'userAuthToken';
+export const adminAuthToken = 'adminAuthToken';
 export const userAuth = 'userAuth';
 export const refreshToken = 'refreshToken';
 

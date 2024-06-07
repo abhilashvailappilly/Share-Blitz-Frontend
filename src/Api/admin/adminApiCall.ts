@@ -1,5 +1,5 @@
 import axios, { AxiosResponse, AxiosError } from "axios";
-import {api as API} from '../../Service/axios'
+import {ApiAdmin} from '../../Service/axios'
 import { toast } from "react-toastify";
 import { BASE_URL } from "../../utils/constants/url";
 
@@ -13,16 +13,16 @@ console.log('api call ',url , data)
             if(header)
                 response = await axios.post(`${BASE_URL}${url}`,data,{headers:header})
             else
-            response = await API.post(url, data);
+            response = await ApiAdmin.post(url, data);
      
         } else if (method === "get") {
-            response = await API.get(url, { params: data });
+            response = await ApiAdmin.get(url, { params: data });
         } else if (method === "patch") {
-            response = await API.patch(url, data);
+            response = await ApiAdmin.patch(url, data);
         } else if (method === "delete") {
-            response = await API.delete(url, { data });
+            response = await ApiAdmin.delete(url, { data });
         } else if (method === "put") {
-            response = await API.put(url, data);
+            response = await ApiAdmin.put(url, data);
         } else {
             throw new Error("Unsupported HTTP method");
         }
@@ -37,10 +37,9 @@ console.log('api call',response.data)
                 
                     //    toast.error(axiosError)
              }
-
-     
         } else {
             throw error;
         }
     }
 };
+ 

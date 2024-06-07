@@ -35,7 +35,8 @@ const [croppedImg, setCroppedImg] = useState<string | null>(null);
 const [profileImage,setProfileImageDisplay] = useState<string | "" > ("")
 const [loading, setLoading] = useState<boolean>(false); // state to set the loading
 const dispatch = useDispatch()
- 
+// const [formError ,setFormError] = useState({name:"",userName:"",mobile:"",image:"",dob:""})
+const [formError, setFormError] = useState<{ [key: string]: string }>({});
 
 const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const img = e.target.files?.[0];
@@ -53,12 +54,14 @@ const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   };
 
 
-  let profileImg = "https://e0.pxfuel.com/wallpapers/105/23/desktop-wallpaper-compromised-character-gaming-profile-dark-cute-cartoon-boys-thumbnail.jpg"
   useEffect(() => {
     setProfileImageDisplay(croppedImg || profileImageUrl); // replace from state
   }, [croppedImg]);
 
   const onSubmit = async () => {
+    if(!validateForm()){
+      return
+    }
     console.log('Form data');
     console.log(croppedImg)
     try {
@@ -75,7 +78,7 @@ const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
           return;
         }
       }
-  
+      
 
     if (saveImageUrl) {
       const userData = {
@@ -92,9 +95,6 @@ const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         toast.success('Profile updated successfully')
         console.log( editProfile)
         dispatch(setCredentials(editProfile.userData))
-          // dispatch(updateUserPosts(createNewPost.postData));
-          // dispatch(setLoadedPosts([createNewPost.postData]));
-          // dispatch(addCreatedPost(createNewPost.postData));
           clearComponent();
           onClose()
        } else {
@@ -110,7 +110,47 @@ const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       console.log(error)
     }
   };
+  const validateForm = (): boolean => {
+    const errors: { [key: string]: string } = {};
 
+    // Validate Name
+    if (!name) {
+      errors.name = "Name cannot be empty";
+    } else if (!/^[a-zA-Z\s]*$/.test(name)) {
+      errors.name = "Name cannot contain special characters except spaces";
+    }
+
+    // Validate Username
+    if (!userName) {
+      errors.userName = "Username cannot be empty";
+    }
+
+    // Validate Mobile
+    if (!mobile) {
+      errors.mobile = "Mobile number cannot be empty";
+    } else if (!/^\d{10}$/.test(mobile)) {
+      errors.mobile = "Mobile number must be 10 digits";
+    }
+
+    // Validate DOB
+    const today = new Date();
+    const dobDate = new Date(dob);
+    const age = today.getFullYear() - dobDate.getFullYear();
+    const monthDiff = today.getMonth() - dobDate.getMonth();
+    const dayDiff = today.getDate() - dobDate.getDate();
+
+    if (!dob) {
+      errors.dob = "Date of Birth cannot be empty";
+    } else if (dobDate > today) {
+      errors.dob = "Date of Birth cannot be in the future";
+    } else if (age < 18 || (age === 18 && (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)))) {
+      errors.dob = "You must be at least 18 years old";
+    }
+
+    setFormError(errors);
+
+    return Object.keys(errors).length === 0;
+  };
   const clearComponent = () => {
     setError("");
     setSelectedImg(false);
@@ -200,6 +240,7 @@ const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                   />
                 </div>
               </div>
+              <span className='text-red-800 font-4'>{formError.image }</span>
             </div>
 
             <div className="col-span-2">
@@ -216,7 +257,7 @@ const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                 value={name}
                 onChange={(e)=>setName(e.target.value)}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-              />
+              /><span className='text-red-800 font-4'>{formError.name}</span>
             </div>
 
             <div className="col-span-2">
@@ -234,6 +275,7 @@ const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                 onChange={(e)=>setUserName(e.target.value)}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
               />
+              <span className='text-red-800 font-4'>{formError.userName}</span>
             </div>
 
             <div className="col-span-2">
@@ -251,6 +293,7 @@ const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                 onChange={(e)=>setMobile(e.target.value)}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
               />
+              <span className='text-red-800 font-4'>{formError.mobile}</span>
             </div>
 
             <div className="col-span-2 sm:col-span-1">
@@ -268,6 +311,7 @@ const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                 onChange={(e)=>setDob(e.target.value)}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
               />
+              <span className='text-red-800 font-4'>{formError.dob}</span>
             </div>
 
             <div className="col-span-2">

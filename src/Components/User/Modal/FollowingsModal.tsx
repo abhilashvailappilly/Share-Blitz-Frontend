@@ -1,9 +1,11 @@
 import  { FC, useEffect, useState } from "react";
 import UserList from "../Card/Userlist"; 
 import { getUser } from "../../../Api/user/authApiMethod";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ProfileDataInterface from "../../../Types/User/userProfile";
 import { toast } from "react-toastify";
+import { RootState } from "../../../Store/store";
+import { useSelector } from "react-redux";
 
 type Users = {
   _id: string;
@@ -20,16 +22,22 @@ interface FollowingsModalProps {
 
 // Define the functional component
 export const FollowingsModal: FC<FollowingsModalProps> = ({title, setOpen, followings,isPrivate,isFriend }) => {
+  const userInfo:ProfileDataInterface  = useSelector((state:RootState) => state.auth.userInfo)
   const [usersData, setUsersData] = useState<ProfileDataInterface[]>([]);
+  const [isAdmin ,setIsAdmin] = useState<Boolean>(false)
+  const { userId } = useParams<{ userId: string }>();
   const handleClose = () => setOpen(false);
   const navigate = useNavigate()
 
- 
+ useEffect(()=>{
+  userId === userInfo?._id ?setIsAdmin(true) : setIsAdmin(false)
+ },[])
   useEffect(() => {
     const fetchData = async () => {
       try {
         const users = await Promise.all(followings.map(async (following) => {
           const data = await getUser(following.userId);
+         
           return data.user;
         }));
 
@@ -86,10 +94,11 @@ export const FollowingsModal: FC<FollowingsModalProps> = ({title, setOpen, follo
               </button>
             </div>
             <div className="p-4 md:p-5 space-y-4">
-            {isPrivate && !isFriend 
-              ? <h2>User is Private</h2> 
-              : <UserList seeProfile={seeProfile} users={usersData} onFollow={(id) => console.log(`Follow user with id: ${id}`)} />
-            }
+            {(isPrivate && !isFriend) && !isAdmin
+                ? <h2>User is Private </h2>
+                
+                : <UserList seeProfile={seeProfile} users={usersData} onFollow={(id) => console.log(`Follow user with id: ${id}`)} />
+              }
 
             </div>
             <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
