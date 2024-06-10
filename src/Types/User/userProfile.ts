@@ -20,6 +20,6 @@ export default interface ProfileDataInterface {
     followings:IFollow[] |[]
     followers:IFollow[] |[]
 }
-interface IFollow {
+export interface IFollow {
     id: string;
   }

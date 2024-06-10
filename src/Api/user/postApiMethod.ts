@@ -1,6 +1,7 @@
 import { apiCall } from "./userApiCall";
 
 import postRoutes from "../../Service/Endpoints/postEndpoints";
+import { toast } from "react-toastify";
 
 
 interface BookingDetails {
@@ -29,7 +30,8 @@ interface UserLoginData {
 // method    Get
 export const getAllPosts = async (limit:number) => {
     try {
-        console.log(" get all post :",limit) 
+        console.log(" get all post :",limit)
+        toast.info(limit) 
     const res = await apiCall('get',postRoutes.getAllPosts,{limit},false)
       console.log('get all posts ',res.data)
         return res.data
@@ -39,18 +41,19 @@ export const getAllPosts = async (limit:number) => {
     }
 }
 
-// @dec      get posts
+// @dec      get posts by postId
 // method    Get
-// export const getPostById = async (postId:string) => {
-//     try {
-//         const res = await apiCall('get',postRoutes.getAllPosts,{postId},false)
-//         console.log('get  post by id ',res.data)
-//         return res.data
-//     } catch (error:any) {
-//         console.log('Error:', error);
+export const getPostById = async (postId:string) => {
+    try {
+        console.log("get post by i")
+        const res = await apiCall('get',postRoutes.getPostById,{postId},false)
+        console.log('get  post by id ',res.data)
+        return res.data
+    } catch (error:any) {
+        console.log('Error:', error);
 
-//     }
-// }
+    }
+}
 
  // @dec   save post
 // method    POST
@@ -58,6 +61,19 @@ export const savePost = async ( userId: string,postId:string) => {
     try {
         console.log(' saved post')
         const res = await apiCall('patch',postRoutes.savePost,{userId,postId},false)
+        return res.data
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+ // @dec   Edit post
+// method    Patch
+export const EditUserPost = async ( userData: any) => {
+    try {
+        console.log(' Edit  post',userData)
+        const res = await apiCall('patch',postRoutes.editUserPost,{...userData},false)
         return res.data
 
     } catch (error) {
@@ -134,3 +150,30 @@ export const GetUserPosts = async (userId : string) => {
 
     }
 }
+
+//  @dec      get a reply of comments
+// method    Get
+export const GetCommentsReply = async (postId:string,commentId : string) => {
+    try {
+    const res = await apiCall('get',postRoutes.getCommentReplys,{postId,commentId},false)
+      console.log('get  reply comment ',res.data)
+        return res.data
+    } catch (error:any) {
+        console.log('Error:', error);
+
+    }
+}
+
+//  @dec      get a reply of comments
+// method    Get
+export const ReplyToComment = async (postId:string,commentId : string , reply:string) => {
+    try {
+    const res = await apiCall('post',postRoutes.replyToComment,{postId,commentId,reply},false)
+      console.log('get  reply comment ',res.data)
+        return res.data
+    } catch (error:any) {
+        console.log('Error:', error);
+
+    }
+}
+

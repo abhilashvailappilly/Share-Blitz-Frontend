@@ -38,19 +38,7 @@ interface ProfilePostsProps {
           </div>
         )}
 
-        {/* { 
-            posts && posts.length > 0 &&  posts?.map((post: Posts, index: number) => {
-
-        return (
-        <div key={index} className="h-72 w-full bg-red-400 border-3 border-white border overflow-hidden">
-            <img src={post.imageUrl}
-            className="object-cover h-full w-full"
-            alt="" />
-        </div>
-            )
-       })
-        } */}
-      
+       
        
   
     </div>

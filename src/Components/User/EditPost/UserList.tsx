@@ -3,6 +3,7 @@
 import  { FC } from 'react';
 import styled from 'styled-components';
 import ProfileDataInterface from '../../../Types/User/userProfile';
+import { toast } from 'react-toastify';
 
 const UserListWrapper = styled.div`
   display: flex;
@@ -44,22 +45,21 @@ const FollowButton = styled.button`
 type UserListProps = {
   users: ProfileDataInterface[];
   onFollow?: (id: string) => void;
-  seeProfile? : (userId :string,name:string)=> void;
+  doFunction? : (user :ProfileDataInterface)=> void;
 };
 
 
-const UserList: FC<UserListProps> = ({ users, onFollow,seeProfile }) => {
-const seeProfileClick =(userId:string,userName :  string)=>{
-  if(!seeProfile)
-    return
-  seeProfile(userId,userName)
+const UserList: FC<UserListProps> = ({ users, onFollow,doFunction }) => {
+const seeProfileClick =(user:ProfileDataInterface)=>{
+  if(doFunction)
+  doFunction(user)
 }
   return (
     <UserListWrapper className='w-full flex justify-center'>
       {users.map((user,index) => (
-        <UserCard key={index} className='mt-3 bg-white items-center py-2 px-4 rounded-lg hover:bg-gray-100 hover:scale-110'>
+        <UserCard key={index} onClick={()=>seeProfileClick(user)} className='mt-3 bg-white items-center py-2 px-4 rounded-lg hover:bg-gray-100 hover:cursor-pointer hover:scale-110'>
           <ProfilePic src={user.profileImageUrl}  alt={`${user.name}'s profile`} />
-          <div className='ml-3 flex flex-col' onClick={()=>seeProfileClick(user._id,user.name)} >
+          <div className='ml-3 flex flex-col'  >
             <span className='font-bold'>{user.name}</span>
             <span>{user.userName}</span>
           </div>

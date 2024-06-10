@@ -15,7 +15,7 @@ const LoginComponent: React.FC = () => {
   const dispatch =useDispatch()
   const [loginDetails,setLoginDetails] = useState({
     email:"",
-    password:""
+    password:"12345678"
   })
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
     // e.preventDefault()
@@ -30,8 +30,6 @@ const LoginComponent: React.FC = () => {
     if(validateEmail(loginDetails.email) && validatePassword(loginDetails.password)){
         const login = await LoginUser(loginDetails);
         if(login.data.success){
-      console.log('ser----------------------------------------------------------- follw')
-
           if(login.data.user.role === 'USER'){
             dispatch(setCredentials(login?.data?.user))
             localStorage.setItem('userInfo', JSON.stringify(login?.data?.user))

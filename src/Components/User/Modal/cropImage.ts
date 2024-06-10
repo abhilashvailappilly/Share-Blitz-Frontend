@@ -26,7 +26,7 @@ const createImage = (url: string) =>
       pixelCrop.width,
       pixelCrop.height
     );
-  
+   
     return new Promise<string>((resolve, reject) => {
       canvas.toBlob((file) => {
         if (file) {

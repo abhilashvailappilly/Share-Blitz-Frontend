@@ -79,6 +79,7 @@ const ProfilePostsContainer = () => {
   const getUserPostss = async () => {
     try {
       const res = await GetUserPosts(userId)
+      console.log("get userPosts",res)
       if (res.success) { 
         setUserPosts(res.userPosts) 
       } else {

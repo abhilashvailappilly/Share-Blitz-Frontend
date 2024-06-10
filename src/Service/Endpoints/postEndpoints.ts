@@ -10,6 +10,10 @@ const postRoutes={
     reportPost :'/post/reportPost',
     blockPost:'/post/blockPost',
     getUserPosts:'/post/getUserPosts',
+    getPostById:'/post/getPostById',
+    editUserPost:'/post/editPost',
+    getCommentReplys:'/post/getCommentReplys',
+    replyToComment:'/post/replyToComment',
 
 }
 

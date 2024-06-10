@@ -46,8 +46,14 @@ const postSlice = createSlice({
       state.myPosts = [];
     },
     setLoadedPosts: (state, action: PayloadAction<Post[]>) => {
-      state.loadedPosts = [...action.payload,...state.loadedPosts ];
+      state.loadedPosts = [...state.loadedPosts,...action.payload ];
      
+    },
+    // setLoadedPosts: (state, action) => {
+    //   state.loadedPosts = action.payload;
+    // },
+    appendLoadedPosts: (state, action) => {
+      state.loadedPosts = [...state.loadedPosts, ...action.payload];
     },
     addCreatedPost: (state, action: PayloadAction<Post>) => {
       state.myPosts = [action.payload, ...state.myPosts];
@@ -62,6 +68,7 @@ const postSlice = createSlice({
 
 export const {
   setUserPosts,
+  appendLoadedPosts,
   removeUserPosts,
   updateUserPosts,
   addNewPost,

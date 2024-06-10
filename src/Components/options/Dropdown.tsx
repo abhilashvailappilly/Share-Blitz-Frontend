@@ -10,16 +10,13 @@ import { PostI } from '../../Types/User/Post';
 import AlertDialog from '../User/Modal/Alert';
 import ReportReasonModal from '../User/Modal/ReportReason';
 import { BlockPost, ReportPost } from '../../Api/user/postApiMethod';
+import { User } from '../../Types/User/Comment';
 
 
 
 
 
-interface User {
-  _id: string;
-  username: string;
-  // Add more properties as needed
-}
+
 
 interface DropdownProps {
   post: PostI;
@@ -165,7 +162,7 @@ const Dropdown: React.FC<DropdownProps> = ({ post, postUser, openEditor, setSele
               <li>
                 <button
                   className="block px-4 py-2 w-full text-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  onClick={() => navigate(`/profile/${postUser?.username}`)}
+                  onClick={() => navigate(`/profile/${postUser?.userName}`)}
                 >
                   View profile
                 </button>

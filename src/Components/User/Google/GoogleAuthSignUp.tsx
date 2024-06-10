@@ -68,7 +68,7 @@ const SignUpForm: React.FC = () => {
             
                             if(saveUserData?.data?.success){
                               dispatch(setCredentials(saveUserData?.data?.user))
-                              navigate('/home')
+                              navigate('/login')
                                 console.log(saveUserData.data.data)
                                 toast.success('Registered successfully !!')
                             } else {
