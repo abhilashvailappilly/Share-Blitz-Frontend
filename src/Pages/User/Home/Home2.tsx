@@ -12,7 +12,7 @@ import Sidebar2 from '../../../Components/User/Sidebar/Sidebar2';
 import { PostI } from '../../../Types/User/Post';
 import { HashLoader } from 'react-spinners';
 import InfiniteScroll from 'react-infinite-scroll-component';
-
+ 
 interface SuggestionI {
   name: string;
   profilePic: string;
@@ -44,13 +44,7 @@ const Home2: React.FC = () => {
   const [showPosts, setShowPosts] = useState<boolean>(true);
   const [showCreatePost, setShowCreatePost] = useState<boolean>(false);
 
-  const toggleShowPost = () => {
-    setShowPosts(!showPosts);
-  };
-
-  const toggleShowCreatePost = () => {
-    setShowCreatePost(!showCreatePost);
-  };
+ 
 
   useEffect(() => {
     if (page === 1) fetchPosts(1);
