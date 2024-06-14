@@ -17,16 +17,22 @@ import { PostI } from "../../../Types/User/Post";
 import { Like } from "../../../Types/User/Post";
 import PostLikesModal from "../Modal/PostLikesModal";
 import { Comment, User } from "../../../Types/User/Comment";
+import useNavigateToProfile from "../../../hooks/UseNavigateToProfile";
 
 interface SinglePostProps {
-  // likeModal: React.RefObject<HTMLDivElement>;
-  // setLikePost: React.Dispatch<React.SetStateAction<PostI | undefined>>;
   setSelectedPost: React.Dispatch<React.SetStateAction<PostI | undefined>>;
   postData: PostI;
   openEditor: React.RefObject<HTMLDivElement>;
 }
 
 const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, openEditor }) => {
+
+  console.log("postdatta >......>",postData)
+  const cardClasses = "max-w-md mx-auto bg-white dark:bg-zinc-800 shadow-md rounded-lg overflow-hidden";
+  const textClasses = "text-zinc-900 dark:text-zinc-100";
+  const buttonClasses = "text-zinc-500 dark:text-zinc-300";
+  const iconClasses = "w-6 h-6";
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.auth.userInfo);
@@ -38,6 +44,8 @@ const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, open
   const [followers, setFollowers] = useState<string[]>([]);
   const [postUser, setPostUser] = useState<User | null>(null);
   const [error, setError] = useState<string>("");
+  const [hover, setHover] = useState<boolean>(false);
+  const navigateToProfile = useNavigateToProfile()
 
   const addLike = useCallback((newLike: Like[] | []) => {
     setPost((prevState) => ({
@@ -48,6 +56,10 @@ const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, open
       },
     }));
   }, []);
+
+  const viewProfile =(userId : string)=>{
+    navigateToProfile(userId)
+  }
 
   const setComment = useCallback((newComment: Comment[] | []) => {
     setPost((prevState) => ({
@@ -134,8 +146,21 @@ const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, open
               <Dropdown post={post} postUser={postUser} openEditor={openEditor} setSelectedPost={setSelectedPost} />
             </div>
           </div>
-          <div className="max-w-full h-3/4 min-w-full mt-2  custom-box p-1 rounded-lg overflow-hidden">
+          <div 
+            className="max-w-full h-3/4 min-w-full mt-2 custom-box p-1 rounded-lg overflow-hidden"
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+          >
             <img src={post.imageUrl} alt="" className="object-cover w-full h-3/4" draggable={false} />
+            {hover && post.taggedUsers.length > 0 && (
+              <div className="absolute inset-20  h-3/4  bg-black bg-opacity-5 flex flex-wrap justify-center items-center">
+                {post.taggedUsers.map(user => (
+                  <div key={user.userId.toString()} onClick={()=>viewProfile(user.userId as string)} className="text-white m-1  bg-black bg-opacity-70 p-1 rounded-lg">
+                    {user.userName}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
           <div className="m-2">
             <CaptionWithShowMore text={post.caption} styleProps={"text-black text-base "} />

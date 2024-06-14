@@ -10,10 +10,6 @@ import { toast } from "react-toastify"
 const FriendsProfileContainer = () => {
   const userInfo:ProfileDataInterface  = useSelector((state:RootState) => state.auth.userInfo)
 
-  // const [myPosts,setMyPosts] = useState([])
-
-
-
   const dispatch = useDispatch()
   useEffect(()=>{
     try {

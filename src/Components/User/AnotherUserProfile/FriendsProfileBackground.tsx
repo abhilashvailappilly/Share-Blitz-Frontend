@@ -10,6 +10,7 @@ import { getUserPosts } from "../../../Api/user/profileApiMethod"
 import { useParams } from "react-router-dom"
 import { FollowUser, UnFollowUser, checkIsFriend } from "../../../Api/user/userApiMethod"
 import Connections from "./Connections"
+import IconTickCircle from "../../icons/BlueTick"
 
 const FriendsProfileBackground = () => {
   const userInfo:ProfileDataInterface = useSelector((state:RootState) => state.auth.userInfo)
@@ -18,6 +19,7 @@ const FriendsProfileBackground = () => {
   const myPosts: any[] = useSelector((state: RootState) => state.post.myPosts)
   const [image, setImage] = useState<string>(userInfo.profileImageUrl);
   const [isAdmin ,setIsAdmin] = useState<Boolean>(false)
+  const [isVerified ,setIsVerified] = useState<Boolean>(false)
   const [isFriend,setIsFriend] = useState<Boolean>(false)
   const [isRequested,setIsRequested] = useState<Boolean>(false)
   const [bio, setBio] = useState(""); 
@@ -50,6 +52,7 @@ const [profileUserData, setProfileUserData] = useState<{
         if (res) {
             setProfileUserData(res.user)
            res?.user?._id === userInfo._id ? setIsAdmin(true) : setIsAdmin(false)
+           setIsVerified( res?.user?.isVerified)
           setImage(res.user.profileImageUrl);
           setBio(res.user.bio);
         }
@@ -123,8 +126,8 @@ const [profileUserData, setProfileUserData] = useState<{
             }
           </div>
           <div className={`w-full ${!isAdmin ? "mt-20" :""}`}>
-            <div className="w-full flex mt-5 font-bold justify-center">
-              <h3>{profileUserData?.name}</h3>
+            <div className="w-full flex gap-1 mt-5 font-bold justify-center items-center">
+              <h3>{profileUserData?.name}</h3>{isVerified && <IconTickCircle/>}
             </div>
             <div className="w-full flex mt-2 font-medium justify-center text-gray-600 px-4 text-center">
                 <span className="font-bold">{profileUserData?.bio}</span>

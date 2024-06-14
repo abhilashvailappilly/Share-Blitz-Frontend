@@ -15,7 +15,7 @@ const LoginComponent: React.FC = () => {
   const dispatch =useDispatch()
   const [loginDetails,setLoginDetails] = useState({
     email:"",
-    password:"12345678"
+    password:""
   })
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
     // e.preventDefault()

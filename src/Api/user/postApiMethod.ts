@@ -28,12 +28,9 @@ interface UserLoginData {
 
 // @dec      get posts
 // method    Get
-export const getAllPosts = async (limit:number) => {
+export const getAllPosts = async (page:number,limit:number) => {
     try {
-        console.log(" get all post :",limit)
-        toast.info(limit) 
-    const res = await apiCall('get',postRoutes.getAllPosts,{limit},false)
-      console.log('get all posts ',res.data)
+         const res = await apiCall('get',postRoutes.getAllPosts,{page,limit},false)
         return res.data
     } catch (error:any) {
         console.log('Error:', error);
@@ -57,14 +54,39 @@ export const getPostById = async (postId:string) => {
 
  // @dec   save post
 // method    POST
-export const savePost = async ( userId: string,postId:string) => {
+export const savePost = async (postId:string) => {
     try {
         console.log(' saved post')
-        const res = await apiCall('patch',postRoutes.savePost,{userId,postId},false)
+        const res = await apiCall('post',postRoutes.savePost,{postId},false)
         return res.data
 
     } catch (error) {
         console.log(error)
+    }
+}
+
+ // @dec   un save post
+// method    POST
+export const unSavePost = async (postId:string) => {
+    try {
+        console.log(' saved post')
+        const res = await apiCall('delete',postRoutes.unSavePost,{postId},false)
+        return res.data
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+// @dec      get posts
+// method    Get
+export const getSavedPosts = async () => {
+    try {
+         const res = await apiCall('get',postRoutes.getSavedPosts,{},false)
+        return res.data
+    } catch (error:any) {
+        console.log('Error:', error);
+
     }
 }
 
@@ -115,6 +137,18 @@ export const commentOnPost = async ( postId:string,comment:string) => {
     }
 }
 
+
+ // @dec  Delete comment 
+// method    Delete
+export const DeleteComment = async ( postId:string,commentId:string) => {
+    try {
+        const res = await apiCall('delete',postRoutes.deleteComment,{postId,commentId},false)
+        return res.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
  // @dec    Report post
 // method    POST
 export const ReportPost = async ( postId:string,reason:string) => {
@@ -151,6 +185,21 @@ export const GetUserPosts = async (userId : string) => {
     }
 }
 
+
+// @dec      get tagged posts
+// method    Get
+export const GetTaggedPosts = async (userId : string) => {
+    try {
+        console.log(" get tagged posts :",userId) 
+    const res = await apiCall('get',postRoutes.getTaggedPosts,{userId},false)
+      console.log('get  user posts ',res.data)
+        return res.data
+    } catch (error:any) {
+        console.log('Error:', error);
+
+    }
+}
+
 //  @dec      get a reply of comments
 // method    Get
 export const GetCommentsReply = async (postId:string,commentId : string) => {
@@ -174,6 +223,17 @@ export const ReplyToComment = async (postId:string,commentId : string , reply:st
     } catch (error:any) {
         console.log('Error:', error);
 
+    }
+}
+
+
+export const DeletePost = async (postId:string ) => {
+    try {
+        const res = await apiCall('delete',postRoutes.deletePost ,{postId},false)
+        return res.data
+
+    } catch (error) {
+        console.log(error)
     }
 }
 

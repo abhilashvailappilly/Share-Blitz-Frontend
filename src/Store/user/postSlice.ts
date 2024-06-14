@@ -6,6 +6,7 @@ interface Post {
 
 interface PostState {
   myPosts: Post[];
+  savedPosts: [];
   newPost: Post | null;
   loadedPosts: Post[];
   lastPost: boolean;
@@ -13,6 +14,7 @@ interface PostState {
 
 const initialState: PostState = {
   myPosts: [],
+  savedPosts: [],
   newPost: null,
   loadedPosts: [],
   lastPost: false,
@@ -49,6 +51,10 @@ const postSlice = createSlice({
       state.loadedPosts = [...state.loadedPosts,...action.payload ];
      
     },
+    setSavedPosts: (state, action: PayloadAction<[]>) => {
+      state.savedPosts = [...action.payload ];
+     
+    },
     // setLoadedPosts: (state, action) => {
     //   state.loadedPosts = action.payload;
     // },
@@ -72,6 +78,7 @@ export const {
   removeUserPosts,
   updateUserPosts,
   addNewPost,
+  setSavedPosts,
   removeNewPost,
   setLoadedPosts,
   addCreatedPost,

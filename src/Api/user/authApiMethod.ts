@@ -160,19 +160,19 @@ export const unlikePost = async ( postId:string) => {
     }
 }
 
- // @dec   remove saved post
-// method    POST
-export const removeSavedPost = async ( userId: string,postId:string) => {
-    try {
-        console.log('remove saved post')
-        // const res = await apiCall('post',userRoutes.userGlogin,{userId,postId},false)
-        // return res
-        return {success:true}
+//  // @dec   remove saved post
+// // method    POST
+// export const removeSavedPost = async ( userId: string,postId:string) => {
+//     try {
+//         console.log('remove saved post')
+//         // const res = await apiCall('post',userRoutes.userGlogin,{userId,postId},false)
+//         // return res
+//         return {success:true}
 
-    } catch (error) {
-        console.log(error)
-    }
-}
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
 
 
  

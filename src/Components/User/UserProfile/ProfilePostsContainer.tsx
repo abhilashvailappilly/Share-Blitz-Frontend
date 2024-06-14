@@ -7,9 +7,11 @@ import { useParams } from "react-router-dom"
 import { getUser } from "../../../Api/user/authApiMethod"
 import { checkIsFriend, getConnections } from "../../../Api/user/userApiMethod"
 import { PostI } from "../../../Types/User/Post"
-import { GetUserPosts } from "../../../Api/user/postApiMethod"
+import { GetTaggedPosts, GetUserPosts, getPostById, getSavedPosts } from "../../../Api/user/postApiMethod"
 import PrivateAccount from "../AnotherUserProfile/PrivateText"
 import LockIcon from "../../icons/LockIcon"
+import { savedPost } from "../../../Types/User/SavedPosts"
+import { toast } from "react-toastify"
 
 type ActiveKeys = 'myPosts' | 'taggedPosts' | 'savedPosts';
 
@@ -23,6 +25,8 @@ const ProfilePostsContainer = () => {
   const [isFriend,setIsFriend] = useState<Boolean>(false)
   const [isPrivate,setIsPrivate] = useState<Boolean>(false)
   const [userPosts, setUserPosts] = useState<PostI[]>([]);
+  const [taggedPosts, setTaggedPosts] = useState<PostI[]>([]);
+  const [savedPosts,setSavedPosts] = useState<PostI[]>([])
   const [active, setActive] = useState<{ [key in ActiveKeys]: boolean }>({
     myPosts: true,
     taggedPosts: false,
@@ -57,8 +61,28 @@ const ProfilePostsContainer = () => {
    
     fetchUserData()
     getUserPostss()
-   
+    fetchSavedPosts()
+    getTaggedPosts()
   }, [userId]);
+
+  const fetchSavedPosts =async()=>{
+    try {
+      const response = await getSavedPosts()
+      if(!response.success)
+        return
+      const savedPostsData: PostI[] = [];
+      for (const savedPost of response.savedPosts.savedPosts) {
+        const postResponse = await getPostById(savedPost.postId.toString());
+        if (postResponse.success && postResponse.postData) {
+          savedPostsData.push(postResponse.postData);
+        }
+      }
+
+      setSavedPosts(savedPostsData);
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   useEffect(()=>{
     if (profileUserData) {
@@ -79,11 +103,22 @@ const ProfilePostsContainer = () => {
   const getUserPostss = async () => {
     try {
       const res = await GetUserPosts(userId)
-      console.log("get userPosts",res)
       if (res.success) { 
         setUserPosts(res.userPosts) 
       } else {
-        // toast.error(res.message)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const getTaggedPosts = async () => {
+    try {
+      const res = await GetTaggedPosts(userId)
+      if (res.success) { 
+        setTaggedPosts(res.postData) 
+      } else {
+        toast.error(res.message)
       }
     } catch (error) {
       console.log(error)
@@ -114,7 +149,7 @@ const ProfilePostsContainer = () => {
     </div>
     {active.myPosts && (
         (isPrivate && isFriend) || !isPrivate || isAdmin? (
-          <ProfilePosts posts={userPosts} />
+          <ProfilePosts field={"myPost"} posts={userPosts} />
         ) : (
           <PrivateAccount>
             <LockIcon/>
@@ -122,11 +157,11 @@ const ProfilePostsContainer = () => {
         )
       )}
      {
-      active.savedPosts && isAdmin &&     <ProfilePosts posts = {userPosts}/>
+      active.savedPosts && isAdmin &&     <ProfilePosts field={"savedPost"} posts = {savedPosts}/>
     }
     {active.taggedPosts && (
         (isPrivate && isFriend) || !isPrivate || isAdmin? (
-          <ProfilePosts posts={[]} />
+          <ProfilePosts field={"taggedPost"} posts={taggedPosts} />
         ) : (
           <PrivateAccount>
             <LockIcon/>

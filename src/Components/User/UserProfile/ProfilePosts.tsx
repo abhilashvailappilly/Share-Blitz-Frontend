@@ -4,21 +4,13 @@ import MyPost from "./MyPost"
 import { PostI } from "../../../Types/User/Post"
 import { toast } from "react-toastify"
 
-interface Posts {
-    _id:string
-    userId:string
-    caption:string
-    imageUrl:string
-    hashtags:string[]
-    like : number
-}
+
 interface ProfilePostsProps {
     posts:PostI[];
+    field:string
   }
   
-  const ProfilePosts: React.FC<ProfilePostsProps> = ({ posts }) => {
-    console.log(posts)
-    // toast.info(posts.length)
+  const ProfilePosts: React.FC<ProfilePostsProps> = ({field, posts }) => {
     const [show ,setShow] = useState(false)
     return (
       <div className=" w-full h-96 bg-blue-700 overflow-auto ">

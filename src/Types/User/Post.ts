@@ -5,12 +5,18 @@ export interface PostI {
     caption: string;
     imageUrl: string;
     tag: string[];
+    taggedUsers:[taggedUsers]
     likesDetails: LikesDetails;
     commentsDetails:CommentDetails
   }
   export interface Like {
     userId: string;
     likedAt: string; // Include a timestamp or any additional fields if needed
+  }
+
+  export interface taggedUsers {
+    userName: string
+    userId: string
   }
   
   export interface LikesDetails {

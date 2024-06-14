@@ -7,7 +7,9 @@ const adminRoutes={
     getUserById : '/admin/getUserById',
     getPostById : '/admin/getPostById',
     changeActionStatus:"/admin/changeActionStatus",
-    deletePost :'/admin/deletePost'
+    deletePost :'/admin/deletePost',
+    getVerificationData:'/admin/getVerificationData',
+    approveVerificationRequest:'/admin/approveVerificationRequest'
 }
 
 export default adminRoutes;

@@ -1,47 +1,52 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { removeSavedPost } from '../../Api/user/authApiMethod';
-import { savePost } from '../../Api/user/postApiMethod';
+import { savePost, unSavePost } from '../../Api/user/postApiMethod';
+import { PostI } from '../../Types/User/Post';
+import { toast } from 'react-toastify';
+import useAppSelector from '../../hooks/UseSelector';
+import { savedPost } from '../../Types/User/SavedPosts';
 
 interface SaveIcnProps {
   size: { width: number; height: number };
-  post: any; // Adjust type as per your post structure
-  setPost?: React.Dispatch<React.SetStateAction<any>>; // Adjust type as per your post structure
+  post: PostI; 
+  setPost?: React.Dispatch<React.SetStateAction<any>>;
   setError: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const SaveIcn: React.FC<SaveIcnProps> = ({ size, post, setPost, setError }) => {
-  const user = useSelector((state: any) => state?.user?.userData); // Adjust type as per your Redux store
+  const user = useSelector((state: any) => state?.user?.userData); 
+  const savedPosts = useAppSelector((state) => state.post.savedPosts);
 
   const [isSaved, setIsSaved] = useState<boolean>(false);
 
   useEffect(() => {
-    if (user?.savedPosts?.includes(post?._id)) {
+    if (savedPosts?.some((savedPost :savedPost) => savedPost.postId === post._id)) {
       setIsSaved(true);
     } else {
       setIsSaved(false);
     }
   }, [user, post]);
 
-  const saveOrUnsave = () => {
-    if (isSaved) {
-      removeSavedPost(user?._id, post?._id)
-        .then((response :any) => {
-          setIsSaved(false);
-          if (setPost) setPost(response?.post);
-        })
-        .catch((error:Error) => {
-          setError("Something went wrong, Try after some time.");
-        });
-    } else {
-      savePost(user?._id, post?._id)
-        .then((response : any) => {
-          setIsSaved(true);
-          if (setPost) setPost(response?.post);
-        })
-        .catch((error : any) => {
-          setError("Unable to save post.");
-        });
+  const saveOrUnsave = async() => {
+    try {
+      if (isSaved) {
+        const response = await unSavePost(post?._id)
+        if(!response.success){
+        return  toast.error(response?.message)
+        } 
+      setIsSaved(false);
+      toast.success("Un saved successfuly")
+
+      } else {
+        const response = await savePost(post?._id)
+        if(!response.success){
+        return  toast.error(response?.message)
+        } 
+      setIsSaved(true);
+      toast.success("Post saved successfuly")
+      }
+    } catch (error) {
+      console.log(error)
     }
   };
 

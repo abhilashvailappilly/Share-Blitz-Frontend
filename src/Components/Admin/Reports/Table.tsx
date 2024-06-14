@@ -31,7 +31,7 @@ function TableData({ report, updatedUsers,setLoading }: Props) {
         fetchPostData()
     },[])
     const fetchUserData = async()=>{
-        // setLoading?.(true)
+        setLoading?.(true)
         const response = await getUserById(report.userId)
         if(response.success){
             setUserData(response.user)

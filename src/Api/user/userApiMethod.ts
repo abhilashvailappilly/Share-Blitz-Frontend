@@ -82,3 +82,54 @@ export const SearchUser = async ( searchInput : string) => {
         console.log(error)
     }
 }
+
+// @dec      Change privacy staus of account ( Public | Private )
+// method    Patch
+export const ChangePrivacy = async () => {
+    try {
+       
+    const res = await apiCall('patch',userRoutes.changePrivacy,{},false)
+    return res.data
+    } catch (error:any) {
+        console.log('Error:', error);
+
+    }
+}
+
+// @dec      Submit verification
+// method    Post
+export const SubmitVerification = async (idUrl : string) => {
+    try {
+       
+    const res = await apiCall('post',userRoutes.submitVerification,{idUrl},false)
+    return res.data
+    } catch (error:any) {
+        console.log('Error:', error);
+
+    }
+}
+
+// @dec      Check if the user is applied for verification 
+// method    get
+export const IsRequestedVerification = async () => {
+    try {   
+        const res = await apiCall('get',userRoutes.isRequestedVerification,{},false)
+        return res.data
+    } catch (error:any) {
+        console.log('Error:', error);
+
+    }
+}
+
+// @dec      Check if the user is applied for verification 
+// method    get
+export const SubmitPaymentDetails = async (paymentId:string,plan:string) => {
+    try {   
+        const res = await apiCall('patch',userRoutes.submitPaymentDetails,{paymentId,plan},false)
+        return res.data
+    } catch (error:any) {
+        console.log('Error:', error);
+
+    }
+}
+

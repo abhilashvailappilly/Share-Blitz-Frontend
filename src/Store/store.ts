@@ -12,6 +12,7 @@ export interface RootState {
     }
     post:{
         myPosts:[]
+        savedPosts:[]
         newPost:[]
         loadedPosts:[]
         lastPost:{}

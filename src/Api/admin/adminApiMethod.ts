@@ -104,3 +104,35 @@ export const DeletePostById = async ( postId:string) => {
         console.log(error)
     }
 }
+
+export const GetVerificationData = async ( ) => {
+    try {
+        const res = await apiCall('get',adminRoutes.getVerificationData ,{},false)
+        return res.data
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+export const ApproveVerificationRequest = async (id:string ) => {
+    try {
+        const res = await apiCall('patch',adminRoutes.approveVerificationRequest ,{id},false)
+        return res.data
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+export const DeletePost = async (postId:string ) => {
+    try {
+        const res = await apiCall('delete',adminRoutes.deletePost ,{postId},false)
+        return res.data
+
+    } catch (error) {
+        console.log(error)
+    }
+}

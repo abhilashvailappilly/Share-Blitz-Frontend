@@ -59,8 +59,8 @@ const Dropdown: React.FC<DropdownProps> = ({ post, postUser, openEditor, setSele
   }, [error]);
 
   useEffect(() => {
-    if (currentUser?._id === postUser?._id) {
-      setOwner(false); // change to true
+    if ( currentUser?._id === postUser?._id) {
+      setOwner(false); 
     }
   }, [currentUser, postUser]);
 
@@ -154,7 +154,7 @@ const Dropdown: React.FC<DropdownProps> = ({ post, postUser, openEditor, setSele
         </div>
 
         {isOpen && (
-          <div className="origin-top-right absolute right-0 mt-2 w-28 mr-2 rounded-lg shadow-lg bg-white divide-y divide-gray-100 dark:bg-gray-700">
+          <div className="  origin-top-right absolute right-0 mt-2 w-28 mr-2 rounded-lg shadow-lg bg-white divide-y divide-gray-100 dark:bg-gray-700">
             <ul
               className="py-2 text-sm text-gray-700 dark:text-gray-200"
               aria-labelledby="dropdownDefaultButton"
@@ -162,7 +162,7 @@ const Dropdown: React.FC<DropdownProps> = ({ post, postUser, openEditor, setSele
               <li>
                 <button
                   className="block px-4 py-2 w-full text-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  onClick={() => navigate(`/profile/${postUser?.userName}`)}
+                  onClick={() => navigate(`/profile/${postUser?._id}`)}
                 >
                   View profile
                 </button>
@@ -202,13 +202,13 @@ const Dropdown: React.FC<DropdownProps> = ({ post, postUser, openEditor, setSele
                     </button>
                   </li>
 
-                  <li>
+                  {/* <li>
                     <button 
                      onClick={handleBlock}
                     className="block px-4 py-2 w-full text-left text-red-500 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                       Block
                     </button>
-                  </li>
+                  </li> */}
                 </>
               )}
             </ul>

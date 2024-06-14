@@ -7,6 +7,8 @@ import { Glogin } from '../../../Api/user/authApiMethod';
 import { setCredentials } from '../../../Store/user/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { getConnections } from '../../../Api/user/userApiMethod';
+import { setFollowerss, setFollowings } from '../../../Store/user/connectionSlice';
 
 // interface decodeJwt {
 //     name:string,
@@ -34,15 +36,22 @@ const GoogleLogin: React.FC = () => {
             //  console.log('res;;;',responseData?.data)
             if(responseData?.data){
                 let userData = responseData?.data
-                const saveUserData = await Glogin(userData?.email as string)
+                const login = await Glogin(userData?.email as string)
             
-                            if(saveUserData?.data?.success){
-                              dispatch(setCredentials(saveUserData?.data?.user))
+                            if(login?.data?.success){
+                              dispatch(setCredentials(login?.data?.user))
+                              localStorage.setItem('userInfo', JSON.stringify(login?.data?.user))
+                              localStorage.setItem('userAuthToken', JSON.stringify(login?.data?.token))
+                              const connections = await getConnections(login?.data?.user._id) 
+                              dispatch(setFollowerss(connections.connections?.followings))
+                              dispatch(setFollowings(connections.connections?.followings))
+                              sessionStorage.setItem('followings', connections.connections?.followings);
+                              sessionStorage.setItem('followers',connections.connections?.followers );
                               navigate('/home')
-                                console.log(saveUserData.data.data)
+                                // console.log(saveUserData.data.data)
                                 toast.success('Registered successfully !!')
                             } else {
-                                toast.error(saveUserData?.data?.message)
+                                toast.error(login?.data?.message)
                             }
              }
         }

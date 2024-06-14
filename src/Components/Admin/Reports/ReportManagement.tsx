@@ -52,17 +52,21 @@ function ReportManagement() {
     }
 
     const updateUserStatus = (userId: string, newStatus: boolean) => {
+        
         const updatedUsers = reports.map(user => {
-            if (user._id === userId) {
-                return { ...user, actionTaken: newStatus };
+            if (user.postId === userId) {
+                return { ...user, actionTaken: true };
             }
             return user;
         });
-        console.log(updatedUsers)
+        console.log(userId,newStatus)
         console.table(updatedUsers)
+        toast.info("updated status")
         setReports(updatedUsers);
     };
-
+useEffect(()=>{
+    console.log('reports.......',reports)
+})
     // Pagination logic
     const indexOfLastUser = currentPage * usersPerPage;
     const indexOfFirstUser = indexOfLastUser - usersPerPage;

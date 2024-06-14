@@ -100,9 +100,9 @@ const handleClickComment = async()=>{
     <>
        <div className={`${
                 show ? 'block' : 'hidden'}
-       fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm  z-50`}>
-      <div className="bg-white rounded-lg    h-[500px]  w-11/12 md:w-3/4 lg:w-1/2">
-        <div className="flex w-full h-1/6 justify-between items-center  border-black">
+          fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm  z-50`}>
+          <div className="bg-white rounded-lg h-[700px] md:h-[500px] w-11/12 md:w-3/4 lg:w-1/2">
+          <div className="flex w-full h-1/6 justify-between items-center  border-black">
 
           <div className="flex space-x-3">
           <div className="w-8 h-8 rounded-full overflow-hidden bg-green-300">
@@ -115,31 +115,29 @@ const handleClickComment = async()=>{
             X
           </button>
         </div> 
-        <div className=" w-full h-5/6 md:flex  flex bg-white ">
-          <div className=" w-full md:w-1/2 sm:flex sm:w-1/2  h-full bg-white">
-            <img src={postData.imageUrl} alt="" className="w-full h-full object-cover" />
-          </div>
-          <div className="w-full md:w-1/2  sm:w-1/2 h-full bg-white ">
-          <div className="w-full h-full bg-white overflow-y-scroll no-scrollbar p-4">
-            {
-              postData?.commentsDetails?.comments?.length > 0 ? (
-                 postData?.commentsDetails?.comments.map((comment :Comment, index) => {
-                  return (
-                   <SingleComment postId={postData._id} isLoading ={isLoading} comment={comment} index={index}/>
-                  );
-                }) 
-              ) :(
-                <div  className="w-full border-black border-2 rounded-xl flex items-start mb-4 p-3">
-                 <h1>No comments available</h1>
-                </div>
-              ) 
-            }
-  
-           </div>
-          
-          </div>
-         
+        <div className="w-full h-5/6 md:flex-row flex flex-col bg-white overflow-hidden">
+      <div className="w-full md:w-1/2 h-full flex flex-col">
+        <div className="flex-grow md:h-full bg-white">
+          <img src={postData.imageUrl} alt="" className="w-full h-full object-cover" />
         </div>
+      </div>
+      <div className="w-full md:w-1/2 h-full bg-white">
+        <div className="w-full h-full bg-white overflow-y-auto p-0">
+          {postData?.commentsDetails?.comments?.length > 0 ? (
+            postData?.commentsDetails?.comments.map((comment: Comment, index) => {
+              return (
+                <SingleComment key={index} setPostData={setPostData} postId={postData._id} isLoading={isLoading} comment={comment} index={index} />
+              );
+            })
+          ) : (
+            <div className="w-full border-black border-2 rounded-xl flex items-start mb-4 p-3">
+              <h1>No comments available</h1>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+
         <div className="bg-white w-full flex h-[50px] rounded-lg mt-1">
           <div className="flex justify-around items-center p-1 w-1/2">
                 <span className="text-red-500">{postData.likesDetails.likes.length}</span>
@@ -155,8 +153,9 @@ const handleClickComment = async()=>{
           
             <FaPaperPlane size={25} onClick={handleClickComment} className="text-black hover:cursor-pointer hover:scale-110 transiction-transform my-auto mx-auto" />
         
-           </div>
         </div>
+        </div>
+
       </div>
     </div>
     </>

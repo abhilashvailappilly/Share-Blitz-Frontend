@@ -11,7 +11,8 @@ import Otp from "../../Pages/User/Otp/Otp"
 import NotFound from "../../Pages/Common/Notfound";
 import SearchPage from "../../Pages/User/Search/SearchPage";
 import EditPostPage from "../../Pages/User/EditPost/EditPost";
-import Explore from "../../Pages/User/Explore/Explore";
+import Explore from "../../Pages/User/Explore/ExplorePage";
+import SettingsPage from "../../Pages/User/Settings/SettingsPage";
 export const UserRoute = () =>{
     console.log("User route worked")
     return (
@@ -30,6 +31,7 @@ export const UserRoute = () =>{
                 <Route path='profile/:userId' element={<Profile />} />
                 <Route path='post/editPost/:postId' element={<EditPostPage />} />
                 <Route path='explore' element={<Explore />} />
+                <Route path='settings/*' element={<SettingsPage />} />
                 <Route path='*' element={<NotFound />} />
 
                

@@ -19,7 +19,7 @@ const DeletePostModal: React.FC<Props> = ({ isOpen, closeModal, updatedUsers,isA
         updatedUsers(userId,!isActionTaken);
         const deletePost = await DeletePostById(postId)
         const changeActionStaus = await ChangeActionStatus(reportId)
-        if(deletePost.success) {
+        if(changeActionStaus.success) {
             toast.success(`Post Deleted Successfully `)
             // toast.success(`Post ${deletePost.updatedStatus ? 'Deleted ' : ''} Successfully `)
         } else {

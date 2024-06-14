@@ -14,11 +14,16 @@ import classNames from 'classnames';
 import IconHome from '../../icons/HomeIcon';
 import IconMessage from '../../icons/MessageIco';
 import { DarkThemeToggle } from 'flowbite-react';
+import IconExplore from '../../icons/ExploreIcon';
+import IconNotifications from '../../icons/NotificationIcon';
+import IconSettings from '../../icons/Settings';
+import { useDarkMode } from '../../../Context/DarkModeContext';
 
 const Sidebar2 = () => {
-  const userData: ProfileDataInterface = useSelector((state: RootState) => state.auth.userInfo);
+  const{isDarkMode,toggleDarkMode} = useDarkMode()
+   const userData: ProfileDataInterface = useSelector((state: RootState) => state.auth.userInfo);
   const dispatch = useDispatch();
-  const [darkMode, setDarkMode] = useState(false);
+  // const [isDarkMode, setisDarkMode] = useState(false);
 
   const handleClickLogout = () => {
     dispatch(logout());
@@ -26,64 +31,84 @@ const Sidebar2 = () => {
     dispatch(clearUserPosts());
   };
 
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
+
 
   return (
-    <div className={classNames("w-1/6 h-screen sticky top-0 border-black rounded md:block lg:block hidden border-r-2 mr-3", { 'bg-white': !darkMode, 'bg-gray-900 text-white': darkMode })}>
-      <div className="h-full px-3 py-4 overflow-y-auto">
+    <div className={classNames("w-1/6  h-screen sticky top-0 border-black rounded md:block lg:block hidden border-r-2 mr-3", { 'bg-white': !isDarkMode, 'bg-gray-900 text-white': isDarkMode } )}>
+      <div className="h-full px-3 py-4 overflow-y-auto  no-scrollbar">
         <a href="/home" className="flex items-center ps-2.5 mb-5">
           <img src="/logo.png" className="h-6 me-3 sm:h-7" alt="Share Blitz Logo" />
           <span className="self-center text-xl font-semibold lg:block hidden flex-1 ms-3 whitespace-nowrap">Share Blitz</span>
         </a>
 
         <ul className="space-y-2 font-medium">
-          <li>
+          {/* <li>
             <button  className=" flex items-center p-2 justify-center rounded-lg hover:bg-green-900 hover:text-white font-bold">
             
               <DarkThemeToggle onClick={toggleDarkMode}/>
             </button>
-          </li>
-          <li><hr className={classNames("h-[1.5px]", { 'bg-black': !darkMode, 'bg-white': darkMode })} /></li>
+          </li> */}
+          <li><hr className={classNames("h-[1.5px]", { 'bg-black': !isDarkMode, 'bg-white': isDarkMode })} /></li>
           <li>
             <Link to="/home" className="flex items-center p-2 justify-center rounded-lg hover:bg-green-900 hover:text-white font-bold">
-              <IconHome className={classNames("flex-shrink-0 w-5 h-5 transition duration-75", { 'dark:text-gray-400': darkMode, 'group-hover:text-gray-900 dark:group-hover:text-white': darkMode })} />
+              <IconHome className={classNames("flex-shrink-0 w-5 h-5 transition duration-75", { 'dark:text-gray-400': isDarkMode, 'group-hover:text-gray-900 dark:group-hover:text-white': isDarkMode })} />
               <span className="lg:block hidden flex-1 ms-3 whitespace-nowrap">Home</span>
             </Link>
           </li>
-          <li><hr className={classNames("h-[1.5px]", { 'bg-black': !darkMode, 'bg-white': darkMode })} /></li>
+          <li><hr className={classNames("h-[1.5px]", { 'bg-black': !isDarkMode, 'bg-white': isDarkMode })} /></li>
           <li>
             <Link to="/search" className="flex justify-center items-center p-2 rounded-lg hover:bg-green-900 hover:text-white font-bold">
               <SearchIcon />
               <span className="lg:block hidden flex-1 ms-3 whitespace-nowrap">Search</span>
             </Link>
           </li>
-          <li><hr className={classNames("h-[1.5px]", { 'bg-black': !darkMode, 'bg-white': darkMode })} /></li>
+          <li><hr className={classNames("h-[1.5px]", { 'bg-black': !isDarkMode, 'bg-white': isDarkMode })} /></li>
           <li>
             <Link to="/createPost" className="flex justify-center items-center p-2 rounded-lg hover:bg-green-900 hover:text-white font-bold">
               <IconPicture />
               <span className="lg:block hidden flex-1 ms-3 whitespace-nowrap">Create Post</span>
             </Link>
           </li>
-          <li><hr className={classNames("h-[1.5px]", { 'bg-black': !darkMode, 'bg-white': darkMode })} /></li>
+          <li><hr className={classNames("h-[1.5px]", { 'bg-black ': !isDarkMode, 'bg-white': isDarkMode })} /></li>
+          <li><hr className={classNames("h-[1.5px] ", { 'bg-black text-black': !isDarkMode, 'bg-white': isDarkMode })} /></li>
           <li>
-            <Link to={`/profile/${userData._id}`} className="flex justify-center items-center p-2 rounded-lg hover:bg-green-900 hover:text-white font-bold">
-              <IconUsers />
-              <span className="lg:block hidden flex-1 ms-3 whitespace-nowrap">Profile</span>
+            <Link to="/explore" className="flex justify-center items-center p-2 rounded-lg hover:bg-green-900 hover:text-white font-bold">
+              <IconExplore />
+              <span className="lg:block hidden flex-1 ms-3 whitespace-nowrap">Explore</span>
             </Link>
           </li>
-          <li>
-          <hr className={classNames("h-[1.5px]", { 'bg-black': !darkMode, 'bg-white': darkMode, 'hidden': darkMode })} />
-         </li>
-          <li><hr className={classNames("h-[1.5px]", { 'bg-black': !darkMode, 'bg-white': darkMode })} /></li>
+          <li><hr className={classNames("h-[1.5px]", { 'bg-black': !isDarkMode, 'bg-white': isDarkMode })} /></li>
           <li>
             <Link to="/message" className="flex justify-center items-center p-2 rounded-lg hover:bg-green-900 hover:text-white font-bold">
               <IconMessage />
               <span className="lg:block hidden flex-1 ms-3 whitespace-nowrap">Message</span>
             </Link>
           </li>
-          <li><hr className={classNames("h-[1.5px]", { 'bg-black': !darkMode, 'bg-white': darkMode })} /></li>
+          <li><hr className={classNames("h-[1.5px]", { 'bg-black': !isDarkMode, 'bg-white': isDarkMode })} /></li>
+          <li>
+            <Link to="/notifications" className="flex justify-center items-center p-2 rounded-lg hover:bg-green-900 hover:text-white font-bold">
+              <IconNotifications />
+              <span className="lg:block hidden flex-1 ms-3 whitespace-nowrap">Notifications</span>
+            </Link>
+          </li>
+          <li><hr className={classNames("h-[1.5px]", { 'bg-black': !isDarkMode, 'bg-white': isDarkMode })} /></li>
+          <li>
+            <Link to={`/profile/${userData._id}`} className="flex justify-center items-center p-2 rounded-lg hover:bg-green-900 hover:text-white font-bold">
+              <IconUsers />
+              <span className="lg:block hidden flex-1 ms-3 whitespace-nowrap">Profile</span>
+            </Link>
+          </li>
+          <li><hr className={classNames("h-[1.5px]", { 'bg-black': !isDarkMode, 'bg-white': isDarkMode })} /></li>
+          <li>
+            <Link to={`/settings`} className="flex justify-center items-center p-2 rounded-lg hover:bg-green-900 hover:text-white font-bold">
+              <IconSettings />
+              <span className="lg:block hidden flex-1 ms-3 whitespace-nowrap">Settings</span>
+            </Link>
+          </li>
+        
+        
+          
+          <li><hr className={classNames("h-[1.5px]", { 'bg-black': !isDarkMode, 'bg-white': isDarkMode })} /></li>
           <li>
             <Link to="/logout" onClick={handleClickLogout} className="flex justify-center items-center p-2 rounded-lg hover:bg-green-900 hover:text-white font-bold">
               <FaSignOutAlt className="icon" />

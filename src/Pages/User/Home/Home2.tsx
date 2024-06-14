@@ -4,8 +4,8 @@ import SuggestionContainer from '../../../Components/User/Container/SuggestionCo
 import Suggestion from '../../../Components/User/Profile/Suggestion';
 import Navbar from '../../../Components/User/Navbar/Navbar';
 import './Home.css';
-import { getAllPosts } from '../../../Api/user/postApiMethod';
-import { setLoadedPosts } from '../../../Store/user/postSlice';
+import { getAllPosts, getSavedPosts } from '../../../Api/user/postApiMethod';
+import { setLoadedPosts, setSavedPosts } from '../../../Store/user/postSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../Store/store';
 import Sidebar2 from '../../../Components/User/Sidebar/Sidebar2';
@@ -23,6 +23,7 @@ const Home2: React.FC = () => {
   const closeEditor = useRef<HTMLDivElement>(null);
   const [selectedPost, setSelectedPost] = useState<PostI | undefined>();
   const [loading, setLoading] = useState<boolean>(true);
+  const [pageLoading, setPageLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const dispatch = useDispatch();
   const suggestions: SuggestionI[] = [
@@ -39,7 +40,6 @@ const Home2: React.FC = () => {
   const [page, setPage] = useState<number>(1);
 
   const closeLikeModal = useRef<HTMLDivElement>(null);
-  // const [likePost, setLikePost] = useState<PostI | undefined>();
 
   const [showPosts, setShowPosts] = useState<boolean>(true);
   const [showCreatePost, setShowCreatePost] = useState<boolean>(false);
@@ -47,14 +47,18 @@ const Home2: React.FC = () => {
  
 
   useEffect(() => {
-    if (page === 1) fetchPosts(1);
+    setPageLoading(true)
+        if (page === 1) fetchPosts(1);
+    setPageLoading(false)
+    fetchSavedPosts()
   }, []);
 
+  
 
   const fetchPosts = async (page: number) => {
     try {
       setLoading(true);
-      const allPosts = await getAllPosts(page);
+      const allPosts = await getAllPosts(page,3);
       if (allPosts.success) {
         const newPosts = allPosts.postData;
         setLoadedPostsState((prevLoadedPosts) =>  prevLoadedPosts.concat(Array.from(newPosts)));
@@ -73,14 +77,35 @@ const Home2: React.FC = () => {
       setHasMore(false);
     }
   };
-
+  const fetchSavedPosts = async () => {
+    try {
+      const response = await getSavedPosts();
+      if (response.success) {
+        dispatch(setSavedPosts(response?.savedPosts.savedPosts));
+      } 
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
   const fetchMorePosts = async () => {
+  
     const newPage = page + 1;
     setPage(newPage);
     setTimeout(async () => {
       await fetchPosts(newPage);
     }, 3000);
   };
+
+  if( pageLoading) {
+   return ( 
+      
+      <div className="flex min:w-full justify-center items-center min-h-screen">
+                  {pageLoading && <HashLoader color="#36d7b7" />}
+       </div>
+                
+    )
+  }
 
   
   return (
@@ -94,33 +119,33 @@ const Home2: React.FC = () => {
             id="post-container"
             className="md:w-fit w-screen md:mr-auto bg-stone-300 md:bg-transparent bg-opacity-50 overflow-y-auto no-scrollbar"
           >
-              <InfiniteScroll
-        dataLength={loadedPosts.length}
-        next={fetchMorePosts}
-        hasMore={hasMore}
-        loader={
-          <div className="flex justify-center items-center py-4">
-            <HashLoader color="#36d7b7" />
-          </div>
-        }
-        endMessage={
-          <p className="text-center text-green-500 py-4">
-            <b>Yay! You have seen it all</b>
-          </p>
-        }
-      >
-        {loadedPosts?.map((post, index) => (
-                 
-                  <SinglePost
-                    // likeModal={likesModal}
-                    // setLikePost={setLikePost}
-                    setSelectedPost={setSelectedPost}
-                    key={index}
-                    postData={post}
-                    openEditor={openEditor}
-                  />
-                ))}
-              {/* </InfiniteScroll> */}
+          
+      <InfiniteScroll
+          dataLength={loadedPosts.length}
+          next={fetchMorePosts}
+          hasMore={hasMore}
+          loader={
+            <div className="flex justify-center items-center py-4">
+              <HashLoader color="#36d7b7" />
+            </div>
+          }
+          endMessage={
+            <p className="text-center text-green-500 py-4">
+              <b>Yay! You have seen it all</b>
+            </p>
+          }
+        >
+          {loadedPosts?.map((post, index) => (
+                  
+                    <SinglePost
+                      // likeModal={likesModal}
+                      // setLikePost={setLikePost}
+                      setSelectedPost={setSelectedPost}
+                      key={index}
+                      postData={post}
+                      openEditor={openEditor}
+                    />
+                  ))}
           
       </InfiniteScroll>
 
