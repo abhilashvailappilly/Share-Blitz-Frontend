@@ -15,7 +15,7 @@ const LoginComponent: React.FC = () => {
   const dispatch =useDispatch()
   const [loginDetails,setLoginDetails] = useState({
     email:"",
-    password:""
+    password:"12345678"
   })
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
     // e.preventDefault()
@@ -33,13 +33,15 @@ const LoginComponent: React.FC = () => {
           if(login.data.user.role === 'USER'){
             dispatch(setCredentials(login?.data?.user))
             localStorage.setItem('userInfo', JSON.stringify(login?.data?.user))
-            localStorage.setItem('userAuthToken', JSON.stringify(login?.data?.token))
+            // localStorage.setItem('userAuthToken', JSON.stringify(login?.data?.token))
+            localStorage.setItem('accessToken', JSON.stringify(login?.data?.accessToken))
+            localStorage.setItem('refreshToken', JSON.stringify(login?.data?.refreshToken))
             const connections = await getConnections(login?.data?.user._id) 
             dispatch(setFollowerss(connections.connections?.followings))
             dispatch(setFollowings(connections.connections?.followings))
             sessionStorage.setItem('followings', connections.connections?.followings);
             sessionStorage.setItem('followers',connections.connections?.followers );
-            navigate('/home')
+            // navigate('/home')
           } else {
             dispatch(setAdminCredentials(login?.data?.user))
             localStorage.setItem('adminInfo', JSON.stringify(login?.data?.user))
@@ -95,7 +97,7 @@ const LoginComponent: React.FC = () => {
               </div>
               <button type="submit" className="block w-full bg-indigo-600 mt-5 py-2 rounded-2xl hover:bg-indigo-700 hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2">Login</button>
               <div className="flex justify-between mt-4">
-                <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all">Forgot Password ?</span>
+              <Link to="/forgetPassword" className="text-sm ml-2 hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all">Forgot Password ?</Link>
             <Link to="/register"  className="text-sm ml-2 hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all"  >Don't have an account yet?</Link>
               </div>
               <GoogleLogin/>

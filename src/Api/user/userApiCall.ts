@@ -10,9 +10,13 @@ interface RegisterUserData {
     mobile: string;
     password: string;
 }
- 
+interface ErrorResponse {
+    message: string;
+    [key: string]: any;
+}
 export const clearUser = () => {
-        toast.error('clr usr')
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
     localStorage.removeItem('userInfo')
     localStorage.removeItem('userAuthToken')
     window.location.href="/login";
@@ -43,31 +47,41 @@ export const apiCall = async (method: string, url: string, data: any,header:any)
         console.log('api call response',response.data)
         return response;
     } catch (error) {
-        console.log( 'Api call error :',error)
+        console.log('API call error:', error);
+
         if (axios.isAxiosError(error)) {
-            const axiosError: AxiosError = error;
-            console.log('error',error)
-            if (axiosError.response?.status === 409) {
-                toast.error(error?.response?.data?.message)
-               
-             }
-             if(axiosError.response?.status === 403){
-                toast.error( error?.response?.data?.message)
-                localStorage.removeItem('userInfo')
-                localStorage.removeItem('userAuthToken')
-                clearUser()
-               
-             }
-             if(axiosError.response?.status === 401){
-
-                toast.error( error?.response?.data?.message)
-                clearUser()
-             }
-
-     
-      
+          const axiosError = error as AxiosError<ErrorResponse>;
+          if (axiosError.response) {
+            const { status, data } = axiosError.response;
+    
+            switch (status) {
+              case 400:
+                toast.error(data?.message || 'Unauthorized access');
+                break;
+              case 401:
+                toast.error(data?.message || 'Unauthorized access');
+                clearUser();
+                break;
+              case 403:
+                toast.error(data?.message || 'Forbidden access');
+                localStorage.removeItem('userInfo');
+                localStorage.removeItem('userAuthToken');
+                localStorage.removeItem('accessToken');
+                localStorage.removeItem('refreshToken');
+                clearUser();
+                break;
+              case 409:
+                toast.error(data?.message || 'Conflict error');
+                break;
+              default:
+                toast.error(data?.message || 'An error occurred');
+            }
+          } else {
+            toast.error('Network error or no response');
+          }
         } else {
-            throw error;
-        }
-    }
+          toast.error('An unexpected error occurred');
+          throw error; // Rethrow if it's not an Axios error
+         }
+    }   
 };

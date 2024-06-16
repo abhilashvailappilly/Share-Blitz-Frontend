@@ -2,6 +2,7 @@ import { apiCall } from "./userApiCall";
 import userRoutes from "../../Service/Endpoints/authEndpoints";
 import postRoutes from "../../Service/Endpoints/postEndpoints";
 import { toast } from "react-toastify";
+import { refreshToken } from "../../utils/constants/localStorage";
 
 
 
@@ -31,6 +32,55 @@ export const Register = async (userData :RegisterUserData) => {
 
         console.log("post register :",userData)
         return res
+    } catch (error:any) {
+        console.log('Error:', error);
+
+    }
+}
+
+// @dec       Send otp
+// method    GET
+export const SendOtp = async (email :string) => {
+    try {
+        const res = await apiCall('get',userRoutes.userSendOtp,{email},false)
+        console.log('reg res',res)
+        // const token  = res?.data?.token
+        // localStorage.setItem('userOtp',token)
+        // localStorage.setItem('userOtpEmail',userData.email)
+
+        console.log("send otp  :",res)
+        return res.data
+    } catch (error:any) {
+        console.log('Error:', error);
+
+    }
+}
+// @dec      VerifyForgettPasswordOtp
+// method    POST
+export const VerifyForgetPasswordOtp = async (otp :string) => {
+    try {
+        const token = localStorage.getItem('userOtp')
+        
+        const res = await apiCall('post',userRoutes.userVerifyOtpForgotPassword,{otp,token},false)
+
+        console.log("send otp  :",res)
+        return res.data
+    } catch (error:any) {
+        console.log('Error:', error);
+
+    }
+}
+
+// @dec      VerifyForgettPasswordOtp
+// method    POST
+export const ChangePassword = async (email:string,password :string) => {
+    try {
+    
+
+        const res = await apiCall('patch',userRoutes.userForgetPasswordChangePassword,{email,password},false)
+
+        console.log("send otp  :",res)
+        return res.data
     } catch (error:any) {
         console.log('Error:', error);
 
@@ -106,7 +156,7 @@ export const LoginUser = async (loginData :UserLoginData) => {
         // const token  = res?.data?.token
         // localStorage.setItem('userOtp',token)
         // console.log("post register :",userData)
-        return res
+        return res.data
     } catch (error:any) {
         console.log('Error:', error);
 
@@ -217,5 +267,20 @@ export const createPost = async ( postData:postDataI) => {
     }
 }
 
+
+// @dec     Login user
+// method    POST
+export const RefreshAccessToken = async () => {
+    try {
+        const token =JSON.parse(localStorage.getItem(refreshToken) as string)
+
+        const res = await apiCall('post',userRoutes.userRefreshAccessToken,{refreshToken:token},false)
+     
+        return res.data
+    } catch (error:any) {
+        console.log('Error:', error);
+
+    }
+}
 
 

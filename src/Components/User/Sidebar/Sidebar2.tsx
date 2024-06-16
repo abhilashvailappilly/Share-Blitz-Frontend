@@ -18,6 +18,7 @@ import IconExplore from '../../icons/ExploreIcon';
 import IconNotifications from '../../icons/NotificationIcon';
 import IconSettings from '../../icons/Settings';
 import { useDarkMode } from '../../../Context/DarkModeContext';
+import IconSearch from '../../icons/SearchIcon';
 
 const Sidebar2 = () => {
   const{isDarkMode,toggleDarkMode} = useDarkMode()
@@ -58,7 +59,7 @@ const Sidebar2 = () => {
           <li><hr className={classNames("h-[1.5px]", { 'bg-black': !isDarkMode, 'bg-white': isDarkMode })} /></li>
           <li>
             <Link to="/search" className="flex justify-center items-center p-2 rounded-lg hover:bg-green-900 hover:text-white font-bold">
-              <SearchIcon />
+              <IconSearch />
               <span className="lg:block hidden flex-1 ms-3 whitespace-nowrap">Search</span>
             </Link>
           </li>

@@ -13,6 +13,7 @@ import SearchPage from "../../Pages/User/Search/SearchPage";
 import EditPostPage from "../../Pages/User/EditPost/EditPost";
 import Explore from "../../Pages/User/Explore/ExplorePage";
 import SettingsPage from "../../Pages/User/Settings/SettingsPage";
+import Forgetpassword from "../../Pages/User/ForgetPassword/ForgetPassword";
 export const UserRoute = () =>{
     console.log("User route worked")
     return (
@@ -23,6 +24,7 @@ export const UserRoute = () =>{
                 <Route path="login" element={<Login/>}/>
                 <Route path="register" element={<SignupComponent/>}/>
                 <Route path='otp' element={<Otp/>} />
+                <Route path='forgetPassword' element={<Forgetpassword/>} />
             </Route>
             <Route path="" element={<UserLoggedIn />}>
                 <Route path="home" element={<Home/>}/>
