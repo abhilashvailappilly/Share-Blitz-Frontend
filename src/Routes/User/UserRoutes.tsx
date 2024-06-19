@@ -14,6 +14,7 @@ import EditPostPage from "../../Pages/User/EditPost/EditPost";
 import Explore from "../../Pages/User/Explore/ExplorePage";
 import SettingsPage from "../../Pages/User/Settings/SettingsPage";
 import Forgetpassword from "../../Pages/User/ForgetPassword/ForgetPassword";
+import MessagesPage from "@/Pages/User/Message/MessagesPage";
 export const UserRoute = () =>{
     console.log("User route worked")
     return (
@@ -33,6 +34,7 @@ export const UserRoute = () =>{
                 <Route path='profile/:userId' element={<Profile />} />
                 <Route path='post/editPost/:postId' element={<EditPostPage />} />
                 <Route path='explore' element={<Explore />} />
+                <Route path='message' element={<MessagesPage />} />
                 <Route path='settings/*' element={<SettingsPage />} />
                 <Route path='*' element={<NotFound />} />
 

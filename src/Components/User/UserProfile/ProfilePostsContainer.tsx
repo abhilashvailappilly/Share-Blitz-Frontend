@@ -157,7 +157,7 @@ const ProfilePostsContainer = () => {
         )
       )}
      {
-      active.savedPosts && isAdmin &&     <ProfilePosts field={"savedPost"} posts = {savedPosts}/>
+      active.savedPosts && isAdmin &&     <ProfilePosts field={"savedPosts"} posts = {savedPosts}/>
     }
     {active.taggedPosts && (
         (isPrivate && isFriend) || !isPrivate || isAdmin? (

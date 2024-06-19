@@ -20,7 +20,7 @@ interface ProfilePostsProps {
           posts.map((post: PostI, index: number) => {
             return (
                 <div key={index}>
-            <MyPost  post={post}/>
+            <MyPost field={field}  post={post}/>
               </div>
             );
           })

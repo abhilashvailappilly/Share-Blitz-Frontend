@@ -1,6 +1,9 @@
 import PostList from '../../../Components/Admin/Posts/Posts2'
 import Sidebar from '../../../Components/Admin/Sidebar/Sibebar';
 import Paggination from '../../../Components/Admin/Posts/Paggination';
+import { Table } from '@/Components/ui/table';
+import ShardComp from '@/Components/Admin/Posts/Shard';
+import PostContainer from '@/Components/Admin/Posts/PostContainer';
 
 const PostsManagement = () => {
   const userData = [
@@ -55,10 +58,8 @@ const PostsManagement = () => {
   return (
     <div className="flex">
         <Sidebar />
-        <div className="flex-1 overflow-x-hidden">
-        <PostList users={userData}/>
-        <Paggination/>
-
+        <div className="flex-1">
+       <PostContainer/>
         </div>
       </div>
    

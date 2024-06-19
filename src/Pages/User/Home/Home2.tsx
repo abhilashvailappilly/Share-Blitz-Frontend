@@ -12,11 +12,15 @@ import Sidebar2 from '../../../Components/User/Sidebar/Sidebar2';
 import { PostI } from '../../../Types/User/Post';
 import { HashLoader } from 'react-spinners';
 import InfiniteScroll from 'react-infinite-scroll-component';
- 
+import io, { Socket } from 'socket.io-client'
+import { userInfo } from 'os';
+import useAppSelector from '@/hooks/UseSelector';
+
 interface SuggestionI {
   name: string;
   profilePic: string;
 }
+
 
 const Home2: React.FC = () => {
   const openEditor = useRef<HTMLDivElement>(null);
@@ -25,7 +29,29 @@ const Home2: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [pageLoading, setPageLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(true);
+  const userInfo = useAppSelector(state => state.auth.userInfo);
+
   const dispatch = useDispatch();
+
+  // *** Socket connection *** ///
+  // const socket = useRef<Socket | null>(null);
+
+  // useEffect(()=>{
+  //   // const socketConnection = io(BACKENDURL,{
+  //   //   auth:{
+  //   //    token: localStorage.getItem('accessToken')
+  //   //   }
+  //   // })
+  //   socket.current = io(BACKENDURL);
+
+  //   socket.current?.emit('addUser', userInfo);
+
+  //   return ()=>{
+  //     // socket.disconnect()
+  //     socket.current?.disconnect()
+  //   }
+  // },[])
+ 
   const suggestions: SuggestionI[] = [
     { name: "test user", profilePic: "https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg" },
     { name: "test user", profilePic: "https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg" },

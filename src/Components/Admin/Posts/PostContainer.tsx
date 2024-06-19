@@ -1,89 +1,45 @@
-import  { useEffect, useState } from 'react';
-import { getAllReportedPosts, getAllUsers } from '../../../Api/admin/adminApiMethod';
-import TableData from './Table';
-import { useDispatch } from 'react-redux';
-import {HashLoader} from 'react-spinners'
-import { toast } from 'react-toastify';
-import { ReportsInterface } from '../../../Types/Admin/Reports';
+import { GetAllPosts } from "@/Api/admin/adminApiMethod"
+import { PostI } from "@/Types/User/Post";
+import { useEffect, useState } from "react"
+import { toast } from "react-toastify";
+import TableData from "./Table";
 
 
-interface User {
-    _id: string;
-    profileImageUrl: string;
-    userName: string;
-    email: string;
-    isBlocked: boolean;
-    name: string;
-    mobile: string;
-}
-
-function ReportManagement() {
-    const dispatch = useDispatch();
-
+const PostContainer = () => {
+    const [postData ,setPostData] = useState<PostI[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-    const [users, setUsers] = useState<User[]>([]);
-    const [reports, setReports] = useState<ReportsInterface[]>([]);
-    const [currentPage, setCurrentPage] = useState<number>(1);
-    const [usersPerPage] = useState<number>(10); 
-    const [total, setTotal] = useState<number>(0);
 
-    useEffect(() => {
-        fetchReportData()
-       
-    }, [dispatch, currentPage, usersPerPage]);
-
-    const fetchReportData = async ()=>{
+    useEffect(()=>{
+        fetchPostData()
+    },[])
+    const fetchPostData = async()=>{
         try {
-          const response = await getAllReportedPosts()
-          console.log('response report',response)
-          if(response.success){
-            setReports(response.reportedPosts)
-                setTotal(response.reportedPosts.length);
-                setLoading(false);
-          } else {
-            // toast.error(response.message)
-          } 
-
-                setLoading(false);
-
+        const response = await GetAllPosts()
+        if (response.success){
+            setPostData(response.posts)
+        }
+            
         } catch (error) {
             console.log(error)
         }
     }
-
     const updateUserStatus = (userId: string, newStatus: boolean) => {
-        
-        const updatedUsers = reports.map(user => {
-            if (user.postId === userId) {
-                return { ...user, actionTaken: true };
-            }
-            return user;
-        });
-        console.log(userId,newStatus)
-        console.table(updatedUsers)
-        toast.info("updated status")
-        setReports(updatedUsers);
+        toast.info("updated ")
+    //    const updatedUsers = reports.map(user => {
+    //         if (user.postId === userId) {
+    //             return { ...user, actionTaken: true };
+    //         }
+    //         return user;
+    //     });
+    //     console.log(userId,newStatus)
+    //     console.table(updatedUsers)
+    //     toast.info("update d status")
+    //     setReports(updatedUsers);
     };
-useEffect(()=>{
-    console.log('reports.......',reports)
-})
-    // Pagination logic
-    const indexOfLastUser = currentPage * usersPerPage;
-    const indexOfFirstUser = indexOfLastUser - usersPerPage;
-    const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
-
-    const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
-
-    if (loading) {
-        return (
-            <div className="flex justify-center items-center min-h-screen">
-              {loading && <HashLoader color="#36d7b7" />}
-            </div>
-          );
-    }
-
-    return (
-        <section className="container px-4 mx-auto flex flex-col justify-center items-center min-h-screen ">
+  return (
+    <div className="h-screen w-full bg-white flex flex-col items-center ">
+      <h1 className="  font-bold mt-4">Post Management</h1>
+      <section className="container px-4 mx-auto flex flex-col justify-center items-center min-h-screen ">
             <div className="flex items-center gap-x-3">
                 <h2 className="text-lg font-bold text-green-700 dark:text-white">Report MANAGEMENT</h2>
             </div>
@@ -108,15 +64,18 @@ useEffect(()=>{
                                         </th>
                                         <th scope="col" className="px-4 py-3.5 text-sm font-bold text-left rtl:text-right  dark:text-gray-400">
                                             <div className="flex items-center">
-                                                <span>Reason</span>
+                                                <span>Likes</span>
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-4 h-4"></svg>
                                             </div>
                                         </th>
                                         <th scope="col" className="px-4  py-3.5 text-sm font-bold text-left rtl:text-right  dark:text-gray-400">
                                             <div className="flex items-center">
-                                                <span>Action taken</span>
+                                                <span>Comments</span>
                                             </div>
                                         </th>
+                                        <th scope="col" className="px-4 py-3.5 text-sm font-bold text-left rtl:text-right  dark:text-gray-400"> Reports</th>
+                                        <th scope="col" className="px-4 py-3.5 text-sm font-bold text-left rtl:text-right  dark:text-gray-400">View Reports</th>
+                                        <th scope="col" className="px-4 py-3.5 text-sm font-bold text-left rtl:text-right  dark:text-gray-400">Reports</th>
                                         <th scope="col" className="px-4 py-3.5 text-sm font-bold text-left rtl:text-right  dark:text-gray-400">Action</th>
 
                                         {/* <th scope="col" className="relative py-3.5  px-4">
@@ -126,8 +85,8 @@ useEffect(()=>{
                                 </thead>
                                 {/* <tbody className="bg-dark divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900 border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"> */}
                                 <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                    {reports.map((reports, index) => (
-                                        <TableData key={index} report={reports} updatedUsers={updateUserStatus} setLoading={setLoading} />
+                                    {postData.map((posts: any, index: any) => (
+                                        <TableData key={index} posts={posts} updatedUsers={updateUserStatus} setLoading={setLoading} />
                                     ))}
                                 </tbody>
                             </table>
@@ -135,7 +94,7 @@ useEffect(()=>{
                     </div>
                 </div>
             </div>
-            <div className="flex mt-5">
+            {/* <div className="flex mt-5">
                 <button
                     className={`flex items-center px-4 py-2 mx-1 text-gray-500 bg-white rounded-md cursor-pointer dark:bg-gray-800 dark:text-gray-600 ${currentPage === 1 ? 'cursor-not-allowed' : 'cursor-pointer'}`}
                     onClick={() => setCurrentPage(currentPage - 1)}
@@ -161,9 +120,10 @@ useEffect(()=>{
                 >
                     Next
                 </button>
-            </div>
+            </div> */}
         </section>
-    );
+    </div>
+  )
 }
 
-export default ReportManagement;
+export default PostContainer

@@ -16,7 +16,7 @@ const VerificationTable: React.FC<VerificationTableProps> = ({ verifications, on
       <table className="min-w-full bg-white border-gray-300 shadow-sm rounded-xl my-4">
         <thead className="bg-green-500 border-b border-gray-300">
           <tr>
-            <th className="px-6 py-3 text-left  text-xs font-medium text-gray-600 uppercase tracking-wider">User ID</th>
+            <th className="px-6 py-3 text-left  text-xs font-medium text-gray-600 uppercase tracking-wider">User Name</th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Verification Status</th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Plan Active</th>
             {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Payment Plan</th> */}

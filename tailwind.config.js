@@ -1,16 +1,11 @@
 /** @type {import('tailwindcss').Config} */
-const withMT = require("@material-tailwind/react/utils/withMT");
- 
-module.exports = withMT({
-
+module.exports = {
   darkMode: ["class"],
   content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
-    "node_modules/flowbite-react/**/*.{ts,tsx}",
-      // 'node_modules/flowbite-react/lib/esm/**/*.js'
   ],
   prefix: "",
   theme: {
@@ -19,7 +14,6 @@ module.exports = withMT({
       padding: "2rem",
       screens: {
         "2xl": "1400px",
-        "mobile":"500px"
       },
     },
     extend: {
@@ -79,8 +73,5 @@ module.exports = withMT({
       },
     },
   },
-  plugins: [
-    require("tailwindcss-animate"),
-    require('flowbite/plugin') 
-  ],
-})
+  plugins: [require("tailwindcss-animate")],
+}

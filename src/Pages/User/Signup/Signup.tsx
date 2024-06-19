@@ -93,8 +93,8 @@ const SignupComponent: React.FC = () => {
         </div>
         {/* Right section */}
         <div className="flex w-full lg:w-1/2 justify-center items-center bg-white space-y-8">
-          <div className="w-full px-8 md:px-32 lg:px-24">
-            <form className="bg-white rounded-md shadow-2xl p-5" onSubmit={handleSubmit}>
+          <div className="w-full px-8 md:px-32 lg:px-24 bg-white rounded-md shadow-2xl ">
+            <form className="p-5" onSubmit={handleSubmit}>
               <h1 className="text-gray-800 font-bold text-2xl mb-1">Create a new account</h1>
               <p className="text-sm font-normal text-gray-600 mb-8">Welcome Back</p>
               <div className="flex items-center border-2 mb-1 py-2 px-3 rounded-2xl">
@@ -174,12 +174,11 @@ const SignupComponent: React.FC = () => {
                 ) : null}
              
               <button type="submit"  className="block w-full bg-indigo-600 mt-5 py-2 rounded-2xl hover:bg-indigo-700 hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2" >Register</button>
-              <div className="flex justify-between mt-4">
-                <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all">Forgot Password ?</span>
+              <div className="flex  mt-4 justify-center">
                 <Link to="/login" className="text-sm ml-2 hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all">Login to existing account </Link>
               </div>
-              <SignUpForm/>
             </form>
+              <SignUpForm/>
           </div>
         </div>
       </div>

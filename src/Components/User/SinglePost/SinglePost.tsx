@@ -112,8 +112,8 @@ const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, open
 
   return (
     <>
-      <div className="overflow-y: auto p-4 h-5/6 mt-5 bg-white w-full select-none">
-        <div className="h-full bg-white p-2 rounded-md relative lg:w-[40rem] flex flex-col bulgeBox2">
+      <div className="overflow-y: auto p-4 h-5/6 mt-5 bg-white w-full select-none border  shadow-xl border-white ">
+        <div className="h-full sm:h-[600px] bg-white p-2 rounded-md relative lg:w-[40rem] flex flex-col bulgeBox2">
           <div className="w-full h-16 flex p-2 gap-3 self-center">
             <div className="bg-white ml-1 w-11 h-11 rounded-full self-center cursor-pointer" onClick={seeProfile}>
               <ProfilePic
@@ -151,7 +151,7 @@ const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, open
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
           >
-            <img src={post.imageUrl} alt="" className="object-cover w-full h-3/4" draggable={false} />
+            <img src={post.imageUrl} alt="" className="object-cover w-full h-full" draggable={false} />
             {hover && post.taggedUsers.length > 0 && (
               <div className="absolute inset-20  h-3/4  bg-black bg-opacity-5 flex flex-wrap justify-center items-center">
                 {post.taggedUsers.map(user => (

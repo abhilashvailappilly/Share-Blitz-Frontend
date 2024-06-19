@@ -4,6 +4,9 @@ interface DarkModeContextType {
   isDarkMode: boolean;
   toggleDarkMode: () => void;
 }
+interface DarkModeProviderProps {
+  children: ReactNode;
+}
 
 const DarkModeContext = createContext<DarkModeContextType | undefined>(undefined);
 
@@ -15,12 +18,9 @@ export const useDarkMode = (): DarkModeContextType => {
   return context;
 };
 
-interface DarkModeProviderProps {
-  children: ReactNode;
-}
 
 export const DarkModeProvider: FC<DarkModeProviderProps> = ({ children }) => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true); // change to false to set light mode as defaultt
 
   const toggleDarkMode = () => setIsDarkMode(prevMode => !prevMode);
 

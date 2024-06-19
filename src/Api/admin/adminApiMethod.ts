@@ -1,5 +1,6 @@
 import { apiCall } from "./adminApiCall";
 import adminRoutes from "../../Service/Endpoints/adminEndpoints";
+import { toast } from "react-toastify";
 
 
 
@@ -43,6 +44,19 @@ export const getAllReportedPosts = async () => {
     try {
       
         const res = await apiCall('get',adminRoutes.getAllReportedPosts,{},false)
+        console.log('reg res',res)
+       
+        return res.data
+    } catch (error:any) {
+        console.log('Error:', error);
+
+    }
+}
+// @dec    Get Reports By PostId
+// method    Get
+export const GetReportsByPostId = async (postId:string) => {
+    try {
+        const res = await apiCall('get',adminRoutes.getReportsByPostId,{postId},false)
         console.log('reg res',res)
        
         return res.data
@@ -130,6 +144,26 @@ export const ApproveVerificationRequest = async (id:string ) => {
 export const DeletePost = async (postId:string ) => {
     try {
         const res = await apiCall('delete',adminRoutes.deletePost ,{postId},false)
+        return res.data
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const TooglePostIsBlocked = async (postId:string ) => {
+    try {
+        const res = await apiCall('patch',adminRoutes.tooglePostIsBlocked ,{postId},false)
+        return res.data
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const GetAllPosts = async ( ) => {
+    try {
+        const res = await apiCall('get',adminRoutes.getAllPosts ,{},false)
         return res.data
 
     } catch (error) {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faEye, faSave, faTrash } from "@fortawesome/free-solid-svg-icons";
 import SingleImageModal from "../Modal/SingleImageModal";
 import { toast } from "react-toastify";
 import { PostI } from "../../../Types/User/Post";
@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import useAppSelector from "../../../hooks/UseSelector";
 import ProfileDataInterface from "../../../Types/User/userProfile";
 import { DeletePostById } from "../../../Api/admin/adminApiMethod";
-import { DeletePost } from "../../../Api/user/postApiMethod";
+import { DeletePost, unSavePost } from "../../../Api/user/postApiMethod";
 
 interface Post {
     _id: string;
@@ -24,10 +24,12 @@ interface Post {
 
 interface MyPostInterface {
     post: PostI;
+    field:string
 }
 
-const MyPost = ({ post }: MyPostInterface) => {
+const MyPost = ({field, post }: MyPostInterface) => {
     const [show, setShow] = useState(false);
+    const [showPost, setShowPost] = useState(true);
     const [owner, setOwner] = useState(false);
     const [postData,setPostData] = useState<PostI|null>()
     const [postUser, setPostUser] = useState<User | null>(null);
@@ -54,7 +56,17 @@ const MyPost = ({ post }: MyPostInterface) => {
         <h2 className="font-bold">Post deleted</h2>
     </div>
     )
-
+const handleClickUnsavePost = async ()=>{
+    try {
+        const response = await unSavePost(post._id)
+        if(response.success){
+            toast.success("Post removed from saved collections")
+            setShowPost(false)
+        }
+    } catch (error) {
+        
+    }
+}
     const deletePost = async()=>{
         try {
             const deletPost = await DeletePost(post._id)
@@ -73,7 +85,7 @@ const MyPost = ({ post }: MyPostInterface) => {
         navigte(`/post/editPost/${post._id}`)
     }
     return (
-        <div className="relative h-72 w-full bg-red-400 border-3 border-white overflow-hidden">
+   <>  {showPost&& <div className="relative h-72 w-full bg-red-400 border-3 border-white overflow-hidden">
             <img
                 onClick={handleShow}
                 src={postData?.imageUrl}
@@ -87,6 +99,7 @@ const MyPost = ({ post }: MyPostInterface) => {
                 <div className="flex space-x-4">
             {owner &&
                 <>
+                  
                     <div
                         className="bg-black bg-opacity-75 rounded-full p-3"
                         onClick={() => console.log('Edit clicked')}
@@ -118,9 +131,20 @@ const MyPost = ({ post }: MyPostInterface) => {
                             className="text-white text-xl cursor-pointer"
                         />
                     </div>
+                    { field === "savedPosts" &&<div
+                        className="bg-black bg-opacity-75 rounded-full p-3"
+                        onClick={() => console.log('Edit clicked')}
+                    >
+                        <FontAwesomeIcon
+                            icon={faSave}
+                            onClick={handleClickUnsavePost}
+                            className="text-white text-xl cursor-pointer"
+                        />
+                    </div>}
                 </div>
             </div>
-        </div>
+        </div>}
+        </>  
     );
 };
 

@@ -70,15 +70,20 @@ const Sidebar2 = () => {
               <span className="lg:block hidden flex-1 ms-3 whitespace-nowrap">Create Post</span>
             </Link>
           </li>
-          <li><hr className={classNames("h-[1.5px]", { 'bg-black ': !isDarkMode, 'bg-white': isDarkMode })} /></li>
-          <li><hr className={classNames("h-[1.5px] ", { 'bg-black text-black': !isDarkMode, 'bg-white': isDarkMode })} /></li>
-          <li>
+          <li><hr className={classNames("h-[1.5px]", { 'bg-black': !isDarkMode, 'bg-white': isDarkMode })} /></li>
+          
+         <li className=''>
             <Link to="/explore" className="flex justify-center items-center p-2 rounded-lg hover:bg-green-900 hover:text-white font-bold">
               <IconExplore />
               <span className="lg:block hidden flex-1 ms-3 whitespace-nowrap">Explore</span>
             </Link>
           </li>
           <li><hr className={classNames("h-[1.5px]", { 'bg-black': !isDarkMode, 'bg-white': isDarkMode })} /></li>
+          <li><hr className={classNames("h-[1.5px]", { 'bg-black': !isDarkMode, 'bg-white': isDarkMode,'hidden':isDarkMode })} /></li>
+          
+          {/* <li><hr className={classNames("h-[1.5px]",  'bg-red-600' )} /></li> */}
+          {/* <li><hr className={classNames("h-[1.5px]", { 'bg-red-400': !isDarkMode, 'bg-white': isDarkMode })} /></li> */}
+
           <li>
             <Link to="/message" className="flex justify-center items-center p-2 rounded-lg hover:bg-green-900 hover:text-white font-bold">
               <IconMessage />
@@ -106,9 +111,7 @@ const Sidebar2 = () => {
               <span className="lg:block hidden flex-1 ms-3 whitespace-nowrap">Settings</span>
             </Link>
           </li>
-        
-        
-          
+
           <li><hr className={classNames("h-[1.5px]", { 'bg-black': !isDarkMode, 'bg-white': isDarkMode })} /></li>
           <li>
             <Link to="/logout" onClick={handleClickLogout} className="flex justify-center items-center p-2 rounded-lg hover:bg-green-900 hover:text-white font-bold">
@@ -116,6 +119,8 @@ const Sidebar2 = () => {
               <span className="lg:block hidden flex-1 ms-3 whitespace-nowrap">Logout</span>
             </Link>
           </li>
+          <li><hr className={classNames("h-[1.5px]", { 'bg-black': !isDarkMode, 'bg-white': isDarkMode })} /></li>
+
         </ul>
       </div>
     </div>

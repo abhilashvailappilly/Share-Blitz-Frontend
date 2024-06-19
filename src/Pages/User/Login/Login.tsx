@@ -18,7 +18,7 @@ const LoginComponent: React.FC = () => {
     password:"12345678"
   })
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
-    // e.preventDefault()
+    e.preventDefault()
     const {name,value}=e.target
     setLoginDetails((prevState)=>({
       ...prevState,[name]:value
@@ -45,7 +45,9 @@ const LoginComponent: React.FC = () => {
           } else {
             dispatch(setAdminCredentials(login?.data?.user))
             localStorage.setItem('adminInfo', JSON.stringify(login?.data?.user))
-            localStorage.setItem('adminAuthToken', JSON.stringify(login?.data?.token))
+            // localStorage.setItem('adminAuthToken', JSON.stringify(login?.data?.token))
+            localStorage.setItem('accessToken', JSON.stringify(login?.data?.accessToken))
+            localStorage.setItem('refreshToken', JSON.stringify(login?.data?.refreshToken))
             navigate('/admin/home')
           }
           toast.success('Login successfull !')
@@ -100,8 +102,8 @@ const LoginComponent: React.FC = () => {
               <Link to="/forgetPassword" className="text-sm ml-2 hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all">Forgot Password ?</Link>
             <Link to="/register"  className="text-sm ml-2 hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all"  >Don't have an account yet?</Link>
               </div>
-              <GoogleLogin/>
             </form>
+              <GoogleLogin/>
           </div>
         </div>
       </div>

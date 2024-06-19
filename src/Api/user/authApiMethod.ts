@@ -148,10 +148,7 @@ export const ResendOtp = async () => {
 export const LoginUser = async (loginData :UserLoginData) => {
     try {
         const res = await apiCall('post',userRoutes.userLogin,loginData,false)
-        console.log('reg res',res)
-        if(res.data.success) {
-            toast.success(res.data.message)
-        } 
+    
         // toast.error(res.data.message)
         // const token  = res?.data?.token
         // localStorage.setItem('userOtp',token)

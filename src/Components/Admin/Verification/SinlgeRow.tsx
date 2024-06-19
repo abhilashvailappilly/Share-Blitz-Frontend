@@ -1,11 +1,26 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import VerificationInterface, { SinlgeRowInterface } from '../../../Types/Admin/Verification'
 import { toast } from 'react-toastify'
-import { ApproveVerificationRequest } from '../../../Api/admin/adminApiMethod'
+import { ApproveVerificationRequest, getUserById } from '../../../Api/admin/adminApiMethod'
+import ProfileDataInterface from '../../../Types/User/userProfile'
 
 const SinlgeRow = ( {verification} :SinlgeRowInterface) => {
     const [verifactionData,setVerificationData] = useState<VerificationInterface>(verification)
     const [isLoading,setIsLoading] = useState<boolean>(true)
+    const [userData,setUserData] = useState<ProfileDataInterface | undefined>(undefined)
+    useEffect(()=>{
+      getUserData()
+    },[])
+    const getUserData = async()=>{
+      try {
+       const response = await getUserById(verifactionData?.userId) 
+       if(response.success){
+        setUserData(response.user)
+       }
+      } catch (error) {
+        console.log(error)
+      }
+    }
     const approve = async (id : string)=>{
         try {
             const response = await ApproveVerificationRequest(id)
@@ -22,7 +37,7 @@ const SinlgeRow = ( {verification} :SinlgeRowInterface) => {
     }
   return (
     <tr key={verification._id}>
-    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium bg-gray-200 text-gray-900">{verifactionData.userId}</td>
+    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium bg-gray-200 text-gray-900">{userData?.name}</td>
     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium bg-gray-200 text-gray-900">{verifactionData.verificationStatus}</td>
     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium bg-gray-200 text-gray-900">{verifactionData.planActive ? 'Yes' : 'No'}</td>
     {/* <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{verification.payment.plan}</td> */}

@@ -36,7 +36,7 @@ function TableData({ report, updatedUsers,setLoading }: Props) {
         if(response.success){
             setUserData(response.user)
         } else {
-            toast.error(response.message)
+            // toast.error(response.message)
         }
         setLoading?.(false)
     }
@@ -47,7 +47,7 @@ function TableData({ report, updatedUsers,setLoading }: Props) {
         if(response.success){
             setPostData(response.postData)
         } else {
-            toast.error(response.message)
+            // toast.error(response.message)
         }
         setLoading?.(false)
     }
@@ -81,13 +81,18 @@ function TableData({ report, updatedUsers,setLoading }: Props) {
 
             <td className="py-4 px-4 whitespace-nowrap text-right text-sm font-medium">
                 {report.actionTaken ? (
-                   <div></div>
+                    <button
+                    onClick={toggleModal}
+                    className="w-28 inline-flex items-center px-4 py-2 text-sm font-medium rounded-md bg-green-500 text-white hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-transform duration-300 transform hover:scale-110"
+                    >
+                    Unblock 
+                    </button>
                 ) : (
                     <button
                     onClick={toggleModal}
-                    className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md bg-red-500 text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-transform duration-300 transform hover:scale-110"
+                    className="w-28 inline-flex items-center px-4 py-2 text-sm font-medium rounded-md bg-red-500 text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-transform duration-300 transform hover:scale-110"
                     >
-                    Delete
+                    Block Post
                     </button>
                 )}
             </td>
