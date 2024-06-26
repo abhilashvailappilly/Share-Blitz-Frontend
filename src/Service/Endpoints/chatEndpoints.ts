@@ -5,6 +5,7 @@ const chatRoutes={
     getMessages:'/chat/messages/getAllMessages',
     deleteMessage:'/chat/messages/deleteMessage',
     editMessage:'/chat/messages/editMessage',
+    getMessageById:'/chat/messages',
    
 }
 

@@ -18,7 +18,7 @@ interface CreatePostProps {
   setClose: (value: boolean) => void;
 }
 
-
+ 
 function CreatePost() {
   const navigate = useNavigate();
   const dispatch = useDispatch();

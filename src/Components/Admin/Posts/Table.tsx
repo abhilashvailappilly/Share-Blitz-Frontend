@@ -122,11 +122,11 @@ function TableData({ posts, updatedUsers,setLoading }: Props) {
                         View Reports
                     </button>
                 </td>
-            <td className="py-4 px-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+            {/* <td className="py-4 px-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                 <button className="w-36 h-8 rounded bg-gray-300 font-bold hover:scale-105">
                     View post
                 </button>
-            </td>
+            </td> */}
 
           
 

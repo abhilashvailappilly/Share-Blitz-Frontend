@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BiBookAlt, BiHelpCircle, BiHome, BiMessage, BiStats, BiTask } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,13 +19,31 @@ import IconNotifications from '../../icons/NotificationIcon';
 import IconSettings from '../../icons/Settings';
 import { useDarkMode } from '../../../Context/DarkModeContext';
 import IconSearch from '../../icons/SearchIcon';
+import { useNotificationStore } from '@/ZustandStore/notificationStore';
+import { GetAllNotifications } from '@/Api/user/notificationApiMethod';
 
 const Sidebar2 = () => {
   const{isDarkMode,toggleDarkMode} = useDarkMode()
    const userData: ProfileDataInterface = useSelector((state: RootState) => state.auth.userInfo);
+   const {notifications,setNotifications} = useNotificationStore()
   const dispatch = useDispatch();
   // const [isDarkMode, setisDarkMode] = useState(false);
 
+  useEffect(() => {
+    fetchNotifications()
+  },[])
+
+  const fetchNotifications = async ()=>{
+    try {
+      const response = await GetAllNotifications()
+      console.log("all notifications",response)
+      if(response.success){
+        setNotifications([...notifications,...response.data.notifications])
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
   const handleClickLogout = () => {
     dispatch(logout());
     dispatch(clearLoadedPosts());
@@ -94,6 +112,7 @@ const Sidebar2 = () => {
           <li>
             <Link to="/notifications" className="flex justify-center items-center p-2 rounded-lg hover:bg-green-900 hover:text-white font-bold">
               <IconNotifications />
+              {notifications?.length}
               <span className="lg:block hidden flex-1 ms-3 whitespace-nowrap">Notifications</span>
             </Link>
           </li>

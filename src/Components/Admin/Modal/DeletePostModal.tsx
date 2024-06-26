@@ -16,11 +16,14 @@ const DeletePostModal: React.FC<Props> = ({ isOpen, closeModal, updatedUsers,isA
 
     const handleBlockToggle = async(userId: string ,reportId : string) => {
 
-        updatedUsers(userId,!isActionTaken);
+        updatedUsers(postId,!isActionTaken);
         const deletePost = await DeletePostById(postId)
         const changeActionStaus = await ChangeActionStatus(reportId)
         if(changeActionStaus.success) {
-            toast.success(`Post Deleted Successfully `)
+          if(changeActionStaus.updatedStatus){
+            toast.success(`Changed status `)
+        
+          }
             // toast.success(`Post ${deletePost.updatedStatus ? 'Deleted ' : ''} Successfully `)
         } else {
             toast.error('Failed to delete post')

@@ -10,6 +10,8 @@ import { useChatStore } from "@/ZustandStore/chatStore";
 export const GetRecentChats = async () => {
     try {
          const res = await apiCall('get',chatRoutes.recentChats,{},false)
+         console.log('recent chat ',res.data)
+         
         return res.data
     } catch (error:any) {
         console.log('Error:', error);
@@ -20,7 +22,7 @@ export const GetRecentChats = async () => {
 // @dec      get recents chats of the user
 // method    Get
 export const SendMessage = async (selectedUserId : string,message:{text:string,imageUrl:string,videoUrl:string}) => {
-
+console.log('api send meessage "',message)
     try {
         if(!selectedUserId)
             return {success:false,message:"Select a user to chat"}
@@ -35,7 +37,6 @@ export const SendMessage = async (selectedUserId : string,message:{text:string,i
 // @dec     Get messages of  chats of a  user
 // method    Get
 export const GetMessages = async (selectedUserId : string) => {
-
     try {
         if(!selectedUserId)
             return {success:false,message:"Select a user to chat"}
@@ -70,6 +71,20 @@ export const EditMessage= async (messageId : string,selectedUserId : string, tex
         if(!selectedUserId)
             return {success:false,message:"Select a user to chat"}
          const res = await apiCall('patch',`${chatRoutes.editMessage}`,{messageId,selectedUserId,text},false)
+        return res.data
+    } catch (error:any) {
+        console.log('Error:', error);
+
+    }
+}
+
+// @dec     Edit messages 
+// method    Patch
+export const FindMessageById= async (messageId : string,) => {
+
+    try {
+        
+         const res = await apiCall('get',`${chatRoutes.getMessageById}/${messageId}`,{},false)
         return res.data
     } catch (error:any) {
         console.log('Error:', error);

@@ -24,6 +24,7 @@ const SingleMessages: React.FC<SingleMessagesInterface> = ({ key, message }) => 
     const [editModalOpen, setEditModalOpen] = useState<boolean>(false); // State for edit modal visibility
     const formattedTime = moment(message.updatedAt).format('hh:mm A');
     const { messages, setMessages } = useChatStore();
+    const [isShake,setIsShake] = useState<boolean>(false)
 
     const createdTime = moment(message.createdAt);
     const currentTime = moment();
@@ -31,16 +32,31 @@ const SingleMessages: React.FC<SingleMessagesInterface> = ({ key, message }) => 
 
     useEffect(() => {
         setShowOptions(false);
+        if(message && message?.isShake){
+            setIsShake(true)
+        }
+        setTimeout(()=>{
+            setIsShake(false)
+        },200)
     }, []);
 
     const handleCopy = () => {
-        // Handle copy logic
+        navigator.clipboard.writeText(message.text)
+            .then(() => {
+                toast.success("Message copied to clipboard");
+            })
+            .catch(() => {
+                toast.error("Failed to copy message");
+            });
+        setShowOptions(false);
+
     }
 
     const handleEdit = async () => {
         const response = await EditMessage(message._id, selectedUser?._id as string, editText); // Use editText state
         if (response.success) {
             toast.success("Message edited");
+            message.isEdited=true
             setMessages(messages.map(msg => msg._id === message._id ? { ...msg, text: editText } : msg)); // Update message in local state
         } else {
             toast.error("Failed to edit message");
@@ -63,24 +79,32 @@ const SingleMessages: React.FC<SingleMessagesInterface> = ({ key, message }) => 
     }
 
     return (
-        <div key={key} className={`flex items-start gap-2.5 ${fromMe ? 'justify-end' : ''}`}>
+        <div key={key} className={`flex ${isShake ? "animate-shake" :""} items-start gap-2.5 ${fromMe ? 'justify-end' : ''}`}>
             <div className={`flex flex-col gap-1 max-w-[320px] ${fromMe ? 'items-end' : ''}`}>
                 <div className="flex items-center b space-x-2.5">
-                    {/* Render profile image if message is not from the current user */}
-                    {!fromMe && <img className="w-8 h-8 rounded-full" src={profilePic} alt={`profile image`} />}
+                   
                 </div>
                 <div className='flex'>
                     <div className={`flex flex-col leading-1.5 p-4 border-gray-200 ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'} ${!fromMe ? 'rounded-r-xl rounded-es-xl' : 'rounded-tl-xl rounded-bl-xl rounded-br-xl'}`}>
                         {/* Render message text */}
-                        <p className={`text-sm font-normal ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{message.text}</p>
+                       {
+                        message.videoUrl &&
+                        <video src={message?.videoUrl} autoPlay={true} className='h-[100px]'></video>
+                     ||
+                        message.imageUrl &&
+                        <img src={message?.imageUrl} className='h- max-h-48 max-w-44' alt="" />
+                       } 
+                        <p className={`text-sm font-normal mt-1 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{message.text}</p>
+
                     </div>
-                    {/* Dropdown button for options */}
+
                     <button
                         id="dropdownMenuIconButton"
                         data-dropdown-toggle="dropdownDots"
                         data-dropdown-placement="bottom-start"
                         className={`inline-flex m-1 self-center items-center p-1 text-sm font-medium text-center ${isDarkMode ? 'text-white bg-gray-900 hover:bg-gray-800 focus:ring-gray-600' : 'text-gray-900 bg-white hover:bg-gray-100 focus:ring-gray-50'} rounded-lg focus:ring-4 focus:outline-none ${fromMe ? 'order-first' : ''}`}
                         type="button"
+                      
                         onClick={() => { setShowOptions(!showOptions) }}
                     >
                         <svg className={`w-3 h-3 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
@@ -88,29 +112,38 @@ const SingleMessages: React.FC<SingleMessagesInterface> = ({ key, message }) => 
                         </svg>
                     </button>
                 </div>
-                {/* Render timestamp */}
+                <div className='flex gap-3'>
                 <span className={`text-[10px] inline-flex ${!fromMe ? 'justify-start' : 'justify-end'} font-normal ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{formattedTime}</span>
+               {message?.isEdited && <span className='font text-white' style={{ fontSize: '10px' }}>Edited</span>}
+                </div>
             </div>
 
-            {/* Options dropdown */}
-            <div id="dropdownDots" className={`z-10 ${showOptions ? 'block' : 'hidden'} text-white dark:bg-gray-700 divide-y divide-gray-100 dark:divide-gray-600 rounded-lg shadow w-40 ${fromMe ? 'ml-2' : 'mr-2'}`}>
+            <div  id="dropdownDots" className={` ${fromMe ? "order-first" :""}  z-10 ${showOptions ? 'block' : 'hidden'} text-white dark:bg-gray-700 divide-y divide-gray-100 dark:divide-gray-600 rounded-lg shadow w-40 ${fromMe ? 'ml-2' : 'mr-2'}`}>
                 <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
                     <li>
                         <a href="#" onClick={handleCopy} className={`block px-4 py-2 ${isDarkMode ? 'dark:hover:bg-gray-600 dark:hover:text-white  text-white' : 'hover:bg-gray-100'}`}>Copy</a>
                     </li>
-                    {/* Render Edit and Delete options based on condition */}
+                   
                     {minutesDiff < 7 && (
                         <>
                             <li>
                                 {fromMe && <a href="#" onClick={() => { setEditModalOpen(true); }} className={`block px-4 py-2 ${isDarkMode ? 'dark:hover:bg-gray-600 dark:hover:text-white  text-white' : 'hover:bg-gray-100'}`}>Edit</a>}
                             </li>
                             <li>
-                                {fromMe && <a href="#" onClick={handleDelete} className={`block px-4 py-2 ${isDarkMode ? 'dark:hover:bg-gray-600 dark:hover:text-white  text-white' : 'hover:bg-gray-100'}`}>Delete</a>}
+                                {fromMe && <a href="#" onClick={handleDelete} className={`block px-4 py-2 ${isDarkMode ? 'dark:hover:bg-gray-600 dark:hover:text-white  text-white' : 'hover:bg-gray-100'}`}>Delete from every one </a>}
+                                
                             </li>
+
                         </>
                     )}
+                     <li>
+                                {fromMe && <a href="#" onClick={handleDelete} className={`block px-4 py-2 ${isDarkMode ? 'dark:hover:bg-gray-600 dark:hover:text-white  text-white' : 'hover:bg-gray-100'}`}>Delete </a>}
+                                
+                     </li>
                 </ul>
             </div>
+
+            
 
             {/* Edit Modal */}
             {editModalOpen && (

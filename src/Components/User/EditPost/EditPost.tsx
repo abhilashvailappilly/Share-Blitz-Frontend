@@ -213,7 +213,7 @@ if(isLoading){
                 <Field
                   type="text"
                   name="caption"
-                  className="w-full p-2 border border-gray-300 rounded mt-1"
+                  className="w-full p-2 border border-gray-300 dark:text-black rounded mt-1"
                 />
                 <ErrorMessage name="caption" component="div" className="text-red-500" />
               </div>
@@ -223,7 +223,7 @@ if(isLoading){
                 <div className="flex items-center">
                   <input
                     type="text"
-                    className="w-full p-2 border border-gray-300 rounded mt-1"
+                    className="w-full p-2 border border-gray-300 dark:text-black rounded mt-1"
                     value={newHashtag}
                     onChange={(e) => setNewHashtag(e.target.value)}
                   />
@@ -329,4 +329,3 @@ if(isLoading){
 };
 
 export default EditPost;
-//  while submitting the data i want to send the tagged user as array of userId 

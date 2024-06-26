@@ -26,6 +26,8 @@ const ChatContainer = () => {
  
 
   const handleUserSelect = useCallback((user: ProfileDataInterface) => {
+
+    // setSelectedUser(null);
     setSelectedUser(user);
     if (window.innerWidth < 768) {
       setIsSidebarVisible(false);
@@ -60,7 +62,7 @@ const ChatContainer = () => {
     <div className={`w-full h-screen ${isDarkMode ? 'bg-gray-800' : 'bg-emerald-200'} flex`}>
       {isSidebarVisible && (
       <Suspense fallback={<div>Loading Sidebar...</div>}>
-      <ChatSidebar onUserSelect={handleUserSelect} />
+       <ChatSidebar onUserSelect={handleUserSelect} />
         </Suspense>
       )}
       <Suspense fallback={<div>Loading Chat...</div>}>

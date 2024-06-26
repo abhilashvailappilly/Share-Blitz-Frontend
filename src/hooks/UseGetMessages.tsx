@@ -2,8 +2,6 @@ import { GetMessages } from "@/Api/user/chatApiMethods"
 import { Message } from "@/Types/User/ZustandStore"
 import { useChatStore } from "@/ZustandStore/chatStore"
 import { useEffect, useState } from "react"
-import { flushSync } from "react-dom"
-import { toast } from "react-toastify"
 
 const UseGetMessages = () => {
  const [loading,setLoading] = useState(false)
@@ -20,8 +18,12 @@ const UseGetMessages = () => {
         try {
             const response = await GetMessages(selectedUser._id)
             if(response.success){
-                // toast.success('fetched get message')
-                setMessages(response.data.chat.messages)
+                if(response.data?.chat?.messages?.length > 0){
+                    setMessages(response.data.chat.messages)
+                } else {
+                    setMessages([])
+                }
+
             }
         } catch (error) {
             console.log(error)

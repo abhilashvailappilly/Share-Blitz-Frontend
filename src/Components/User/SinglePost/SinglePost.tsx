@@ -27,12 +27,12 @@ interface SinglePostProps {
 
 const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, openEditor }) => {
 
-  console.log("postdatta >......>",postData)
-  const cardClasses = "max-w-md mx-auto bg-white dark:bg-zinc-800 shadow-md rounded-lg overflow-hidden";
+  console.log("postdatta >......>", postData)
+  const cardClasses = "max-w-md mx-auto bg-white dark:bg-gray-900 shadow-md rounded-lg overflow-hidden";
   const textClasses = "text-zinc-900 dark:text-zinc-100";
   const buttonClasses = "text-zinc-500 dark:text-zinc-300";
   const iconClasses = "w-6 h-6";
-  
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.auth.userInfo);
@@ -45,7 +45,7 @@ const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, open
   const [postUser, setPostUser] = useState<User | null>(null);
   const [error, setError] = useState<string>("");
   const [hover, setHover] = useState<boolean>(false);
-  const navigateToProfile = useNavigateToProfile()
+  const navigateToProfile = useNavigateToProfile();
 
   const addLike = useCallback((newLike: Like[] | []) => {
     setPost((prevState) => ({
@@ -57,9 +57,9 @@ const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, open
     }));
   }, []);
 
-  const viewProfile =(userId : string)=>{
-    navigateToProfile(userId)
-  }
+  const viewProfile = (userId: string) => {
+    navigateToProfile(userId);
+  };
 
   const setComment = useCallback((newComment: Comment[] | []) => {
     setPost((prevState) => ({
@@ -112,9 +112,9 @@ const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, open
 
   return (
     <>
-      <div className="overflow-y: auto p-4 h-5/6 mt-5 bg-white w-full select-none border  shadow-xl border-white ">
-        <div className="h-full sm:h-[600px] bg-white p-2 rounded-md relative lg:w-[40rem] flex flex-col bulgeBox2">
-          <div className="w-full h-16 flex p-2 gap-3 self-center">
+      <div className={`overflow-y-auto p-4 h-5/6 mt-5 bg-white w-full select-none border shadow-xl border-white dark:bg-gray-900`}>
+        <div className={`h-full sm:h-[600px] bg-white dark:bg-gray-900 p-2 rounded-md relative lg:w-[40rem] flex flex-col ${cardClasses}`}>
+          <div className="w-full h-16 flex bg-gray-900 p-2 gap-3 self-center">
             <div className="bg-white ml-1 w-11 h-11 rounded-full self-center cursor-pointer" onClick={seeProfile}>
               <ProfilePic
                 styleProp={"rounded-full"}
@@ -128,10 +128,10 @@ const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, open
               <NameField
                 name={postUser?.name as string}
                 doFunction={handleClickOnUserName}
-                styleProp={"font-bold text-black"}
+                styleProp={"font-bold text-black dark:text-white"}
               />
             </div>
-            {owner ? (
+            {/* {owner ? (
               <div className="font-thin font-mono self-center rounded-lg w-16 h-5">
                 <ConnectionBtn
                   user={postUser as User}
@@ -141,7 +141,7 @@ const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, open
                   setFollowers={setFollowers}
                 />
               </div>
-            ) : null}
+            ) : null} */}
             <div className="self-center ml-auto cursor-pointer">
               <Dropdown post={post} postUser={postUser} openEditor={openEditor} setSelectedPost={setSelectedPost} />
             </div>
@@ -155,7 +155,7 @@ const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, open
             {hover && post.taggedUsers.length > 0 && (
               <div className="absolute inset-20  h-3/4  bg-black bg-opacity-5 flex flex-wrap justify-center items-center">
                 {post.taggedUsers.map(user => (
-                  <div key={user.userId.toString()} onClick={()=>viewProfile(user.userId as string)} className="text-white m-1  bg-black bg-opacity-70 p-1 rounded-lg">
+                  <div key={user.userId.toString()} onClick={() => viewProfile(user.userId as string)} className="text-white m-1  bg-black bg-opacity-70 p-1 rounded-lg">
                     {user.userName}
                   </div>
                 ))}
@@ -163,9 +163,9 @@ const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, open
             )}
           </div>
           <div className="m-2">
-            <CaptionWithShowMore text={post.caption} styleProps={"text-black text-base "} />
+            <CaptionWithShowMore text={post.caption} styleProps={"text-black dark:text-white text-base "} />
           </div>
-          <div className="mt-1 flex flex-col">
+          <div className="mt-1 flex flex-col bg-gray-900">
             <div className="p-2 text-xl flex gap-5 mt-0 font-bold">
               <Heart size={{ width: 34, height: 36 }} color={"red"} post={post} addLike={addLike} />
               <CommentIcn size={{ width: 33, height: 31 }} post={post} setShow={setCommentModal} />
@@ -175,12 +175,12 @@ const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, open
             </div>
             <span
               onClick={showLikes}
-              className="pl-2 hover:cursor-pointer hover:scale-95 hover:font-bold text-black font-bold text-sm  select-none"
+              className="pl-2 hover:cursor-pointer hover:scale-95 hover:font-bold text-black dark:text-white font-bold text-sm select-none"
             >
               {post?.likesDetails?.likes.length || 0} Likes
             </span>
             <span
-              className="hover:cursor-pointer hover:scale-100 hover:font-bold"
+              className="hover:cursor-pointer hover:scale-100 hover:font-bold text-black dark:text-white"
               onClick={() => setCommentModal(true)}
             >
               View all {post?.commentsDetails?.comments.length} comments
@@ -197,3 +197,4 @@ const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, open
 };
 
 export default memo(SinglePost);
+``

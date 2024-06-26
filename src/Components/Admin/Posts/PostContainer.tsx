@@ -41,7 +41,7 @@ const PostContainer = () => {
       <h1 className="  font-bold mt-4">Post Management</h1>
       <section className="container px-4 mx-auto flex flex-col justify-center items-center min-h-screen ">
             <div className="flex items-center gap-x-3">
-                <h2 className="text-lg font-bold text-green-700 dark:text-white">Report MANAGEMENT</h2>
+                {/* <h2 className="text-lg font-bold text-green-700 dark:text-white">Report MANAGEMENT</h2> */}
             </div>
 
             <div className="flex flex-col mt-6">
@@ -75,7 +75,7 @@ const PostContainer = () => {
                                         </th>
                                         <th scope="col" className="px-4 py-3.5 text-sm font-bold text-left rtl:text-right  dark:text-gray-400"> Reports</th>
                                         <th scope="col" className="px-4 py-3.5 text-sm font-bold text-left rtl:text-right  dark:text-gray-400">View Reports</th>
-                                        <th scope="col" className="px-4 py-3.5 text-sm font-bold text-left rtl:text-right  dark:text-gray-400">Reports</th>
+                                        {/* <th scope="col" className="px-4 py-3.5 text-sm font-bold text-left rtl:text-right  dark:text-gray-400">Reports</th> */}
                                         <th scope="col" className="px-4 py-3.5 text-sm font-bold text-left rtl:text-right  dark:text-gray-400">Action</th>
 
                                         {/* <th scope="col" className="relative py-3.5  px-4">

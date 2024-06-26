@@ -1,41 +1,62 @@
 import { useDarkMode } from '@/Context/DarkModeContext';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { SearchUser } from '@/Api/user/userApiMethod';
-import ProfileDataInterface, { IFollow } from '@/Types/User/userProfile';
+import ProfileDataInterface from '@/Types/User/userProfile';
 import React from 'react';
 import ListUsersSidebar from './ListUsersSidebar';
 import { GetRecentChats } from '@/Api/user/chatApiMethods';
+import { useChatStore } from '@/ZustandStore/chatStore';
 
 interface ChatSidebarProps {
   onUserSelect: (user: ProfileDataInterface) => void;
 }
+interface Room {
+  _id: string;
+  createdAt: string;
+  isGroupChat: boolean;
+  messages: string[]; // Assuming message IDs are strings
+  name: string;
+  lastMessage:string;
+  participants: string[]; // Array of participant IDs
+  updatedAt: string;
+  __v: number;
+}
 
+interface ChatRoom {
+  room: Room;
+  participantsDetails: ProfileDataInterface[];
+}
 const ChatSidebar: React.FC<ChatSidebarProps> = React.memo(({ onUserSelect }) => {
-    const { isDarkMode } = useDarkMode();
-   const [isLoading,setIsLoading] = useState(true)
+  const { isDarkMode } = useDarkMode();
+  const [isLoading, setIsLoading] = useState(true);
   const [allUsers, setAllUsers] = useState<ProfileDataInterface[]>([]);
   const [searchedUsers, setSearchedUsers] = useState<ProfileDataInterface[]>([]);
-  const [recentChat, setRecentChat] = useState<ProfileDataInterface[]>([]);
+  // const [recentChat, setRecentChat] = useState<ChatRoom[]>([]);
+  const {recentChats,setRecentChats} = useChatStore((state) => state)
   const [searchInput, setSearchInput] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  useEffect(() => {
+    fetchRecentChats();
+  }, []);
+  useEffect(() => {
+console.log('recent chaets,',recentChats)
+  }, [recentChats]);
 
-  useEffect(()=>{
-    fetchRecentChats()
-  },[])
-  const fetchRecentChats = async () =>{
+
+  const fetchRecentChats = async () => {
     try {
-      const response = await GetRecentChats()
-      if(response.success){
-        setRecentChat(response.data.users)
+      const response = await GetRecentChats();
+      if (response.success) {
+        setRecentChats(response.data.users);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
     if (searchInput === '') {
@@ -46,13 +67,13 @@ const ChatSidebar: React.FC<ChatSidebarProps> = React.memo(({ onUserSelect }) =>
   }, [searchInput, allUsers]);
 
   const handleUserClick = useCallback((user: ProfileDataInterface) => {
-    if (!recentChat.some(chat => chat._id === user._id)) {
-      setRecentChat([user, ...recentChat]);
-    }
+    // if (!recentChat.some(chat => chat._id === user._id)) {
+    //   setRecentChat([user, ...recentChat]);
+    // }
     setSearchInput('');
     inputRef.current?.blur();
     onUserSelect(user);
-  }, [onUserSelect, recentChat]);
+  }, [onUserSelect, recentChats]);
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -90,28 +111,35 @@ const ChatSidebar: React.FC<ChatSidebarProps> = React.memo(({ onUserSelect }) =>
       </div>
       <div className='p-4 overflow-y-auto h-5/6'>
         <ul>
-        {isFocused && searchInput ? (
-                    <>
-                        <h1 className={`p-2 ${isDarkMode ? 'text-white' : 'text-black'} font-bold text-xl`}>Search Result</h1>
-                        {searchedUsers.map(user => (
-                            <ListUsersSidebar
-                                user={user}
-                                doFunction={handleUserClick}
-                            />
-                        ))}
-                    </>
-        )
-            :(
-           <>     
-           <h1 className={`p-2 ${isDarkMode ? 'text-white' : 'text-black'} font-bold text-xl`} >Recent chats</h1>
-            { recentChat.length > 0
-              ? recentChat.map(user => (
-                <ListUsersSidebar user={user} doFunction={handleUserClick} />
-
-              ))
-              : <li className={`p-2 ${isDarkMode ? 'text-white' : 'text-black'}`}>No recent chats available</li>
-            }
-        </> ) }
+          {isFocused && searchInput ? (
+            <>
+              <h1 className={`p-2 ${isDarkMode ? 'text-white' : 'text-black'} font-bold text-xl`}>Search Result</h1>
+              {searchedUsers.map((user) => (
+                <ListUsersSidebar
+                  key={user._id}
+                  isSearching={true}
+                  user={user}
+                  doFunction={handleUserClick}
+                />
+              ))}
+            </>
+          ) : (
+            <>
+              <h1 className={`p-2 ${isDarkMode ? 'text-white' : 'text-black'} font-bold text-xl`}>Recent chats</h1>
+              {recentChats.length > 0
+                ? recentChats.map((user,index) => (
+                  <ListUsersSidebar
+                    key={index}
+                    isSearching={false}
+                    user={user.participantsDetails[0]}
+                    lastMessage= {user.room.lastMessage}
+                    doFunction={handleUserClick}
+                  />
+                ))
+                : <li className={`p-2 ${isDarkMode ? 'text-white' : 'text-black'}`}>No recent chats available</li>
+              }
+            </>
+          )}
         </ul>
       </div>
     </div>
