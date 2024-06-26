@@ -13,8 +13,8 @@ interface ProfilePostsProps {
   const ProfilePosts: React.FC<ProfilePostsProps> = ({field, posts }) => {
     const [show ,setShow] = useState(false)
     return (
-      <div className=" w-full h-96 bg-blue-700 overflow-auto ">
-    <div className="w-full h-full grid  grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-3 bg-white overflow-auto no-scrollbar">
+      <div className=" w-full h-96 bg-white-700 dark:bg-slate-800 overflow-auto ">
+    <div className="w-full h-full grid  grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-3 bg-white dark:bg-slate-800 overflow-auto no-scrollbar">
 
     {posts && posts.length > 0 ? (
           posts.map((post: PostI, index: number) => {

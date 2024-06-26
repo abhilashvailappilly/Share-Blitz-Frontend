@@ -1,5 +1,4 @@
-import React from 'react'
-import CreatePost from './CreatePost3'
+import CreatePost from './CreatePost'
 
 const CreatePostContainer = () => {
   return (

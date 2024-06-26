@@ -28,7 +28,7 @@ const FriendsProfileContainer = () => {
     }
   },[])
   return (
-    <div className="  w-full flex flex-col justify-center items-center  bg-white">
+    <div className="  w-full flex flex-col justify-center items-center  bg-white dark:bg-slate-800">
        
         
         {/* <ProfileBackground/> */}

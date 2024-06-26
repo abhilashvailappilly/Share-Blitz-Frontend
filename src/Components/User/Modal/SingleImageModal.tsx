@@ -80,7 +80,7 @@ const SingleImageModal =({show,setShow ,post} : SingleImageModalPropsInterface )
                <div className="w-1/3 h-full bg-green-100 flex justify-between">
               <div className="w-full mr-3">
               <Heart size={{ width: 34, height: 36 }} color={'red'} post={post} setPost={setPost} addLike={addLike}  />
-              <span className="font-bold">10</span> likes
+              <span className="font-bold">110</span> likes
               {/* <span className="font-bold">{post?.like}</span> likes */}
               </div>
               <div className="w-full">
