@@ -1,33 +1,23 @@
-// import { defineConfig } from 'vite'
-// import react from '@vitejs/plugin-react'
-
-// // https://vitejs.dev/config/
-// export default defineConfig({
-//   plugins: [react()],
-// })
-
-// import path from "path"
-// import react from "@vitejs/plugin-react"
-// import { defineConfig } from "vite"
-
-// export default defineConfig({
-//   plugins: [react()],
-//   resolve: {
-//     alias: {
-//       "shard": path.resolve(__dirname, "/src"),
-//     },
-//   },
-// })
-
+import NodePolyfillPlugin from 'node-polyfill-webpack-plugin';
 import path from "path"
 import react from "@vitejs/plugin-react"
 import { defineConfig } from "vite"
+// import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
+// import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill';
 
 export default defineConfig({
   plugins: [react()],
+
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  define: {
+    'global': {},
+  },
+  server:{
+    host:false
+  }
+  
 })

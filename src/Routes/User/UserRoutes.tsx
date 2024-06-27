@@ -16,6 +16,7 @@ import SettingsPage from "../../Pages/User/Settings/SettingsPage";
 import Forgetpassword from "../../Pages/User/ForgetPassword/ForgetPassword";
 import MessagesPage from "@/Pages/User/Message/MessagesPage";
 import NotificationPage from "@/Pages/User/Notification/NotificationPage";
+import VideoCall from "@/Components/User/VideoCall/main";
 export const UserRoute = () =>{
     console.log("User route worked")
     return (
@@ -36,6 +37,7 @@ export const UserRoute = () =>{
                 <Route path='post/editPost/:postId' element={<EditPostPage />} />
                 <Route path='explore' element={<Explore />} />
                 <Route path='message' element={<MessagesPage />} />
+                <Route path='video' element={<VideoCall />} />
                 <Route path='notifications' element={<NotificationPage />} />
                 <Route path='settings/*' element={<SettingsPage />} />
                 <Route path='*' element={<NotFound />} />

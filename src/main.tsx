@@ -1,3 +1,5 @@
+import 'webcrypto-shim';
+
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
@@ -7,16 +9,22 @@ import { ThemeProvider } from '@material-tailwind/react'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import { DarkModeProvider } from './Context/DarkModeContext.tsx'
 import { SocketContextProvider } from './Context/SocketContext.tsx'
+import { VideoCallContextProvider } from './Context/VideoCallContext.tsx'
+
+const GOOGLE_KEY = import.meta.env.VITE_GOOGLE_KEY;
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   // <React.StrictMode>
   <Provider store={store} >
      <ThemeProvider>
       <DarkModeProvider>
-         <SocketContextProvider>
-              <GoogleOAuthProvider clientId="877314682536-nf44nbj12qjgv9kcd4ffcne077lrcq8s.apps.googleusercontent.com">
+        <SocketContextProvider>
+          <VideoCallContextProvider>
+              <GoogleOAuthProvider clientId={GOOGLE_KEY}>
                   <App />
               </GoogleOAuthProvider>
-          </SocketContextProvider>
+          </VideoCallContextProvider>
+        </SocketContextProvider>
       </DarkModeProvider>
     </ThemeProvider>
    </Provider>
