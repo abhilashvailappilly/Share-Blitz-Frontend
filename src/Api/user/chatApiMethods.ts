@@ -78,13 +78,41 @@ export const EditMessage= async (messageId : string,selectedUserId : string, tex
     }
 }
 
-// @dec     Edit messages 
-// method    Patch
+// @dec     Find messages by id 
+// method    Get
 export const FindMessageById= async (messageId : string,) => {
 
     try {
         
          const res = await apiCall('get',`${chatRoutes.getMessageById}/${messageId}`,{},false)
+        return res.data
+    } catch (error:any) {
+        console.log('Error:', error);
+
+    }
+}
+
+// @dec     Get unreaded messages 
+// method    Get
+export const GetUnReadedMessages= async (roomId : string,) => {
+
+    try {
+        
+         const res = await apiCall('get',`${chatRoutes.unreadedMessages}/${roomId}`,{},false)
+        return res.data
+    } catch (error:any) {
+        console.log('Error:', error);
+
+    }
+}
+
+// @dec     Edit messages 
+// method    Patch
+export const UpdateMessagesAsSeen= async (selectedUserId : string,) => {
+
+    try {
+        
+         const res = await apiCall('patch',`${chatRoutes.markAsRead}/${selectedUserId}`,{},false)
         return res.data
     } catch (error:any) {
         console.log('Error:', error);

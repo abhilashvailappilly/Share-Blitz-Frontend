@@ -1,11 +1,8 @@
-console.log("Hello, World!");
 
 import React, { createContext, useState, useRef, useEffect, ReactNode, useContext } from "react";
 import { useChatStore } from "@/ZustandStore/chatStore";
 import SimplePeer from "simple-peer";
 import { toast } from "react-toastify";
-import Peer, { MediaConnection } from 'peerjs';
-// import 'webcrypto-shim';
 
 interface ContextProviderProps {
   children: ReactNode;
@@ -35,6 +32,8 @@ const VideoCallContextProvider: React.FC<ContextProviderProps> = ({ children }) 
   const [me, setMe] = useState<string>("");
   const [name,setName] = useState<string>('')
   const [callAccepted,setCallAccepted] = useState<boolean>(false)
+  const [isCalling,setIsCalling] = useState<boolean>(false)
+  const [callReceiving,setCallReceiving] = useState<boolean>(false)
   const [callEnded,setCallEnded] = useState<boolean>(false)
   const [call, setCall] = useState<Call>({
     isReceivedCall: false,
@@ -48,101 +47,142 @@ const VideoCallContextProvider: React.FC<ContextProviderProps> = ({ children }) 
   const connectionRef = useRef<SimplePeer.Instance | null>(null);
 
   useEffect(() => {
-    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
-      .then((currentStream) => {
-        setStream(currentStream);
-        if (myVideo.current) {
-          myVideo.current.srcObject = currentStream;
-        }
-      });
-
-    socket?.on('connected', (id: string) => setMe(id));
-
-    socket?.on('callUser', ({ from, name: callerName, signal }: { from: string, name: string, signal: any }) => {
-        toast('call user revied from back')
+    const handleConnected = (id: string) => setMe(id);
+    const handleCallUser = ({ from, name: callerName, signal }: { from: string, name: string, signal: any }) => {
+      // toast('call user received from backend');console.log('recive call',from,name) 
+      setCallReceiving(true)
       setCall({ isReceivedCall: true, from, name: callerName, signal });
-    });
+    };
+    // const handleCallEnded = () =>{ 
+    //   toast("call ended")
+    //   leaveCall()
+
+    // };
+
+   
+    socket?.on('connected', handleConnected);
+    socket?.on('callFromUser', handleCallUser);
+    socket?.on('callEnded', leaveCall);
+  
+    return () => {
+      socket?.off('connected', handleConnected);
+      socket?.off('callUser', handleCallUser);
+      socket?.off('callEnded', leaveCall);
+    };
   }, [socket]);
 
+const answeredCall1 =async() => {
+    // const currentStream= await getMediaStream();
+    console.log('ans c my',myVideo)
+    // if (myVideo.current) {
+    //   toast('setteed')
+    //   myVideo.current.srcObject = stream;
+    // }
+    toast.success('call accepted');
+    setCallAccepted(true);
+  };
 
-  const callUser = (id : string) => {
-    if (!socket) {
-              console.error('Socket is not connected');
-              toast.error('Socket is not connected');
-              return;
-            }
-    if (!stream) {
-                console.error('Stream is not available');
-                toast.error('Stream is not available');
-                return;
-              }
-    const peer = new SimplePeer({ initiator: true, trickle: false, stream: stream });
+  
 
+  const getMediaStream = async () => {
+    try {
+      const currentStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+      setStream(currentStream);
+      // if (myVideo.current) {
+      //   myVideo.current.srcObject = currentStream;
+      // }
+      return currentStream;
+    } catch (error) {
+      console.error('Error accessing media devices.', error);
+      toast.error('Error accessing media devices.');
+      return null;
+    }
+  };
+  
+  const callUser = async (id: string) => {
+    const currentStream = await getMediaStream();
+    setCall({isReceivedCall: false,
+      from: id,
+     
+      name: "",
+      signal: ""})
+     if (myVideo.current) {
+        myVideo.current.srcObject = currentStream;
+      }
+    if (!socket || !currentStream) return;
+  
+    const peer = new SimplePeer({ initiator: true, trickle: false, stream: currentStream });
+  
     peer.on('signal', (data) => {
-        socket.emit('callUser', { userToCall: id, signalData: data, from: me, name: name });
+      socket.emit('callUser', { userToCall: id, signalData: data, from: me, name });
     });
-
+  
     peer.on('stream', (currentStream) => {
-        if (userVideo.current) {
-            userVideo.current.srcObject = currentStream;
-          }
-    });
-
-    socket.on('answeredCall', (signal) => {
-        toast.success('call accepted')
-        setCallAccepted(true);
-
-        peer.signal(signal);
-    });
-
-    connectionRef.current = peer;
-}
-
-
-  const answerCall = () => {
-    setCallAccepted(true)
-    setCall({ ...call, isReceivedCall: false });
-
-    if (!socket) {
-        console.error('Socket is not connected');
-        toast.error('Socket is not connected');
-        return;
-      }
-  
-      if (!stream) {
-        console.error('Stream is not available');
-        toast.error('Stream is not available');
-        return;
-      }
-  
- 
-
-    const peer = new SimplePeer({
-      initiator: false,
-      trickle: false,
-      stream: stream ,
-    });
-
-    peer.on('signal', (data: any) => {
-      socket?.emit('answerCall', { signal: data, to: call.from });
-    });
-
-    peer.on('stream', (currentStream: MediaStream) => {
       if (userVideo.current) {
         userVideo.current.srcObject = currentStream;
       }
     });
-
-    peer.signal(call.signal);
-
+  
+    socket.on('answeredCall',async (signal) => {
+      // const currentStream= await getMediaStream();
+      // await answeredCall()
+      // if (myVideo.current) {
+      //   toast('setteed')
+      //   myVideo.current.srcObject = stream;
+      // }
+      toast.success('call accepted');
+      setCallAccepted(true);
+      peer.signal(signal);
+    });
+  
     connectionRef.current = peer;
   };
+  
+  const answerCall = async () => {
+    setCallAccepted(true);
+    setCall({ ...call, isReceivedCall: false });
+  
+    const currentStream = await getMediaStream();
+    if (myVideo.current) {
 
-  const leaveCall = () => {
-    setCallEnded(true)
-    connectionRef.current?.destroy();
-    window.location.reload();
+      myVideo.current.srcObject = currentStream;
+    }
+    if (!socket || !currentStream) return;
+  
+    const peer = new SimplePeer({ initiator: false, trickle: false, stream: currentStream });
+  
+    peer.on('signal', (data) => {
+      socket.emit('answerCall', { signal: data, to: call.from });
+    });
+  
+    peer.on('stream', (stream) => {
+      if (userVideo.current) {
+        userVideo.current.srcObject = stream;
+      }
+    });
+  
+    peer.signal(call.signal);
+    connectionRef.current = peer;
   };
+  
+
+  const leaveCall = (id: string) => {
+    if (!socket) {
+      console.error('Socket is not connected');
+      toast.error('Socket is not connected');
+      return;
+    }
+    setCallEnded(true);
+    socket.emit('callEnded', { userId: id });
+    connectionRef.current?.destroy();
+    // us.current?.destroy();
+    // connectionRef.current?.destroy();
+    setCallAccepted(false);
+    setIsCalling(false)
+    setStream(null);
+    setCall({ isReceivedCall: false, from: "", name: "", signal: "" });
+  };
+  
 
   return (
     <VideoCallContext.Provider value={{
@@ -150,12 +190,17 @@ const VideoCallContextProvider: React.FC<ContextProviderProps> = ({ children }) 
       callUser,
       answerCall,
       leaveCall,
+      // answeredCall,
       callAccepted,
+      callReceiving,
       callEnded,
       myVideo,
       userVideo,
       stream,
       name,
+      isCalling,
+      setCallReceiving,
+      setIsCalling,
       setName,
       me
     }}>

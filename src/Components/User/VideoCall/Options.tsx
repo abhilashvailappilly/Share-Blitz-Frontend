@@ -49,7 +49,7 @@ interface OptionsProps {
             {callAccepted && !callEnded ? (
               <button
                 type="button"
-                onClick={leaveCall}
+                onClick={()=>leaveCall()}
                 className="mt-4 w-full py-2 px-4 bg-red-500  text-white rounded-lg hover:bg-red-600 flex items-center justify-center space-x-2"
               >
                 <PhoneXMarkIcon className="h-6 w-6" />

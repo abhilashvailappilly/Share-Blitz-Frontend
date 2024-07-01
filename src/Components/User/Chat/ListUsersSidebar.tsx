@@ -1,4 +1,4 @@
-import { FindMessageById } from "@/Api/user/chatApiMethods";
+import { FindMessageById, GetUnReadedMessages } from "@/Api/user/chatApiMethods";
 import { useDarkMode } from "@/Context/DarkModeContext";
 import { Message } from "@/Types/User/ZustandStore";
 import ProfileDataInterface from "@/Types/User/userProfile";
@@ -11,21 +11,35 @@ interface ListUsersSidebarInterface {
     user: ProfileDataInterface;
     isSearching: boolean;
     lastMessage?:string
+    roomId?:string
     doFunction: (user: ProfileDataInterface) => void;
 }
 
-const ListUsersSidebar = ({ user, isSearching,lastMessage, doFunction }: ListUsersSidebarInterface) => {
+const ListUsersSidebar = ({ user, isSearching,roomId,lastMessage, doFunction }: ListUsersSidebarInterface) => {
     const { isDarkMode } = useDarkMode();
     const selectedUser = useChatStore((state) => state.selectedUser);
     const onlineUsers = useChatStore((state) => state.onlineUsers);
     const isOnline = onlineUsers.includes(user?._id);
     const isSelected = selectedUser?._id === user._id;
     const [lastMessageData,setLastMessage] = useState<Message | null>(null)
-
+    const [unReadedMessages,setUnReadedMessages] = useState<number >(0)
     useEffect(()=>{
             fetchUserLastMessage()
         
     },[lastMessage])
+    useEffect(()=>{
+       fetchUnReadedMessages()
+    },[lastMessage,selectedUser?._id])
+    const fetchUnReadedMessages = async()=>{
+        try {
+            const response = await GetUnReadedMessages(roomId as string)
+            if(response.success){
+                setUnReadedMessages(response?.data?.messages.length)
+            }
+        } catch (error) {
+           console.log(error)
+        }
+    }
     const fetchUserLastMessage = async()=>{
         if(!lastMessage)
             return 
@@ -96,15 +110,14 @@ const ListUsersSidebar = ({ user, isSearching,lastMessage, doFunction }: ListUse
                         </span>
                     }
                     
-                    {/* Add your additional content here */}
                 </div>
                 <div className="w-1/4 flex justify-end gap-6 items-center">
                 {isOnline && (
                             <div className="w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
                         )}
-                         <div className="rounded-full flex bg-white h-8 w-8 items-center justify-center">
-                             <span className="text-black font-bold">43</span>
-                         </div>
+                       {unReadedMessages > 0 &&  <div className="rounded-full flex bg-white h-8 w-8 items-center justify-center">
+                            <span className="text-black font-bold">{unReadedMessages || ""}</span>
+                         </div>}
                 </div>
                
                

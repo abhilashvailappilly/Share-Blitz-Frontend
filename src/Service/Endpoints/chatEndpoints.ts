@@ -6,6 +6,8 @@ const chatRoutes={
     deleteMessage:'/chat/messages/deleteMessage',
     editMessage:'/chat/messages/editMessage',
     getMessageById:'/chat/messages',
+    unreadedMessages:'/chat/messages/unReadedMessages',
+    markAsRead:'/chat/messages/markAsRead'
    
 }
 

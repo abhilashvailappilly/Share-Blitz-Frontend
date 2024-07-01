@@ -5,7 +5,6 @@ import { toast } from "react-toastify"
 import messageSendSound from '../../public/Sounds/mixkit-message-pop-alert-2354.mp3'
 import { GetRecentChats } from "@/Api/user/chatApiMethods"
 // import CustomMessageToast from "@/Components/icons/ToastMessage"
-import CustomMessageToast, { CustomMessageToastProps } from "@/Components/icons/ToastMessage"; // Adjust the path as needed
 import { useNotificationStore } from "@/ZustandStore/notificationStore"
 import { Notification } from "@/Types/User/Notifications"
 
@@ -30,25 +29,21 @@ const useListenMessages = ()=>{
         fetchRecentChats()
         const sound = new Audio(messageSendSound)
         sound.play()
-        toast.warning('sound played')
-        console.log("new message", newMessage);
-        setMessages([...messages, newMessage]);
-        console.log("mmessage", messages);
+        if(newMessage?.senderId === selectedUser?._id){
+            setMessages([...messages, newMessage]);
+        } 
 
         if(newMessage.senderId != selectedUser?._id) {
-            toast.warning("notifiaction sended")
             if(socket)
                 socket.emit('createNotification',{type:'NEWMESSAGE',senderId:newMessage.senderId})
         } 
 
     };
     const handleEditMessage = (editedMessage: Message) => {
-        console.log("edit message", editedMessage);
         const updatedUsers = messages.filter((user :Message) => user._id !== editedMessage?._id);
         setMessages([...updatedUsers,editedMessage]);
     };
     const handleDeletedMessage = (deletedMessage: string) => {
-        console.log("deleted message", deletedMessage);
         toast.warning("Message deleted");
 
         const updatedUsers = messages.filter((user :Message) => user._id !== deletedMessage);
@@ -56,13 +51,14 @@ const useListenMessages = ()=>{
 
     };
     const handleNewNotification = (newNotification:Notification ) => {
-        toast(
-          "new notification received"
-        );
+        // toast(
+        //   "new notification received"
+        // );
         setNotifications([...notifications,newNotification])
-        console.log('new notification :',newNotification)
     };
-
+    const handleMessagesMarkedAsRead=()=>{
+        fetchRecentChats()
+    }
     const fetchRecentChats = async ()=>{
         const response = await GetRecentChats();
         if (response.success) {
@@ -72,6 +68,7 @@ const useListenMessages = ()=>{
     const handleMessageSended=()=>{
         fetchRecentChats()
     }
+  
 
     socket?.on("typing", handleTyping);
     socket?.on("stoppedTyping", handleStoppedTyping);
@@ -80,6 +77,8 @@ const useListenMessages = ()=>{
     socket?.on("editedMessage", handleEditMessage);
     socket?.on("deletedMessage", handleDeletedMessage);
     socket?.on("newNotification", handleNewNotification);
+    socket?.on("messagesMarkedAsRead", handleMessagesMarkedAsRead);
+    
 
     return () => {
         socket?.off("typing", handleTyping);
@@ -89,6 +88,7 @@ const useListenMessages = ()=>{
         socket?.off("deletedMessage", handleDeletedMessage);
         socket?.off("editedMessage", handleEditMessage);
         socket?.off("newNotification", handleNewNotification);
+        socket?.on("messagesMarkedAsRead", handleMessagesMarkedAsRead);
 
     };
  },[socket,setMessages,messages])

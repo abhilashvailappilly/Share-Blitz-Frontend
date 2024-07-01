@@ -1,14 +1,12 @@
 import ChatMessageLoader from '@/Components/Skeleton/SkeletonChat';
-import { useDarkMode } from '@/Context/DarkModeContext';
 import UseGetMessages from '@/hooks/UseGetMessages';
 import SingleMessages from './SingleMessages';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import useListenMessages from '@/hooks/UseListenMessages';
+import { useEffect, useRef, useState } from 'react';
 import TypingIndicator from './TypingIndicator';
 import { useChatStore } from '@/ZustandStore/chatStore';
+import { UpdateMessagesAsSeen } from '@/Api/user/chatApiMethods';
 
 const MessagesContainer = () => {
-    const { isDarkMode } = useDarkMode();
     const { selectedUser, typing } = useChatStore();
     const { messages, loading } = UseGetMessages();
     const [isLoading,setIsLoading] = useState<boolean>(true)
@@ -18,9 +16,16 @@ const MessagesContainer = () => {
     if (!selectedUser) return null;
 
     const isTyping = typing.includes(selectedUser._id);
+    
+    const updateMessagesAsSeen = async()=>{
+        try {
+            const response = await UpdateMessagesAsSeen(selectedUser?._id)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     useEffect(() => {
-        // Scroll to the last message when messages are updated
         const scrollToLastMessage = () => {
             if (lastMessageRef.current) {
                 lastMessageRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -28,8 +33,8 @@ const MessagesContainer = () => {
             }
         };
 
-        // Use a timeout to ensure the DOM has updated
         const timer = setTimeout(scrollToLastMessage, 100);
+        updateMessagesAsSeen()
         setIsLoading(false);
         return () => clearTimeout(timer);
     }, [messages]);
@@ -48,6 +53,8 @@ const MessagesContainer = () => {
             </div>
         )
     }
+
+   
 
     return (
         <div className='flex-grow p-4 overflow-y-auto'>

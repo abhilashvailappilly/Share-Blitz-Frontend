@@ -37,6 +37,7 @@ const SingleMessages: React.FC<SingleMessagesInterface> = ({ key, message }) => 
         }
         setTimeout(()=>{
             setIsShake(false)
+            
         },200)
     }, []);
 

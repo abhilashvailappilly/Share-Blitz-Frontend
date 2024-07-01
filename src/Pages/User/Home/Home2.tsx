@@ -14,6 +14,7 @@ import { HashLoader } from 'react-spinners';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import useAppSelector from '@/hooks/UseSelector';
 import { useDarkMode } from '@/Context/DarkModeContext';
+import Layout from '@/Layout';
 
 interface SuggestionI {
   name: string;
@@ -108,9 +109,10 @@ const Home2: React.FC = () => {
 
   return (
     <>
-      <div className={`flex bg-gray-900 ${isDarkMode ? 'dark' : ''}`}>
-        <Navbar />
-        <Sidebar2 />
+     <Layout>
+     <div className={`flex bg-gray-900 ${isDarkMode ? 'dark' : ''}`}>
+        {/* <Navbar />
+        <Sidebar2 /> */}
 
         <div className="md:ml-auto">
           <div
@@ -156,6 +158,8 @@ const Home2: React.FC = () => {
           )}
         </div>
       </div>
+   </Layout>
+     
     </>
   );
 };

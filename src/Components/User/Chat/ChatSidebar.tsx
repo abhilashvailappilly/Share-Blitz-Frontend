@@ -40,9 +40,6 @@ const ChatSidebar: React.FC<ChatSidebarProps> = React.memo(({ onUserSelect }) =>
   useEffect(() => {
     fetchRecentChats();
   }, []);
-  useEffect(() => {
-console.log('recent chaets,',recentChats)
-  }, [recentChats]);
 
 
   const fetchRecentChats = async () => {
@@ -131,6 +128,7 @@ console.log('recent chaets,',recentChats)
                   <ListUsersSidebar
                     key={index}
                     isSearching={false}
+                    roomId={user?.room?._id}
                     user={user.participantsDetails[0]}
                     lastMessage= {user.room.lastMessage}
                     doFunction={handleUserClick}
