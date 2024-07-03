@@ -3,6 +3,7 @@ import { FC, ReactNode, createContext, useContext, useEffect, useState } from "r
 import { io, Socket } from "socket.io-client";
 import useAppSelector from "@/hooks/UseSelector";
 import { useChatStore } from "@/ZustandStore/chatStore";
+import { toast } from "react-toastify";
 
 interface SocketContextInterface {
   onlineUsers: string[];
@@ -30,6 +31,7 @@ export const SocketContextProvider: FC<SocketContextProviderProps> = ({ children
   const setOnlineUsersStore = useChatStore((state) => state.setOnlineUsers);
   const setSocketStore = useChatStore((state) => state.setSocket);
   const userInfo = useAppSelector(state => state.auth.userInfo);
+  const adminInfo = useAppSelector(state => state.auth.adminInfo);
 
   const setOnlineUsers: React.Dispatch<React.SetStateAction<string[]>> = (value) => {
     if (typeof value === 'function') {
@@ -40,25 +42,23 @@ export const SocketContextProvider: FC<SocketContextProviderProps> = ({ children
   };
 
   useEffect(() => {
-    if (userInfo) {
+    console.log('admin info',adminInfo)
+    if (userInfo || adminInfo ) {
       const newSocket = io(BACKENDURL, {
         query: {
-          userId: userInfo._id
+          userId: userInfo?._id || adminInfo?._id
         }
       });
       setSocket(newSocket);
       setSocketStore(newSocket)
 
       newSocket.on("getOnlineUsers", (users) => {
-        // toast.info("get online")
+        toast.info("get online")
+        
         console.log("received get users:", users);
         setOnlineUsers(users);
       });
 
-      // newSocket.on("newMessage", (users) => {toast.info("new messaes")
-      //   console.log("received get users:", users);
-      //   setOnlineUsers(users);
-      // });
 
       return () => {
         newSocket.close();
@@ -69,7 +69,7 @@ export const SocketContextProvider: FC<SocketContextProviderProps> = ({ children
         setSocket(null);
       }
     }
-  }, [userInfo]);
+  }, [userInfo,adminInfo]);
 
   return (
     <SocketContext.Provider value={{ onlineUsers, setOnlineUsers }}>

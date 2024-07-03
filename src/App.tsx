@@ -27,7 +27,7 @@ function App() {
         rtl={false}
         theme={isDarkMode ? "dark" : "light"}
         draggable
-        pauseOnHover />
+         />
         <Toaster/>
     <Router>
           <Routes>

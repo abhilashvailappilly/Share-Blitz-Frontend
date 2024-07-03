@@ -8,7 +8,7 @@ interface ProfilePicProps {
 const ProfilePic: React.FC<ProfilePicProps> = ({ styleProp, image }) => {
   return (
     <>
-      <img src={image} alt="" className={styleProp} />
+      <img loading='lazy' src={image} alt="" className={styleProp} />
     </>
   );
 }

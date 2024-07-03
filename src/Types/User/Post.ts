@@ -7,7 +7,8 @@ export interface PostI {
     tag: string[];
     taggedUsers:[taggedUsers]
     likesDetails: LikesDetails;
-    commentsDetails:CommentDetails
+    commentsDetails:CommentDetails,
+    creationTime:Date
   }
   export interface Like {
     userId: string;

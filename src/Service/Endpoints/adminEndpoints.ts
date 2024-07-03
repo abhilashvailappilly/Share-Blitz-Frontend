@@ -12,7 +12,9 @@ const adminRoutes={
     changeActionStatus:"/admin/changeActionStatus",
     deletePost :'/admin/deletePost',
     getVerificationData:'/admin/getVerificationData',
-    approveVerificationRequest:'/admin/approveVerificationRequest'
+    approveVerificationRequest:'/admin/approveVerificationRequest',
+    cardsData : '/admin/dashboard/cardsData'
+
 }
 
 export default adminRoutes;

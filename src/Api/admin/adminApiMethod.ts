@@ -170,3 +170,14 @@ export const GetAllPosts = async ( ) => {
         console.log(error)
     }
 }
+
+
+export const FetchDashBoardCardsData = async ( ) => {
+    try {
+        const res = await apiCall('get',adminRoutes.cardsData ,{},false)
+        return res.data
+
+    } catch (error) {
+        console.log(error)
+    }
+}

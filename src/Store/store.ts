@@ -8,7 +8,7 @@ import { FollowingsInterface } from '../Types/User/Connections'
 export interface RootState {
     auth: {
         userInfo: ProfileDataInterface
-        adminInfo:string
+        adminInfo:ProfileDataInterface
     }
     post:{
         myPosts:[]

@@ -88,7 +88,7 @@ const useListenMessages = ()=>{
         socket?.off("deletedMessage", handleDeletedMessage);
         socket?.off("editedMessage", handleEditMessage);
         socket?.off("newNotification", handleNewNotification);
-        socket?.on("messagesMarkedAsRead", handleMessagesMarkedAsRead);
+        socket?.off("messagesMarkedAsRead", handleMessagesMarkedAsRead);
 
     };
  },[socket,setMessages,messages])
