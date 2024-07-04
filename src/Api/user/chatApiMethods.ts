@@ -119,3 +119,15 @@ export const UpdateMessagesAsSeen= async (selectedUserId : string,) => {
 
     }
 }
+
+// @dec     Create group chat  
+// method    Post
+export const CreateGroupChat = async (groupName : string,participants : string[]) => {
+    try {
+        const res = await apiCall('post',chatRoutes.createGroupChat ,{groupName,participants},false)
+        return res.data
+
+    } catch (error) {
+        console.log(error)
+    }
+}

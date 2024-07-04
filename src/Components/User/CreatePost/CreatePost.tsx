@@ -14,6 +14,7 @@ import useAppSelector from '../../../hooks/UseSelector';
 import UserList from '../EditPost/UserList';
 import { createPost } from '@/Api/user/authApiMethod';
 import CropImage from '@/Components/options/CropImage';
+import { debounce } from '@/utils/helpers/Debounce';
 
 interface TaggedUser {
   userId: string;
@@ -46,13 +47,7 @@ const EditPost = () => {
     taggedUsers: [] as TaggedUser[],
   });
 
-  function debounce(func: Function, wait: number) {
-    let timeout: NodeJS.Timeout;
-    return (...args: any[]) => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func(...args), wait);
-    };
-  }
+
 
 
 
@@ -213,7 +208,7 @@ if(isLoading){
           setimgSelected={setSelectedImg}
         />
       ) : null}
-      <h3 className="text-2xl underline font-extrabold dark:text-white text-black mb-4">Edit Post</h3>
+      <h3 className="text-2xl underline font-extrabold dark:text-white text-black mb-4">Create Post</h3>
   
       <Formik
   initialValues={initialFormValues}

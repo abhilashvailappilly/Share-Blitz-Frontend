@@ -14,7 +14,7 @@ export interface Message {
 }
 
 
-interface Room {
+export interface Room {
     _id: string;
     createdAt: string;
     isGroupChat: boolean;

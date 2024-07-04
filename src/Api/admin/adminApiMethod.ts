@@ -161,9 +161,9 @@ export const TooglePostIsBlocked = async (postId:string ) => {
     }
 }
 
-export const GetAllPosts = async ( ) => {
+export const GetAllPosts = async ( limit  : number) => {
     try {
-        const res = await apiCall('get',adminRoutes.getAllPosts ,{},false)
+        const res = await apiCall('get',`${adminRoutes.getAllPosts}/${limit}` ,{},false)
         return res.data
 
     } catch (error) {
@@ -181,3 +181,7 @@ export const FetchDashBoardCardsData = async ( ) => {
         console.log(error)
     }
 }
+
+
+
+

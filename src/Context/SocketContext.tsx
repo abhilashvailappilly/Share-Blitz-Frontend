@@ -53,8 +53,6 @@ export const SocketContextProvider: FC<SocketContextProviderProps> = ({ children
       setSocketStore(newSocket)
 
       newSocket.on("getOnlineUsers", (users) => {
-        toast.info("get online")
-        
         console.log("received get users:", users);
         setOnlineUsers(users);
       });

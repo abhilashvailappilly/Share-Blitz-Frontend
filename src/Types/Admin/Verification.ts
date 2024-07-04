@@ -7,6 +7,7 @@ export default interface VerificationInterface {
     payment: {
       plan?: '10 days' | '20 days' | '30 days';
       paymentStatus: 'Done' | 'Pending';
+      amount?:number
       startDate?: Date;
       endDate?: Date;
     };

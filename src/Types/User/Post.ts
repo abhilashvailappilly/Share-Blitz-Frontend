@@ -5,6 +5,7 @@ export interface PostI {
     caption: string;
     imageUrl: string;
     tag: string[];
+    isBlocked:boolean
     taggedUsers:[taggedUsers]
     likesDetails: LikesDetails;
     commentsDetails:CommentDetails,

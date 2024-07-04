@@ -40,6 +40,9 @@ function TableData({ posts, updatedUsers,setLoading }: Props) {
         fetchReportData()
     //    posts ? fetchReportData() :""
     },[postData])
+    useEffect(()=>{
+        setPostData(posts)
+    },[posts])
     const fetchUserData = async()=>{
          setLoading?.(true)
         const response = await getUserById(posts.userId)
@@ -103,7 +106,7 @@ function TableData({ posts, updatedUsers,setLoading }: Props) {
 
             <td className="py-4 px-4 whitespace-nowrap ">
                 <div className="flex items-center">
-                    <img src={posts?.imageUrl ||"https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D" } 
+                    <img src={postData?.imageUrl || "" } 
                     alt="Profile" className="h-10 w-10" /> 
                     <div className="ml-4">
                         {/* <div className="text-sm font-medium text-gray-900 dark:text-white">{userData?.name}</div> */}

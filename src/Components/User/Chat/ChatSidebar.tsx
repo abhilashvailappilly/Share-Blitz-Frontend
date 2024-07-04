@@ -6,6 +6,8 @@ import React from 'react';
 import ListUsersSidebar from './ListUsersSidebar';
 import { GetRecentChats } from '@/Api/user/chatApiMethods';
 import { useChatStore } from '@/ZustandStore/chatStore';
+import CreateGroupChatModal from './GroupChat/CreateGroupChatModal';
+import ListGroupChatsInSidebar from './GroupChat/ListGroupChatsInSidebar';
 
 interface ChatSidebarProps {
   onUserSelect: (user: ProfileDataInterface) => void;
@@ -14,7 +16,7 @@ interface Room {
   _id: string;
   createdAt: string;
   isGroupChat: boolean;
-  messages: string[]; // Assuming message IDs are strings
+  messages: string[]; 
   name: string;
   lastMessage:string;
   participants: string[]; // Array of participant IDs
@@ -37,6 +39,10 @@ const ChatSidebar: React.FC<ChatSidebarProps> = React.memo(({ onUserSelect }) =>
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const [active,setActive] = useState<{chat:boolean,groupChat:boolean}>
+  ({chat:true,groupChat:false})
+  const [showCreateGroupChatModal,setShowCreateGroupChatModal] = useState<boolean>(false)
+
   useEffect(() => {
     fetchRecentChats();
   }, []);
@@ -46,6 +52,7 @@ const ChatSidebar: React.FC<ChatSidebarProps> = React.memo(({ onUserSelect }) =>
     try {
       const response = await GetRecentChats();
       if (response.success) {
+        console.log('recent chats :',response.data.users)
         setRecentChats(response.data.users);
       }
     } catch (error) {
@@ -106,6 +113,21 @@ const ChatSidebar: React.FC<ChatSidebarProps> = React.memo(({ onUserSelect }) =>
           className={`w-full p-2 border rounded ${isDarkMode ? 'bg-gray-800 text-white border-gray-600' : 'bg-white text-black border-gray-300'}`}
         />
       </div>
+      <div className='w-full  h-[50px] flex gap-1'>
+        <div className={`w-3/4 h-full flex justify-center items-center cursor-pointer ${
+              active.chat ? 'border-b-4 rounded-lg bg-gray-200 dark:bg-gray-700' : 'hover:border-b-4 '
+            } rounded`}
+            onClick={()=>setShowCreateGroupChatModal(!showCreateGroupChatModal)}
+            >
+           <span className='font-bold dark:text-white text-black'> + Create a group chat</span>
+        </div>
+        <div className={`w-1/4 h-full flex justify-center items-center cursor-pointer ${
+              active.chat ? 'border-b-4 rounded-lg bg-gray-200 dark:bg-gray-700' : 'hover:border-b-4 '
+            } rounded`}>
+              Search Chat
+        </div>
+      
+      </div>
       <div className='p-4 overflow-y-auto h-5/6'>
         <ul>
           {isFocused && searchInput ? (
@@ -125,6 +147,16 @@ const ChatSidebar: React.FC<ChatSidebarProps> = React.memo(({ onUserSelect }) =>
               <h1 className={`p-2 ${isDarkMode ? 'text-white' : 'text-black'} font-bold text-xl`}>Recent chats</h1>
               {recentChats.length > 0
                 ? recentChats.map((user,index) => (
+                  user?.room?.isGroupChat ? 
+                  <ListGroupChatsInSidebar
+                   key={index}
+                    
+                    room={user?.room}
+                    user={user.participantsDetails[0]}
+                    lastMessage= {user.room.lastMessage}
+                    doFunction={handleUserClick}
+                  />
+                  :
                   <ListUsersSidebar
                     key={index}
                     isSearching={false}
@@ -140,6 +172,7 @@ const ChatSidebar: React.FC<ChatSidebarProps> = React.memo(({ onUserSelect }) =>
           )}
         </ul>
       </div>
+      <CreateGroupChatModal showCreateGroupChatModal={showCreateGroupChatModal} setShowCreateGroupChatModal={setShowCreateGroupChatModal}/>
     </div>
   );
 });

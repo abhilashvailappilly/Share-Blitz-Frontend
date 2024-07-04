@@ -13,7 +13,7 @@ const adminRoutes={
     deletePost :'/admin/deletePost',
     getVerificationData:'/admin/getVerificationData',
     approveVerificationRequest:'/admin/approveVerificationRequest',
-    cardsData : '/admin/dashboard/cardsData'
+    cardsData : '/admin/dashboard/cardsData',
 
 }
 

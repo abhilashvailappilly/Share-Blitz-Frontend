@@ -7,7 +7,8 @@ const chatRoutes={
     editMessage:'/chat/messages/editMessage',
     getMessageById:'/chat/messages',
     unreadedMessages:'/chat/messages/unReadedMessages',
-    markAsRead:'/chat/messages/markAsRead'
+    markAsRead:'/chat/messages/markAsRead',
+    createGroupChat:'/chat/groupChat',
    
 }
 

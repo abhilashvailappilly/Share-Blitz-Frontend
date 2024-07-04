@@ -8,7 +8,7 @@ const MessagesPage = () => {
   
   return (
    <Layout>
-    { <ChatContainer/>}
+     <ChatContainer/>
    </Layout>
   )
 }

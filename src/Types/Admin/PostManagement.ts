@@ -10,6 +10,8 @@ export interface PostInterface {
     likesDetails: LikesDetails;
     commentsDetails:CommentDetails
     isBlocked:boolean
+    creationTime:Date
+
 }
 
 export interface Like {
