@@ -186,6 +186,8 @@ export const Glogin = async ( email: string) => {
 // method    get
 export const getUser = async ( userId: string) => {
     try {
+        if(!userId)
+            return 
         const res = await apiCall('get',postRoutes.getUser,{userId},false)
         console.log('get usr ;',res.data)
         return res?.data

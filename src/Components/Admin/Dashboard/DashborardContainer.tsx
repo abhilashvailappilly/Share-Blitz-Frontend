@@ -116,7 +116,7 @@ const DashboardContainer = () => {
 
   return (
    
-      <div className="flex flex-col bg-white  w-full mt-20 p-4 flex-grow  overflow-scroll no-scrollbar">
+      <div className="flex flex-col bg-white  w-full mt-1 p-4 flex-grow  overflow-scroll no-scrollbar">
         
       <TopCards/>
       <Graphs/>

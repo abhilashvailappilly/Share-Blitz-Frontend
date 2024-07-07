@@ -112,7 +112,7 @@ const Sidebar2 = () => {
           <li>
             <Link to="/notifications" className="flex justify-center items-center p-2 rounded-lg hover:bg-green-900 hover:text-white font-bold">
               <IconNotifications />
-              {notifications?.length}
+              {/* {notifications?.length} */}
               <span className="lg:block hidden flex-1 ms-3 whitespace-nowrap">Notifications</span>
             </Link>
           </li>

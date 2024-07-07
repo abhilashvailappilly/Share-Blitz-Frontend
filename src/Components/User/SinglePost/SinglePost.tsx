@@ -72,6 +72,8 @@ const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, open
   }, []);
 
   useEffect(() => {
+    console.log("useeffect post id ............................................")
+    console.log(post.userId)
     getUser(post?.userId)
       .then((response: { success: Boolean; user: User }) => {
         setPostUser(response?.user);
@@ -197,4 +199,4 @@ const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, open
 };
 
 export default memo(SinglePost);
-``
+

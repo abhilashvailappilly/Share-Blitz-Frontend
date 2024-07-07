@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux'; 
 import { toast } from 'react-toastify';
 import { Formik, Field, Form, ErrorMessage, FormikErrors } from 'formik';
 import * as Yup from 'yup';
 import { ChangePassword, SendOtp, VerifyForgetPasswordOtp } from '../../../Api/user/authApiMethod';
-import { verify } from 'crypto';
 
 const Forgetpassword: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [otpVerified, setOtpVerified] = useState<boolean>(false);
   const [otpSend, setOtpSend] = useState<boolean>(false);
   const [showSendOtpButton , setShowSendOtpButton] = useState<boolean>(true)

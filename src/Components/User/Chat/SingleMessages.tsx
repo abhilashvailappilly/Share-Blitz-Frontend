@@ -6,13 +6,15 @@ import useAppSelector from '@/hooks/UseSelector';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import ShowUserName from './GroupChat/ShowUserName';
+import IconUnavailable from '@/Components/icons/IconUnavailable';
 
 interface SingleMessagesInterface {
-    key: number;
+    // key: number;
     message: Message;
 }
 
-const SingleMessages: React.FC<SingleMessagesInterface> = ({ key, message }) => {
+const SingleMessages: React.FC<SingleMessagesInterface> = ({  message }) => {
     const { isDarkMode } = useDarkMode();
     const userInfo = useAppSelector(state => state.auth.userInfo);
     const selectedUser = useChatStore((state) => state.selectedUser);
@@ -23,7 +25,7 @@ const SingleMessages: React.FC<SingleMessagesInterface> = ({ key, message }) => 
     const [editText, setEditText] = useState<string>(message.text); // State for edit text
     const [editModalOpen, setEditModalOpen] = useState<boolean>(false); // State for edit modal visibility
     const formattedTime = moment(message.updatedAt).format('hh:mm A');
-    const { messages, setMessages } = useChatStore();
+    const { messages, setMessages ,selectedRoom} = useChatStore();
     const [isShake,setIsShake] = useState<boolean>(false)
 
     const createdTime = moment(message.createdAt);
@@ -80,11 +82,21 @@ const SingleMessages: React.FC<SingleMessagesInterface> = ({ key, message }) => 
     }
 
     return (
-        <div key={key} className={`flex ${isShake ? "animate-shake" :""} items-start gap-2.5 ${fromMe ? 'justify-end' : ''}`}>
+        <div className={`flex ${isShake ? "animate-shake" :""} items-start gap-2.5 ${fromMe ? 'justify-end' : ''}`}>
             <div className={`flex flex-col gap-1 max-w-[320px] ${fromMe ? 'items-end' : ''}`}>
                 <div className="flex items-center b space-x-2.5">
                    
                 </div>
+                {
+                    message.isDeleted ? (
+                        <div className="flex items-center gap-2 p-2 dark:bg-gray-700 bg-white rounded-md">
+                            <IconUnavailable/>
+                            <span className="dark:text-white text-black ">This message is  deleted</span>
+                         </div>
+
+                    ) : 
+                
+            ( <>{  selectedRoom && (message?.senderId !=userInfo._id) && <ShowUserName userId={message?.senderId} />}
                 <div className='flex'>
                     <div className={`flex flex-col leading-1.5 p-4 border-gray-200 ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'} ${!fromMe ? 'rounded-r-xl rounded-es-xl' : 'rounded-tl-xl rounded-bl-xl rounded-br-xl'}`}>
                         {/* Render message text */}
@@ -113,10 +125,14 @@ const SingleMessages: React.FC<SingleMessagesInterface> = ({ key, message }) => 
                         </svg>
                     </button>
                 </div>
+                </>
+                ) }
+
                 <div className='flex gap-3'>
                 <span className={`text-[10px] inline-flex ${!fromMe ? 'justify-start' : 'justify-end'} font-normal ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{formattedTime}</span>
                {message?.isEdited && <span className='font text-white' style={{ fontSize: '10px' }}>Edited</span>}
                 </div>
+               
             </div>
 
             <div  id="dropdownDots" className={` ${fromMe ? "order-first" :""}  z-10 ${showOptions ? 'block' : 'hidden'} text-white dark:bg-gray-700 divide-y divide-gray-100 dark:divide-gray-600 rounded-lg shadow w-40 ${fromMe ? 'ml-2' : 'mr-2'}`}>

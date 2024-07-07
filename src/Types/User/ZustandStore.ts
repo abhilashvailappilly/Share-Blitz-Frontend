@@ -9,6 +9,8 @@ export interface Message {
     receiverId:string
     isShake?: boolean
     isEdited:boolean
+    isDeleted:boolean
+    isDeletedFromMe:boolean
     createdAt:Date
     updatedAt:Date
 }

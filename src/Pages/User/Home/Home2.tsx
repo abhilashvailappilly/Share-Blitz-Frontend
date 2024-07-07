@@ -126,7 +126,7 @@ const Home2: React.FC = () => {
               next={fetchMorePosts}
               hasMore={hasMore}
               loader={
-                <div className="flex justify-center items-center py-4">
+                <div className="flex h-screen justify-center items-center py-4">
                   <HashLoader color="#36d7b7" />
                 </div>
               }

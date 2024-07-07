@@ -10,7 +10,7 @@ import { Notification } from "@/Types/User/Notifications"
 
 const useListenMessages = ()=>{
 
- const {messages,setMessages,selectedUser,typing,setTypingUsers,socket,setRecentChats} = useChatStore()
+ const {messages,setMessages,selectedUser,typing,setTypingUsers,socket,setRecentChats,selectedRoom} = useChatStore()
  const {notifications,setNotifications} = useNotificationStore()
 
  useEffect(() => {
@@ -31,6 +31,25 @@ const useListenMessages = ()=>{
         sound.play()
         if(newMessage?.senderId === selectedUser?._id){
             setMessages([...messages, newMessage]);
+        } 
+
+        if(newMessage.senderId != selectedUser?._id) {
+            if(socket)
+                socket.emit('createNotification',{type:'NEWMESSAGE',senderId:newMessage.senderId})
+        } 
+
+    };
+    const handleNewGroupChatCreated = ()=>{
+        fetchRecentChats()
+    }
+    const handleNewGroupMessage =async (newMessage: any) => {
+        newMessage.isShake =true
+        // socket?.emit('fetchRecentChats')
+        fetchRecentChats()
+        const sound = new Audio(messageSendSound)
+        sound.play()
+        if(newMessage?.roomId === selectedRoom?._id){
+            setMessages([...messages, newMessage?.message]);
         } 
 
         if(newMessage.senderId != selectedUser?._id) {
@@ -73,6 +92,8 @@ const useListenMessages = ()=>{
     socket?.on("typing", handleTyping);
     socket?.on("stoppedTyping", handleStoppedTyping);
     socket?.on("newMessage", handleNewMessage);
+    socket?.on("newGroupChatCreated", handleNewGroupChatCreated);
+    socket?.on("newGroupMessage", handleNewGroupMessage);
     socket?.on("messageSended",handleMessageSended );
     socket?.on("editedMessage", handleEditMessage);
     socket?.on("deletedMessage", handleDeletedMessage);
@@ -85,6 +106,8 @@ const useListenMessages = ()=>{
         socket?.off("stoppedTyping", handleStoppedTyping);
         socket?.off("messageSended", handleMessageSended);
         socket?.off("newMessage", handleNewMessage);
+        socket?.off("newGroupChatCreated", handleNewGroupChatCreated);
+        socket?.off("newGroupMessage", handleNewGroupMessage);
         socket?.off("deletedMessage", handleDeletedMessage);
         socket?.off("editedMessage", handleEditMessage);
         socket?.off("newNotification", handleNewNotification);

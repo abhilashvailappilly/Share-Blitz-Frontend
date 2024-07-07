@@ -3,6 +3,7 @@ import { useDarkMode } from '@/Context/DarkModeContext';
 import {  useEffect, useCallback, lazy, Suspense } from 'react';
 import ProfileDataInterface from '@/Types/User/userProfile';
 import { useChatStore } from '@/ZustandStore/chatStore';
+import LoaderSpinner from '@/Components/Common/Loader/LoaderSpinner';
 // import MessageSection from './MessageSection';
 
 const ChatSidebar = lazy(() => import('./ChatSidebar'));
@@ -17,7 +18,7 @@ const ChatContainer = () => {
   const isSidebarVisible = useChatStore((state) => state.isSidebarVisible);
   const setSelectedUser = useChatStore((state) => state.setSelectedUser);
   const setIsSidebarVisible = useChatStore((state) => state.setSidebarVisible);
-
+  const {setSelectedRoom} = useChatStore()
   // useEffect(()=>{
   //   console.log("online users",onlineUsers)
   //   if(selectedUser?._id)
@@ -27,7 +28,8 @@ const ChatContainer = () => {
 
   const handleUserSelect = useCallback((user: ProfileDataInterface) => {
 
-    // setSelectedUser(null);
+    setSelectedUser(null);
+    setSelectedRoom(null)
     setSelectedUser(user);
     if (window.innerWidth < 768) {
       setIsSidebarVisible(false);
@@ -61,11 +63,11 @@ const ChatContainer = () => {
   return (
     <div className={`w-full h-screen ${isDarkMode ? 'bg-gray-800' : 'bg-emerald-200'} flex`}>
       {isSidebarVisible && (
-      <Suspense fallback={<div>Loading Sidebar...</div>}>
+      <Suspense fallback={<div className='w-full h-screen flex  justify-center items-center'><LoaderSpinner/></div>}>
        <ChatSidebar onUserSelect={handleUserSelect} />
         </Suspense>
       )}
-      <Suspense fallback={<div>Loading Chat...</div>}>
+      <Suspense fallback={<div className='w-full h-screen flex  justify-center items-center'><LoaderSpinner/></div>}>
         <MessageSection />
       </Suspense>
       

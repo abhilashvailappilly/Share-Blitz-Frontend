@@ -7,7 +7,11 @@ import ListUsersSidebar from './ListUsersSidebar';
 import { GetRecentChats } from '@/Api/user/chatApiMethods';
 import { useChatStore } from '@/ZustandStore/chatStore';
 import CreateGroupChatModal from './GroupChat/CreateGroupChatModal';
-import ListGroupChatsInSidebar from './GroupChat/ListGroupChatsInSidebar';
+import { toast } from 'react-toastify';
+import ListGroupChatsInSidebar from './GroupChat/ListGroupChatsInsideSidebar';
+import useAppSelector from '@/hooks/UseSelector';
+import { userInfo } from 'os';
+import { useToast } from '@/Components/ui/use-toast';
 
 interface ChatSidebarProps {
   onUserSelect: (user: ProfileDataInterface) => void;
@@ -34,10 +38,13 @@ const ChatSidebar: React.FC<ChatSidebarProps> = React.memo(({ onUserSelect }) =>
   const [allUsers, setAllUsers] = useState<ProfileDataInterface[]>([]);
   const [searchedUsers, setSearchedUsers] = useState<ProfileDataInterface[]>([]);
   // const [recentChat, setRecentChat] = useState<ChatRoom[]>([]);
-  const {recentChats,setRecentChats} = useChatStore((state) => state)
+  const {recentChats,setRecentChats,setSelectedRoom} = useChatStore((state) => state)
   const [searchInput, setSearchInput] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const {setSidebarVisible ,setSelectedUser} = useChatStore()
+  const userInfo = useAppSelector(state => state.auth.userInfo);
+  const {toast: toaster} = useToast()
 
   const [active,setActive] = useState<{chat:boolean,groupChat:boolean}>
   ({chat:true,groupChat:false})
@@ -71,14 +78,28 @@ const ChatSidebar: React.FC<ChatSidebarProps> = React.memo(({ onUserSelect }) =>
   }, [searchInput, allUsers]);
 
   const handleUserClick = useCallback((user: ProfileDataInterface) => {
-    // if (!recentChat.some(chat => chat._id === user._id)) {
-    //   setRecentChat([user, ...recentChat]);
-    // }
+  
+    if(user._id === userInfo._id)
+      return toaster({
+				title: "You cannot chat with yourself",
+			});
+		
     setSearchInput('');
     inputRef.current?.blur();
     onUserSelect(user);
   }, [onUserSelect, recentChats]);
 
+  const handleUserClickGroupChat = useCallback((room: Room) => {
+    
+    setSelectedUser(null);
+    setSelectedRoom(null)
+    setSelectedRoom(room)
+    if (window.innerWidth < 768) {
+      setSidebarVisible(false);
+    }
+
+  }, [ ]);
+  
   useEffect(() => {
     const fetchUserDetails = async () => {
       if (searchInput.trim() === '') {
@@ -113,22 +134,23 @@ const ChatSidebar: React.FC<ChatSidebarProps> = React.memo(({ onUserSelect }) =>
           className={`w-full p-2 border rounded ${isDarkMode ? 'bg-gray-800 text-white border-gray-600' : 'bg-white text-black border-gray-300'}`}
         />
       </div>
+      
+      <div className='p-4 overflow-y-auto h-5/6 no-scrollbar'>
       <div className='w-full  h-[50px] flex gap-1'>
-        <div className={`w-3/4 h-full flex justify-center items-center cursor-pointer ${
+        <div className={`w-full h-full flex justify-center items-center cursor-pointer ${
               active.chat ? 'border-b-4 rounded-lg bg-gray-200 dark:bg-gray-700' : 'hover:border-b-4 '
             } rounded`}
             onClick={()=>setShowCreateGroupChatModal(!showCreateGroupChatModal)}
             >
-           <span className='font-bold dark:text-white text-black'> + Create a group chat</span>
+           <span className='font-bold dark:text-white text-black'> + Create a group</span>
         </div>
-        <div className={`w-1/4 h-full flex justify-center items-center cursor-pointer ${
+        {/* <div className={`w-1/4 h-full flex justify-center items-center cursor-pointer ${
               active.chat ? 'border-b-4 rounded-lg bg-gray-200 dark:bg-gray-700' : 'hover:border-b-4 '
             } rounded`}>
               Search Chat
-        </div>
+        </div> */}
       
       </div>
-      <div className='p-4 overflow-y-auto h-5/6'>
         <ul>
           {isFocused && searchInput ? (
             <>
@@ -150,11 +172,10 @@ const ChatSidebar: React.FC<ChatSidebarProps> = React.memo(({ onUserSelect }) =>
                   user?.room?.isGroupChat ? 
                   <ListGroupChatsInSidebar
                    key={index}
-                    
                     room={user?.room}
                     user={user.participantsDetails[0]}
                     lastMessage= {user.room.lastMessage}
-                    doFunction={handleUserClick}
+                    doFunction={handleUserClickGroupChat}
                   />
                   :
                   <ListUsersSidebar

@@ -10,7 +10,7 @@ interface LayoutProps {
 }
   
   const Layout: React.FC<LayoutProps> = ({ children }) => {
-    const {selectedUser} = useChatStore()
+    const {selectedUser ,selectedRoom} = useChatStore()
     const {callAccepted} = useVideoCallContext()
   return (
    
@@ -22,7 +22,7 @@ interface LayoutProps {
       {!callAccepted ? children : null}
       </div>
     </div>
-   { !selectedUser&&<Navbar />}
+   { (!selectedUser && !selectedRoom)&&<Navbar />}
   </div>
   
   )

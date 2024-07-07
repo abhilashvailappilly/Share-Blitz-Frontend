@@ -52,9 +52,9 @@ const toggleCamera = () => {
       <div className="w-full h-3/4 flex flex-col items-center  justify-center">
         <div className="bg-white w-3/4 h-full mt-2 relative rounded-lg overflow-hidden">
           <video playsInline  ref={userVideo} autoPlay className="w-full h-full object-fill" />
-          <div className="bg-red-900 w-1/6 h-1/6 absolute bottom-0 right-0 m-4 rounded-lg overflow-hidden">
+          {/* <div className="bg-red-900 w-1/6 h-1/6 absolute bottom-0 right-0 m-4 rounded-lg overflow-hidden">
             <video playsInline muted ref={stream} autoPlay className="w-full h-full object-fill" />
-          </div>
+          </div> */}
         </div>
        
       </div>

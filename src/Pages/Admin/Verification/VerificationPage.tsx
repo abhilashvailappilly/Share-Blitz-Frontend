@@ -1,4 +1,3 @@
-import React from 'react'
 import VerificationContainer from '../../../Components/Admin/Verification/VerificationContainer'
 import Sidebar from '../../../Components/Admin/Sidebar/Sibebar'
 

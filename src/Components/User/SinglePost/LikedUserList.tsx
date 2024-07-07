@@ -6,7 +6,10 @@ import { toast } from 'react-toastify';
 import { FollowUser, UnFollowUser, checkIsFriend } from '../../../Api/user/userApiMethod';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../Store/store';
+import Modal from 'react-modal';
 
+// Set the app element for accessibility
+Modal.setAppElement('#root');
 interface LikedUserListProps {
     userId: string;
     index: number;

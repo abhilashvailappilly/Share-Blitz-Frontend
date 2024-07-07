@@ -9,6 +9,9 @@ const chatRoutes={
     unreadedMessages:'/chat/messages/unReadedMessages',
     markAsRead:'/chat/messages/markAsRead',
     createGroupChat:'/chat/groupChat',
+    sendGroupMessage:'/chat/groupMessage',
+    getMessagesByRoom : '/chat/messages/getAllMessagesByRoom',
+    removeParticipants:'/chat/groupChat/removeParticipants'
    
 }
 

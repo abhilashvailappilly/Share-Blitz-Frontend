@@ -1,4 +1,3 @@
-import React from 'react'
 import CreatePostContainer from '@/Components/User/CreatePost/CreatePostContainer'
 import Sidebar2 from '../../../Components/User/Sidebar/Sidebar2'
 const CreatePost = () => {

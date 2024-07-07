@@ -3,9 +3,9 @@ import { useDarkMode } from "@/Context/DarkModeContext";
 import { Message } from "@/Types/User/ZustandStore";
 import ProfileDataInterface from "@/Types/User/userProfile";
 import { useChatStore } from "@/ZustandStore/chatStore";
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { FaImage, FaImages, FaVideo } from "react-icons/fa";
-import { toast } from "react-toastify";
 
 interface ListUsersSidebarInterface {
     user: ProfileDataInterface;
@@ -70,13 +70,13 @@ const ListUsersSidebar = ({ user, isSearching,roomId,lastMessage, doFunction }: 
                     : 'hover:bg-gray-200 text-black'
             } hover:rounded-xl relative rounded-xl`}
         >
-            <div className={`w-full h-15 flex p-2 items-center gap-3 transition duration-200`}>
-                <div className="rounded-full w-12 h-10 overflow-hidden border-2 border-white shadow-md relative">
+            <div className={`w-full h-15 flex p-2 items-center gap-3 transition duration-200  `}>
+                <div className="rounded-full w-12 h-10 overflow-hidden border-2 border-white shadow-md relative ">
                     <img src={user?.profileImageUrl} className="w-full h-full object-cover" alt="User Profile" />
                 </div>
                 <div className="flex flex-col w-3/4 ">
                     <span
-                        className={`font-semibold flex gap-4 items-center justify-between w-full ${
+                        className={`  font-semibold flex gap-4 items-center justify-between w-full ${
                             isDarkMode ? 'text-white' : 'text-black'
                         }`}
                     >
@@ -92,7 +92,8 @@ const ListUsersSidebar = ({ user, isSearching,roomId,lastMessage, doFunction }: 
                     )}
                     {
                         lastMessageData && 
-                        <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                       
+                        <span className={` text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                        {
                          lastMessageData.videoUrl ?
                              <div className="flex items-center gap-2">
@@ -108,16 +109,21 @@ const ListUsersSidebar = ({ user, isSearching,roomId,lastMessage, doFunction }: 
                        }  
                        
                         </span>
+                       
                     }
                     
                 </div>
-                <div className="w-1/4 flex justify-end gap-6 items-center">
+                <div className="w-2/4  h-full flex justify-end gap-6 items-center">
                 {isOnline && (
                             <div className="w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
                         )}
-                       {unReadedMessages > 0 &&  <div className="rounded-full flex bg-white h-8 w-8 items-center justify-center">
-                            <span className="text-black font-bold">{unReadedMessages || ""}</span>
-                         </div>}
+                       <div>
+                        {unReadedMessages > 0 &&  <div className="rounded-full flex bg-white h-6 w-6 items-center justify-center">
+                                <span className="text-black font-bold">{unReadedMessages || ""}</span>
+                            </div>}
+                        <span className=" text-sm">{moment(lastMessageData?.createdAt).format('hh:mm A')}</span>
+                       </div>
+                
                 </div>
                
                

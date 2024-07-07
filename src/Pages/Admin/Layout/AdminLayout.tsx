@@ -1,4 +1,3 @@
-import Navbar from '@/Components/Admin/Navbar/Navbar';
 import Sidebar from '@/Components/Admin/Sidebar/Sibebar'
 import React, { ReactNode } from 'react'
 interface LayoutProps {
@@ -13,7 +12,7 @@ const AdminLayout : React.FC<LayoutProps> = ({ children }) => {
       <div className="w-full
        overflow-scroll  no-scrollbar ">
          <div className="flex flex-col h-screen bg-white overflow-hidden">
-         <Navbar/>
+         {/* <Navbar/> */}
            {children }
          </div>
       </div>

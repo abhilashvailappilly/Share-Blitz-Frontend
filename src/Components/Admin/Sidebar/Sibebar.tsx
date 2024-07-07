@@ -41,7 +41,7 @@ const Sidebar = () => {
                         <IconUsers/>
 
                         <span className="mx-4 font-bold">
-                            User Management 
+                            Users
                         </span>
                     </Link>
 
@@ -49,7 +49,7 @@ const Sidebar = () => {
                         <IconPicture/>
 
                         <span className="mx-4 font-bold">
-                            Post Management 
+                            Posts 
                         </span>
                     </Link>
 

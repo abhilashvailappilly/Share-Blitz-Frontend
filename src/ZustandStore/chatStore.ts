@@ -1,11 +1,11 @@
 import { create } from 'zustand';
 import ProfileDataInterface from '@/Types/User/userProfile';
 import { Socket } from 'socket.io-client';
-import { RecentChatInteface, Message } from '@/Types/User/ZustandStore';
+import { RecentChatInteface, Message, Room } from '@/Types/User/ZustandStore';
 
 interface ChatStoreState {
   selectedUser: ProfileDataInterface | null;
-  selectedRoom: any | null;
+  selectedRoom: Room | null;
   isSidebarVisible: boolean;
   onlineUsers: string[];
   messages: Message[];
@@ -13,7 +13,7 @@ interface ChatStoreState {
   typing:string[]
   recentChats:RecentChatInteface[]
   setSelectedUser: (user: ProfileDataInterface | null) => void;
-  setSelectedRoom: (user: any | null) => void;
+  setSelectedRoom: (room: Room | null) => void;
   setSidebarVisible: (isVisible: boolean) => void;
   setOnlineUsers: (users: string[]) => void;
   setTypingUsers: (userId: string[]) => void;

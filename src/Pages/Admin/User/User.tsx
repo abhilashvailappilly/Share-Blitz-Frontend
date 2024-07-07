@@ -1,6 +1,5 @@
-import React,{useEffect} from 'react'
+import {useEffect} from 'react'
 import Sidebar from '../../../Components/Admin/Sidebar/Sibebar'
-// import UsersList from '../../../components/Admin/UsersList/UsersList'
 import UserManagement from '../../../Components/Admin/User/User'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'

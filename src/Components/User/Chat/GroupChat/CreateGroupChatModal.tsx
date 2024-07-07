@@ -23,9 +23,6 @@ const CreateGroupChatModal = ({ showCreateGroupChatModal, setShowCreateGroupChat
  const {toast} = useToast()
 
   const handleCreateGroupChat = async() => {
-    // Handle group chat creation logic here
-    console.log('Group Name:', groupName);
-    console.log('Group Name:', groupParticipants);
    const participants= groupParticipants.map(user => user._id);
    
     try {
@@ -94,13 +91,14 @@ const CreateGroupChatModal = ({ showCreateGroupChatModal, setShowCreateGroupChat
           left: '50%',
           transform: 'translate(-50%, -50%)',
           width: 400,
-          bgcolor: isDarkMode ? 'background.paper' : 'background.default',
+          // bgcolor: isDarkMode ? 'background.paper' : 'background.default',
           border: '2px solid #000',
           boxShadow: 24,
           p: 4,
         }}
+        className="dark:bg-gray-900 bg-white "
       >
-        <Typography id="create-group-chat-modal-title" variant="h6" component="h2">
+        <Typography id="create-group-chat-modal-title" variant="h6" component="h2" className='text-black dark:text-white '>
           Create Group Chat
         </Typography>
         <TextField
@@ -109,6 +107,7 @@ const CreateGroupChatModal = ({ showCreateGroupChatModal, setShowCreateGroupChat
           margin="normal"
           value={groupName}
           onChange={(e) => setGroupName(e.target.value)}
+          className='dark:bg-gray-600 rounded-lg'
         />
         <TextField
           label="Participants"
@@ -118,6 +117,8 @@ const CreateGroupChatModal = ({ showCreateGroupChatModal, setShowCreateGroupChat
           onFocus={() => setInputFocused(true)}
           onChange={(e) => setParticipantsQuery(e.target.value)}
           helperText="Enter participant names"
+          className='bg-gray-600 rounded-lg'
+
         />
         <div className="mt-2 flex flex-wrap">
           {groupParticipants.map((user, index) => (

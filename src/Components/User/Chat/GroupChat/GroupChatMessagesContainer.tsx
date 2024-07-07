@@ -1,26 +1,28 @@
 import ChatMessageLoader from '@/Components/Skeleton/SkeletonChat';
 import UseGetMessages from '@/hooks/UseGetMessages';
-import SingleMessages from './SingleMessages';
+// import SingleMessages from './SingleMessages';
 import { useEffect, useRef, useState } from 'react';
-import TypingIndicator from './TypingIndicator';
+// import TypingIndicator from './TypingIndicator';
 import { useChatStore } from '@/ZustandStore/chatStore';
 import { UpdateMessagesAsSeen } from '@/Api/user/chatApiMethods';
+import SingleMessages from '../SingleMessages';
+import UseGetMessagesByRoom from '@/hooks/UseGetMessagesByRoom';
 import LoaderCircle from '@/Components/Common/Loader/LoaderCircle';
 
-const MessagesContainer = () => {
-    const { selectedUser, typing } = useChatStore();
-    const { messages, loading } = UseGetMessages();
+const GroupChatMessagesContainer = () => {
+    const { selectedUser,selectedRoom, typing } = useChatStore();
+    const { messages, loading } = UseGetMessagesByRoom();
     const [isLoading,setIsLoading] = useState<boolean>(true)
     const lastMessageRef = useRef<HTMLDivElement | null>(null);
     const typingRef = useRef<HTMLDivElement | null>(null);
 
-    if (!selectedUser) return null;
+    if (!selectedRoom) return null;
 
-    const isTyping = typing.includes(selectedUser._id);
+    // const isTyping = typing.includes(selectedUser._id);
     
     const updateMessagesAsSeen = async()=>{
         try {
-            const response = await UpdateMessagesAsSeen(selectedUser?._id)
+            const response = await UpdateMessagesAsSeen(selectedRoom?._id)
         } catch (error) {
             console.log(error)
         }
@@ -41,17 +43,12 @@ const MessagesContainer = () => {
     }, [messages]);
 
   
-    useEffect(() => {
-        if (isTyping && typingRef.current) {
-            typingRef.current.scrollIntoView({ behavior: 'smooth' });
-        }
-    }, [isTyping]);
+
     
     if(isLoading) {
         return (
             <div className='w-full animate-pulse  h-screen flex items-center justify-center'>
-                {/* <h1>loding ..</h1> */}
-                <LoaderCircle/>
+               <LoaderCircle/>
             </div>
         )
     }
@@ -62,7 +59,16 @@ const MessagesContainer = () => {
         <div className='flex-grow p-4 overflow-y-auto no-scrollbar'>
             {!loading && messages.length > 0 && messages.map((message, index) => (
                 <div ref={index === messages.length - 1 ? lastMessageRef : null} key={message._id}>
-                    <SingleMessages key={index} message={message} />
+                 {message.isDeleted ? (
+                <div className="flex items-center p-2 bg-gray-200 rounded-md">
+                    <svg className="w-6 h-6 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 13h6m2 9H7a2 2 0 01-2-2V7a2 2 0 012-2h3l2-2h2l2 2h3a2 2 0 012 2v13a2 2 0 01-2 2z"></path>
+                    </svg>
+                    <span className="text-gray-500">Message deleted</span>
+                </div>
+            ) : (
+                <SingleMessages key={index} message={message} />
+            )}
                 </div>
             ))}
             {loading && Array.from({ length: 5 }).map((_, index) => (
@@ -77,13 +83,13 @@ const MessagesContainer = () => {
                     <p className="text-gray-500">Start a conversation by sending the first message!</p>
                 </div>
             )}
-            {isTyping && (
+            {/* {isTyping && (
                 <div ref={typingRef} className='mt-4'>
                     <TypingIndicator />
                 </div>
-            )}
+            )} */}
         </div>
     );
 }
 
-export default MessagesContainer;
+export default GroupChatMessagesContainer;

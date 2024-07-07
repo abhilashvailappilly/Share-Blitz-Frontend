@@ -3,20 +3,20 @@ import { useDarkMode } from "@/Context/DarkModeContext";
 import { Message, Room } from "@/Types/User/ZustandStore";
 import ProfileDataInterface from "@/Types/User/userProfile";
 import { useChatStore } from "@/ZustandStore/chatStore";
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { FaImage, FaVideo } from "react-icons/fa";
 
 interface ListUsersSidebarInterface {
     user: ProfileDataInterface;
     lastMessage?:string
-    room?:Room
-    doFunction: (user: ProfileDataInterface) => void;
+    room:Room
+    doFunction: (room: Room) => void;
 }
 
 const ListGroupChatsInSidebar = ({ user,room,lastMessage, doFunction }: ListUsersSidebarInterface) => {
     const { isDarkMode } = useDarkMode();
-    const selectedUser = useChatStore((state) => state.selectedUser);
-    const onlineUsers = useChatStore((state) => state.onlineUsers);
+    const {selectedRoom ,selectedUser , onlineUsers} = useChatStore()
     const isOnline = onlineUsers.includes(user?._id);
     const isSelected = selectedUser?._id === user._id;
     const [lastMessageData,setLastMessage] = useState<Message | null>(null)
@@ -28,12 +28,14 @@ const ListGroupChatsInSidebar = ({ user,room,lastMessage, doFunction }: ListUser
     useEffect(()=>{
        fetchUnReadedMessages()
     },[lastMessage,selectedUser?._id])
-    const fetchUnReadedMessages = async()=>{
+    const fetchUnReadedMessages = async()=>{ 
         try {
-            // const response = await GetUnReadedMessages(roomId as string)
-            // if(response.success){
-            //     setUnReadedMessages(response?.data?.messages.length)
-            // }
+            const response = await GetUnReadedMessages(room?._id as string)
+            console.log('response ::',response)
+            if(response.success){
+
+                setUnReadedMessages(response?.data?.messages.length)
+            }
         } catch (error) {
            console.log(error)
         }
@@ -57,7 +59,7 @@ const ListGroupChatsInSidebar = ({ user,room,lastMessage, doFunction }: ListUser
     return (
         <li
             key={user._id}
-            onClick={() => doFunction(user)}
+            onClick={() => doFunction(room)}
             className={`p-2 cursor-pointer mt-1 ${
                 isDarkMode
                     ? isSelected
@@ -104,13 +106,17 @@ const ListGroupChatsInSidebar = ({ user,room,lastMessage, doFunction }: ListUser
                     }
                     
                 </div>
-                <div className="w-1/4 flex justify-end gap-6 items-center">
-                {/* {isOnline && (
+                <div className="w-2/4  h-full flex justify-end gap-6 items-center">
+                {isOnline && (
                             <div className="w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
-                        )} */}
-                       {unReadedMessages > 0 &&  <div className="rounded-full flex bg-white h-8 w-8 items-center justify-center">
-                            <span className="text-black font-bold">{unReadedMessages || ""}</span>
-                         </div>}
+                        )}
+                       <div>
+                        {unReadedMessages > 0 &&  <div className="rounded-full flex bg-white h-6 w-6 items-center justify-center">
+                                <span className="text-black font-bold">{unReadedMessages || ""}</span>
+                            </div>}
+                        <span className=" text-sm">{moment(lastMessageData?.createdAt).format('hh:mm A')}</span>
+                       </div>
+                
                 </div>
                
                
