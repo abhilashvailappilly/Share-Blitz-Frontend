@@ -1,7 +1,7 @@
 import { getUserById } from '@/Api/admin/adminApiMethod'
 import { ReportsInterface } from '@/Types/Admin/Reports'
 import ProfileDataInterface from '@/Types/User/userProfile'
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 interface ListOfReportsInterface {
     index:number
     report:ReportsInterface

@@ -8,7 +8,7 @@ import SinglePost from './SinglePost';
 const ExploreContainer: React.FC = () => {
   const [pageLoading, setPageLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(true);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [_loading, setLoading] = useState<boolean>(true);
   const [loadedPosts, setLoadedPostsState] = useState<PostI[]>([]);
   const [page, setPage] = useState<number>(1);
 
@@ -57,12 +57,12 @@ const ExploreContainer: React.FC = () => {
     }, 1000);
   };
 
-  const getRandomHeight = (): string => {
-    const minHeight = 200;
-    const maxHeight = 600;
-    const height = Math.floor(Math.random() * (maxHeight - minHeight + 1)) + minHeight;
-    return `${height}px`;
-  };
+  // const getRandomHeight = (): string => {
+  //   const minHeight = 200;
+  //   const maxHeight = 600;
+  //   const height = Math.floor(Math.random() * (maxHeight - minHeight + 1)) + minHeight;
+  //   return `${height}px`;
+  // };
 
   if(pageLoading){
     return(

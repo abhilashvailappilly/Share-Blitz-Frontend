@@ -29,7 +29,7 @@ const CropImage: React.FC<CropImageProps> = ({
   const onZoomChange = (zoom: number) => {
     setZoom(zoom);
   };
-  const onCropComplete = (croppedArea: any, croppedAreaPxc: any) => {
+  const onCropComplete = (_croppedArea: any, croppedAreaPxc: any) => {
     setCroppedAreaPx(croppedAreaPxc);
   };
   const onCrop = async () => {

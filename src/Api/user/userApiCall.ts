@@ -3,13 +3,7 @@ import {api as API} from '../../Service/axios'
 import { toast } from "react-toastify";
 import { BASE_URL } from "../../utils/constants/url";
 // import {persistor} from '../../Store/store'
-interface RegisterUserData {
-    name: string;
-    userName: string;
-    email: string;
-    mobile: string;
-    password: string;
-}
+
 interface ErrorResponse {
     message: string;
     [key: string]: any;

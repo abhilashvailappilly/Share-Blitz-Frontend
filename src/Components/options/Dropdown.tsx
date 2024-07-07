@@ -9,7 +9,7 @@ import { RootState } from '../../Store/store';
 import { PostI } from '../../Types/User/Post';
 import AlertDialog from '../User/Modal/Alert';
 import ReportReasonModal from '../User/Modal/ReportReason';
-import { BlockPost, ReportPost } from '../../Api/user/postApiMethod';
+import {  ReportPost } from '../../Api/user/postApiMethod';
 import { User } from '../../Types/User/Comment';
 
 
@@ -35,11 +35,9 @@ const Dropdown: React.FC<DropdownProps> = ({ post, postUser, openEditor, setSele
 //   const currentUser = useSelector<any>((state) => state?.user?.userData);
   const currentUser = useSelector((state: RootState) => state.auth.userInfo);
     // Delete post section
-    const [deleteModal, setDeleteModal] = useState(false);
 
     // Report post section
     const [reportModal, setReportModal] = useState(false);
-    const [blockModal,setBlockModal] = useState(false)
 
   const [error, setError] = useState<string>('');
   useEffect(() => {
@@ -109,18 +107,18 @@ const Dropdown: React.FC<DropdownProps> = ({ post, postUser, openEditor, setSele
     setOpenReportReason(false)
   }
 
-  const handleBlock = ()=>{
-    setBlockModal(true)
-  }
-  const blockPost = async() => {
-    setBlockModal(false)
-    const blockPost = await BlockPost(post._id)
-    if(blockPost.success) {
-      toast.success('Post blocked')
-    } else {
-      toast.error(blockPost.message)
-    }
-  }
+  // const handleBlock = ()=>{
+  //   setBlockModal(true)
+  // }
+  // const blockPost = async() => {
+  //   setBlockModal(false)
+  //   const blockPost = await BlockPost(post._id)
+  //   if(blockPost.success) {
+  //     toast.success('Post blocked')
+  //   } else {
+  //     toast.error(blockPost.message)
+  //   }
+  // }
 
 
   return (
@@ -128,7 +126,7 @@ const Dropdown: React.FC<DropdownProps> = ({ post, postUser, openEditor, setSele
       {/* {deleteModal && <Confirmation post={post} deleteModal={deleteModal} setDeleteModal={setDeleteModal} />}
       {reportModal && <ReportModal post={post} setError={setError} setReportModal={setReportModal} />} */}
       <div className="self-center" ref={dropdownRef}>
-        <div onClick={toggleDropdown} className="" role="button">
+        <div onClick={toggleDropdown} className="" role="button" title="Post actions">
           <svg
             width={33}
             height={34}
@@ -184,7 +182,7 @@ const Dropdown: React.FC<DropdownProps> = ({ post, postUser, openEditor, setSele
                   <li>
                     <button
                       type="button"
-                      onClick={() => { toast.success('Post deleted'),setDeleteModal(true)}}
+                      onClick={() => { toast.success('Post deleted')}}
                       className="block px-4 py-2 w-full text-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                     >
                       Delete post

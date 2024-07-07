@@ -7,10 +7,8 @@ import ListUsersSidebar from './ListUsersSidebar';
 import { GetRecentChats } from '@/Api/user/chatApiMethods';
 import { useChatStore } from '@/ZustandStore/chatStore';
 import CreateGroupChatModal from './GroupChat/CreateGroupChatModal';
-import { toast } from 'react-toastify';
 import ListGroupChatsInSidebar from './GroupChat/ListGroupChatsInsideSidebar';
 import useAppSelector from '@/hooks/UseSelector';
-import { userInfo } from 'os';
 import { useToast } from '@/Components/ui/use-toast';
 
 interface ChatSidebarProps {
@@ -28,14 +26,11 @@ interface Room {
   __v: number;
 }
 
-interface ChatRoom {
-  room: Room;
-  participantsDetails: ProfileDataInterface[];
-}
+
 const ChatSidebar: React.FC<ChatSidebarProps> = React.memo(({ onUserSelect }) => {
   const { isDarkMode } = useDarkMode();
   const [isLoading, setIsLoading] = useState(true);
-  const [allUsers, setAllUsers] = useState<ProfileDataInterface[]>([]);
+  const [allUsers] = useState<ProfileDataInterface[]>([]);
   const [searchedUsers, setSearchedUsers] = useState<ProfileDataInterface[]>([]);
   // const [recentChat, setRecentChat] = useState<ChatRoom[]>([]);
   const {recentChats,setRecentChats,setSelectedRoom} = useChatStore((state) => state)
@@ -46,7 +41,7 @@ const ChatSidebar: React.FC<ChatSidebarProps> = React.memo(({ onUserSelect }) =>
   const userInfo = useAppSelector(state => state.auth.userInfo);
   const {toast: toaster} = useToast()
 
-  const [active,setActive] = useState<{chat:boolean,groupChat:boolean}>
+  const [active] = useState<{chat:boolean,groupChat:boolean}>
   ({chat:true,groupChat:false})
   const [showCreateGroupChatModal,setShowCreateGroupChatModal] = useState<boolean>(false)
 
@@ -54,7 +49,9 @@ const ChatSidebar: React.FC<ChatSidebarProps> = React.memo(({ onUserSelect }) =>
     fetchRecentChats();
   }, []);
 
-
+if(isLoading){
+}
+   
   const fetchRecentChats = async () => {
     try {
       const response = await GetRecentChats();
@@ -153,7 +150,7 @@ const ChatSidebar: React.FC<ChatSidebarProps> = React.memo(({ onUserSelect }) =>
       </div>
         <ul>
           {isFocused && searchInput ? (
-            <>
+            <li>
               <h1 className={`p-2 ${isDarkMode ? 'text-white' : 'text-black'} font-bold text-xl`}>Search Result</h1>
               {searchedUsers.map((user) => (
                 <ListUsersSidebar
@@ -163,9 +160,9 @@ const ChatSidebar: React.FC<ChatSidebarProps> = React.memo(({ onUserSelect }) =>
                   doFunction={handleUserClick}
                 />
               ))}
-            </>
+            </li>
           ) : (
-            <>
+            <li>
               <h1 className={`p-2 ${isDarkMode ? 'text-white' : 'text-black'} font-bold text-xl`}>Recent chats</h1>
               {recentChats.length > 0
                 ? recentChats.map((user,index) => (
@@ -187,9 +184,9 @@ const ChatSidebar: React.FC<ChatSidebarProps> = React.memo(({ onUserSelect }) =>
                     doFunction={handleUserClick}
                   />
                 ))
-                : <li className={`p-2 ${isDarkMode ? 'text-white' : 'text-black'}`}>No recent chats available</li>
+                : <div className={`p-2 ${isDarkMode ? 'text-white' : 'text-black'}`}>No recent chats available</div>
               }
-            </>
+            </li>
           )}
         </ul>
       </div>

@@ -1,14 +1,14 @@
 import React from 'react';
 import { useDarkMode } from '@/Context/DarkModeContext';
+import './TypingIndicator.css';
 
-const TypingIndicator = () => {
+const TypingIndicator: React.FC = () => {
   const { isDarkMode } = useDarkMode();
   return (
-    <div className={`flex items-center space-x-2  ${isDarkMode ? 'text-white' : 'text-black'}`}>
-      <div className="bg-current rounded-full w-2 h-2 animate-typing"></div>
-      <div className="bg-current rounded-full w-2 h-2 animate-typing" style={{ animationDelay: '0.2s' }}></div>
-      <div className="bg-current rounded-full w-2 h-2 animate-typing" style={{ animationDelay: '0.4s' }}></div>
-      
+    <div className={`typing-indicator ${isDarkMode ? 'text-white' : 'text-black'}`}>
+      <div className="typing-dot"></div>
+      <div className="typing-dot"></div>
+      <div className="typing-dot"></div>
     </div>
   );
 };

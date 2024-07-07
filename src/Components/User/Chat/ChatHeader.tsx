@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import IconReturnUpBack from "@/Components/icons/BackIcon";
 import { useDarkMode } from "@/Context/DarkModeContext";
 import { useChatStore } from "@/ZustandStore/chatStore";
 import { FaPhoneAlt, FaVideo } from "react-icons/fa";
 import CallingScreen from "./CallingScreen";
-import { toast } from "react-toastify";
 // import { useToast } from '@/components/ui/use-toast';
 // import { useToast } from '@/components/ui/use-toast';
 import { useToast } from "@/Components/ui/use-toast";
@@ -17,7 +16,7 @@ interface ChatHeaderProps {
 const ChatHeader: React.FC<ChatHeaderProps> = ({ handleBackClick }) => {
 	const { isDarkMode } = useDarkMode();
 	const { isCalling, setIsCalling, callAccepted } = useVideoCallContext();
-	const { selectedUser, selectedRoom, onlineUsers, typing } = useChatStore();
+	const { selectedUser, onlineUsers, typing } = useChatStore();
 	// const [isCalling, setIsCalling] = useState(false);
 	const { toast } = useToast();
 	if (!selectedUser) return null;

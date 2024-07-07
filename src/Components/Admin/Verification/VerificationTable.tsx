@@ -7,7 +7,7 @@ interface VerificationTableProps {
   onApprove: (id: string) => void;
 }
 
-const VerificationTable: React.FC<VerificationTableProps> = ({ verifications, onApprove }) => {
+const VerificationTable: React.FC<VerificationTableProps> = ({ verifications }) => {
   return (
     <div className="overflow-x-auto flex w-full h-screen justify-center items-center p-4 bg-gray-100 dark:bg-gray-900">
       <table className="min-w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 shadow-lg rounded-xl my-4">

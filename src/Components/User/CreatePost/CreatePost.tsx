@@ -1,7 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { EditUserPost, getPostById } from '../../../Api/user/postApiMethod';
-import { PostI } from '../../../Types/User/Post';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
 import { SearchUser } from '../../../Api/user/userApiMethod';
@@ -10,7 +8,6 @@ import { Formik, Form, Field, ErrorMessage, FormikErrors } from 'formik';
 import * as Yup from 'yup';
 import upload from '../../../hooks/Cloudinary';
 import { HashLoader } from 'react-spinners';
-import useAppSelector from '../../../hooks/UseSelector';
 import UserList from '../EditPost/UserList';
 import { createPost } from '@/Api/user/authApiMethod';
 import CropImage from '@/Components/options/CropImage';
@@ -22,26 +19,21 @@ interface TaggedUser {
 }
 
 const EditPost = () => {
-  const userInfo = useAppSelector(state => state.auth.userInfo);
   const [isLoading,setIsLoading] = useState(true)
   const [taggedUserQuery, setTaggedUserQuery] = useState('');
   const [userSuggestions, setUserSuggestions] = useState<ProfileDataInterface[]>([]);
   const [file, setFile] = useState<File | null>(null);
-  const [image, setImage] = useState<string>("");
 
   const [filePreview, setFilePreview] = useState<string | null>(null);
-  const [hovering, setHovering] = useState(true);
+  const [hovering] = useState(true);
   const [newHashtag, setNewHashtag] = useState('');
-  const { postId } = useParams();
   const [inputFocused, setInputFocused] = useState(false);
-  const [postData, setPostData] = useState<PostI | null>(null);
   const [croppedImg, setCroppedImg] = useState<string | null>(null);
-  const [error, setError] = useState<string>(""); 
   const [showCrop,setShowCrop] = useState<boolean>(false)
 
   const navigate = useNavigate()
 
-  const [initialFormValues, setInitialFormValues] = useState({
+  const [initialFormValues] = useState({
     caption: '',
     hashtags: [] as string[],
     taggedUsers: [] as TaggedUser[],

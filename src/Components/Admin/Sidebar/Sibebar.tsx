@@ -16,7 +16,7 @@ const Sidebar = () => {
         navigate('/login')
     }
     return (
-        <aside className="flex flex-col w-1/6 h-screen px-4 py-8 overflow-y-auto bg-green-600 border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700 md:block lg:block hidden">
+        <aside className="sm:flex flex-col w-1/6 h-screen px-4 py-8 overflow-y-auto bg-green-600 border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700 md:block lg:block hidden">
             <div className="flex items-center">
        
        

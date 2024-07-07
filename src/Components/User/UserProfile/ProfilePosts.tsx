@@ -1,8 +1,5 @@
-import { useState } from "react"
-import SingleImageModal from "../Modal/SingleImageModal"
 import MyPost from "./MyPost"
 import { PostI } from "../../../Types/User/Post"
-import { toast } from "react-toastify"
 
 
 interface ProfilePostsProps {
@@ -11,7 +8,6 @@ interface ProfilePostsProps {
   }
   
   const ProfilePosts: React.FC<ProfilePostsProps> = ({field, posts }) => {
-    const [show ,setShow] = useState(false)
     return (
       <div className=" w-full h-96 bg-white-700 dark:bg-slate-800 overflow-auto ">
     <div className="w-full h-full grid  grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-3 bg-white dark:bg-slate-800 overflow-auto no-scrollbar">

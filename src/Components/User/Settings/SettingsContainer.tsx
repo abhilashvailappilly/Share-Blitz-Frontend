@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router-dom"
-import SettingsMain from "./SettingsMain"
 import SettingsSidebar from "./SettingsSidebar"
 import Privacy from "./Privacy"
 import Verification from "./Verification"

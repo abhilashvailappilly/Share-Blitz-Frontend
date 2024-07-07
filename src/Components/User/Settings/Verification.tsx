@@ -202,6 +202,7 @@ const Verification = () => {
         const rzp1 = new window.Razorpay(options);
         rzp1.on('payment.failed', function (response: any) {
             // Logic to handle payment failure
+            console.log(response)
             toast.error('Payment Failed');
         rzp1.close();
 

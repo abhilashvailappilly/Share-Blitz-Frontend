@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faEye, faSave, faTrash } from "@fortawesome/free-solid-svg-icons";
-import SingleImageModal from "../Modal/SingleImageModal";
 import { toast } from "react-toastify";
 import { PostI } from "../../../Types/User/Post";
 import { getUser } from "../../../Api/user/authApiMethod";
@@ -10,17 +9,9 @@ import CommentModal from "../Modal/CommentModal";
 import { useNavigate } from "react-router-dom";
 import useAppSelector from "../../../hooks/UseSelector";
 import ProfileDataInterface from "../../../Types/User/userProfile";
-import { DeletePostById } from "../../../Api/admin/adminApiMethod";
 import { DeletePost, unSavePost } from "../../../Api/user/postApiMethod";
 
-interface Post {
-    _id: string;
-    userId: string;
-    caption: string;
-    imageUrl: string;
-    hashtags: string[];
-    like: number;
-}
+
 
 interface MyPostInterface {
     post: PostI;
@@ -48,6 +39,7 @@ const MyPost = ({field, post }: MyPostInterface) => {
             })
             .catch((error: Error) => {
                 // handle error
+                console.log(error)
             });
     }, [post, post.userId]);
     if(!postData)

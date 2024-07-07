@@ -16,7 +16,7 @@ interface ListUsersSidebarInterface {
 
 const ListGroupChatsInSidebar = ({ user,room,lastMessage, doFunction }: ListUsersSidebarInterface) => {
     const { isDarkMode } = useDarkMode();
-    const {selectedRoom ,selectedUser , onlineUsers} = useChatStore()
+    const {selectedUser , onlineUsers} = useChatStore()
     const isOnline = onlineUsers.includes(user?._id);
     const isSelected = selectedUser?._id === user._id;
     const [lastMessageData,setLastMessage] = useState<Message | null>(null)
@@ -57,7 +57,7 @@ const ListGroupChatsInSidebar = ({ user,room,lastMessage, doFunction }: ListUser
     }
 
     return (
-        <li
+        <div
             key={user._id}
             onClick={() => doFunction(room)}
             className={`p-2 cursor-pointer mt-1 ${
@@ -121,7 +121,7 @@ const ListGroupChatsInSidebar = ({ user,room,lastMessage, doFunction }: ListUser
                
                
             </div>
-        </li>
+        </div>
     );
 };
 

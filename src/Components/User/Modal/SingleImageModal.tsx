@@ -1,9 +1,8 @@
 
 "use client";
 
-import { Button, Modal, Select } from "flowbite-react";
 import { useEffect, useState } from "react";
-import { FaShare,FaHeart,FaSave } from "react-icons/fa";
+import { FaShare, } from "react-icons/fa";
 import { getUser } from "../../../Api/user/authApiMethod";
 import ProfileDataInterface from "../../../Types/User/userProfile";
 import SaveIcn from "../../icons/SaveIcon";
@@ -18,15 +17,9 @@ interface SingleImageModalPropsInterface {
     post:PostI
 }
 
-const comments = ['hello ','hai']
 
 const SingleImageModal =({show,setShow ,post} : SingleImageModalPropsInterface ) => {
-  const [openModal, setOpenModal] = useState(true);
-  const [modalSize, setModalSize] = useState<string>('md');
-  const [isLoading,setIsLoading] = useState<Boolean>(false)
   const [userData,setUserData] = useState<ProfileDataInterface>()
-  const [postt ,setPost] = useState<PostI>(post)
-  const [err,setError] = useState('')
   useEffect(()=>{
     const fetchUserData=async()=>{
       try{
@@ -40,7 +33,7 @@ const SingleImageModal =({show,setShow ,post} : SingleImageModalPropsInterface )
       }
     } 
     fetchUserData()
-  },[postt.userId]);
+  },[post.userId]);
  
   const handleClose = ()=>{
     setShow(false)
@@ -79,7 +72,7 @@ const SingleImageModal =({show,setShow ,post} : SingleImageModalPropsInterface )
             <div className="w-full flex bg-white h-10">
                <div className="w-1/3 h-full bg-green-100 flex justify-between">
               <div className="w-full mr-3">
-              <Heart size={{ width: 34, height: 36 }} color={'red'} post={post} setPost={setPost} addLike={addLike}  />
+              <Heart size={{ width: 34, height: 36 }} color={'red'} post={post}  addLike={addLike}  />
               <span className="font-bold">110</span> likes
               {/* <span className="font-bold">{post?.like}</span> likes */}
               </div>
@@ -88,7 +81,7 @@ const SingleImageModal =({show,setShow ,post} : SingleImageModalPropsInterface )
               </div>
               <FaShare className="text-black text-2xl"/>
                </div>
-               <SaveIcn size={{ width: 36, height: 37 }} setError={setError}  post={post} />
+               <SaveIcn size={{ width: 36, height: 37 }}   post={post} />
             </div>
             
           </div>

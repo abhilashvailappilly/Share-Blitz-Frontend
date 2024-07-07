@@ -1,12 +1,9 @@
-import React, { SetStateAction, useEffect, useState } from 'react';
-import UserBlockModal from '../../../Components/Admin/Modal/UserBlockModal';
+import  {  useEffect, useState } from 'react';
+
 import { ReportsInterface } from '../../../Types/Admin/Reports';
-import { getUser } from '../../../Api/user/authApiMethod';
-import { User } from '../../../Types/User/Comment';
+
 import ProfileDataInterface from '../../../Types/User/userProfile';
-import { toast } from 'react-toastify';
-import { HashLoader } from 'react-spinners';
-import { Dispatch } from '@reduxjs/toolkit';
+
 import { PostI } from '../../../Types/User/Post';
 import { getPostById, getUserById } from '../../../Api/admin/adminApiMethod';
 import DeletePostModal from '../Modal/DeletePostModal';

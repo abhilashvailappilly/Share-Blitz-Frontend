@@ -19,8 +19,6 @@ const SingleMessages: React.FC<SingleMessagesInterface> = ({  message }) => {
     const userInfo = useAppSelector(state => state.auth.userInfo);
     const selectedUser = useChatStore((state) => state.selectedUser);
     const fromMe = userInfo?._id === message.senderId;
-    const profilePic = fromMe ? userInfo.profileImageUrl : selectedUser?.profileImageUrl;
-    const userName = fromMe ? userInfo.name : selectedUser?.name;
     const [showOptions, setShowOptions] = useState<boolean>(false);
     const [editText, setEditText] = useState<string>(message.text); // State for edit text
     const [editModalOpen, setEditModalOpen] = useState<boolean>(false); // State for edit modal visibility
@@ -130,7 +128,7 @@ const SingleMessages: React.FC<SingleMessagesInterface> = ({  message }) => {
 
                 <div className='flex gap-3'>
                 <span className={`text-[10px] inline-flex ${!fromMe ? 'justify-start' : 'justify-end'} font-normal ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{formattedTime}</span>
-               {message?.isEdited && <span className='font text-white' style={{ fontSize: '10px' }}>Edited</span>}
+               {message?.isEdited && <span className='font text-white text-[10px]' >Edited</span>}
                 </div>
                
             </div>

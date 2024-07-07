@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import { ListReplyCommentPropsInteface } from '../../../Types/User/Comment'
 import ProfileDataInterface from '../../../Types/User/userProfile'
 import { getUser } from '../../../Api/user/authApiMethod'

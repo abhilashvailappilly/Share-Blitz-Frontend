@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import VerificationInterface, { SinlgeRowInterface } from '../../../Types/Admin/Verification';
 import { toast } from 'react-toastify';
 import { ApproveVerificationRequest, getUserById } from '../../../Api/admin/adminApiMethod';
 import ProfileDataInterface from '../../../Types/User/userProfile';
+import LoaderCircle from '@/Components/Common/Loader/LoaderCircle';
 
 const SinlgeRow = ({ verification }: SinlgeRowInterface) => {
   const [verifactionData, setVerificationData] = useState<VerificationInterface>(verification);
@@ -38,7 +39,11 @@ const SinlgeRow = ({ verification }: SinlgeRowInterface) => {
       setIsLoading(false);
     }
   };
-
+  if(isLoading) {
+    <div className='h-screen w-full'>
+      <LoaderCircle/>
+    </div>
+  }
   return (
     <tr key={verification._id} className="bg-white dark:bg-gray-800 transition duration-300 ease-in-out hover:bg-gray-100 dark:hover:bg-gray-700">
       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-200">{userData?.name}</td>

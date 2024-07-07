@@ -13,7 +13,6 @@ interface AlertDialogPropsInterface {
 }
 
 export default function AlertDialog({message,submitFunction,cancelFunction}:AlertDialogPropsInterface) {
-  const [open, setOpen] = React.useState(true);
 
   const handleClickOpen = () => {
     submitFunction()
@@ -27,7 +26,7 @@ export default function AlertDialog({message,submitFunction,cancelFunction}:Aler
     <React.Fragment>
     
       <Dialog
-        open={open}
+        open={true} // here provide a state named open and give default value true
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"

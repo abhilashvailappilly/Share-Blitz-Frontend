@@ -1,6 +1,5 @@
-import { getUserById } from '@/Api/admin/adminApiMethod';
 import { ReportsInterface } from '@/Types/Admin/Reports';
-import React, { useEffect } from 'react';
+import React from 'react';
 import ListOfReports from './ListOfReports';
 
 interface ReportModalProps {

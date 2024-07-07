@@ -1,8 +1,6 @@
-// SignUpForm.tsx
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { GoogleLogin, CredentialResponse ,useGoogleLogin,UseGoogleLoginOptionsImplicitFlow  } from '@react-oauth/google';
-import { jwtDecode } from 'jwt-decode';
+import React from 'react';
+import { useGoogleLogin, UseGoogleLoginOptionsImplicitFlow } from '@react-oauth/google';
 import { toast } from 'react-toastify';
 
 import { Gsignup } from '../../../Api/user/authApiMethod';
@@ -10,87 +8,56 @@ import { setCredentials } from '../../../Store/user/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-interface decodeJwt {
-    name:string,
-    email:string,
-    picture:string
-}
+
 
 const SignUpForm: React.FC = () => {
-  
-//   const handleGoogleSignInSuccess = async (response:CredentialResponse) => {
-//     console.log('Google sign-in successful:', response);
-//     console.log('Google sign-in successful:', response.credential);
-//     if(response.credential){
-//         const result:decodeJwt = jwtDecode(response.credential as string);
-//         if(result){
-//     console.log("result...........",result);
-        
-//             const saveUserData = await Gsignup(result?.name as string,result?.name.split(' ')[0] + Date.now().toString().slice(9),result?.email as string,result.picture as string )
-          
-//             if(saveUserData?.data?.success){
-//                 toast.success('success')
-//             } else {
-//                 toast.error(saveUserData?.data?.message)
-//             }
-           
-//         }
-//     }
-//     else{
-//         toast.error("Someting went wrong")
-//     }
-  
-//   };
 
-//   const handleGoogleSignInFailure = () => {
-//     console.error('Google sign-in failed:', Error);
-//     toast.error('Google sign-in failed:')
-//   };
+
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
 
-  const handle: UseGoogleLoginOptionsImplicitFlow['onSuccess'] = async (response : any )=>{
-        console.log('res ponse',response)
-        console.log(response.access_token)
-        if(response.access_token){
-            let responseData = await axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${response.access_token}`, {
-                headers: {
-                    Authorization: `Bearer ${response.access_token}`,
-                    Accept: 'application/json'
-                        }
-             })
-             console.log('res;;;',responseData?.data)
-            if(responseData?.data){
-                let userData = responseData?.data
-                const saveUserData = await Gsignup(userData?.name as string,userData?.name.split(' ')[0] + Date.now().toString().slice(9),userData?.email as string,userData.picture as string )
-            
-                            if(saveUserData?.data?.success){
-                              dispatch(setCredentials(saveUserData?.data?.user))
-                              navigate('/login')
-                                console.log(saveUserData.data.data)
-                                toast.success('Registered successfully !!')
-                            } else {
-                                toast.error(saveUserData?.data?.message)
-                            }
-             }
+  const handle: UseGoogleLoginOptionsImplicitFlow['onSuccess'] = async (response: any) => {
+    console.log('res ponse', response)
+    console.log(response.access_token)
+    if (response.access_token) {
+      let responseData = await axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${response.access_token}`, {
+        headers: {
+          Authorization: `Bearer ${response.access_token}`,
+          Accept: 'application/json'
         }
+      })
+      console.log('res;;;', responseData?.data)
+      if (responseData?.data) {
+        let userData = responseData?.data
+        const saveUserData = await Gsignup(userData?.name as string, userData?.name.split(' ')[0] + Date.now().toString().slice(9), userData?.email as string, userData.picture as string)
 
-       
+        if (saveUserData?.data?.success) {
+          dispatch(setCredentials(saveUserData?.data?.user))
+          navigate('/login')
+          console.log(saveUserData.data.data)
+          toast.success('Registered successfully !!')
+        } else {
+          toast.error(saveUserData?.data?.message)
+        }
+      }
+    }
+
+
   }
 
 
   const login = useGoogleLogin({
     onSuccess: handle,
     onError: (error) => console.log('Login Failed:', error)
-});
+  });
 
-const handleGoogleSignup =()=>{
+  const handleGoogleSignup = () => {
     login()
-}
+  }
 
-return (
+  return (
     <div className="flex justify-center mt-5">
       <button
         onClick={handleGoogleSignup}

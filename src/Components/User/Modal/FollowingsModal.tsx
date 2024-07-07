@@ -3,7 +3,6 @@ import UserList from "../Card/Userlist";
 import { getUser } from "../../../Api/user/authApiMethod";
 import { useNavigate, useParams } from 'react-router-dom';
 import ProfileDataInterface from "../../../Types/User/userProfile";
-import { toast } from "react-toastify";
 import { RootState } from "../../../Store/store";
 import { useSelector } from "react-redux";
 
@@ -54,7 +53,7 @@ export const FollowingsModal: FC<FollowingsModalProps> = ({ title, setOpen, foll
 
   const handleClose = () => setOpen(false);
 
-  const seeProfile = (userId: string, name: string) => {
+  const seeProfile = (userId: string, ) => {
     navigate(`/profile/${userId}`);
     handleClose();
   };

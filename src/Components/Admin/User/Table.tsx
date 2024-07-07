@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import UserBlockModal from '../../../Components/Admin/Modal/UserBlockModal';
 
 interface User {

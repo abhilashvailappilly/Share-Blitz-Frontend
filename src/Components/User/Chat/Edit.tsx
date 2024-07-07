@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { EditMessage } from '@/Api/user/chatApiMethods';
-import { useChatStore } from '@/ZustandStore/chatStore';
-import { Message } from '@/Types/User/ZustandStore';
 import { toast } from 'react-toastify';
 
 interface EditMessageModalProps {
@@ -14,7 +12,6 @@ interface EditMessageModalProps {
 
 const EditMessageModal: React.FC<EditMessageModalProps> = ({ isOpen, onClose, initialMessageText, messageId, selectedUserId }) => {
     const [editedText, setEditedText] = useState(initialMessageText);
-    const { setMessages } = useChatStore();
 
     const handleEdit = async () => {
         const response = await EditMessage(messageId, selectedUserId, editedText);

@@ -1,4 +1,3 @@
-import useAppSelector from "@/hooks/UseSelector"
 
 const Navbar = () => {
   // const {adminInfo} = useAppSelector()

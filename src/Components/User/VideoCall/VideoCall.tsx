@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import { IconButton } from '@mui/material';
-import { VideoCallContext, useVideoCallContext } from '@/Context/VideoCallContext'
-import { Grid, Paper, Typography } from '@mui/material'
-import { CallEnd, MicOff, Mic, VideocamOff, Videocam } from '@mui/icons-material';
-import { FaMicrophone, FaMicrophoneAlt, FaMicrophoneSlash, FaPhoneSlash } from 'react-icons/fa';
+import  { useEffect, useState } from 'react'
+import {  useVideoCallContext } from '@/Context/VideoCallContext'
+import {  VideocamOff, Videocam } from '@mui/icons-material';
+import { FaMicrophone, FaMicrophoneSlash, FaPhoneSlash } from 'react-icons/fa';
 
 
 const VideoCall = () => {
-const {call,callAccepted ,answeredCall, myVideo , userVideo , callEnded,leaveCall , stream} =  useVideoCallContext()
+const {call,callAccepted , myVideo , userVideo ,leaveCall , stream} =  useVideoCallContext()
 const [isMuted, setIsMuted] = useState(false);
 const [isCameraOff, setIsCameraOff] = useState(false);
 

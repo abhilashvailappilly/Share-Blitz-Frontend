@@ -1,13 +1,10 @@
 import { useDarkMode } from '@/Context/DarkModeContext';
 import { useChatStore } from '@/ZustandStore/chatStore';
-import useAppSelector from '@/hooks/UseSelector';
 
-import React, { useCallback, useEffect, useState } from 'react'
-import { toast, } from 'react-toastify';
+import  { useCallback, useEffect } from 'react'
 import 'react-toastify/dist/ReactToastify.css';
 import MessagesContainer from './MessagesContainer';
 import NoChatSelected from './NoChatSelected';
-import { SendMessage } from '@/Api/user/chatApiMethods';
 import ChatHeader from './ChatHeader';
 import ChatFooter from './ChatFooter';
 import useListenMessages from '@/hooks/UseListenMessages';

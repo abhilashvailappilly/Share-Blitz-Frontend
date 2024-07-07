@@ -3,7 +3,6 @@ import IconSendCircle from '@/Components/icons/SendIcon';
 import { useDarkMode } from '@/Context/DarkModeContext';
 import { useChatStore } from '@/ZustandStore/chatStore';
 import upload from '@/hooks/Cloudinary';
-import useAppSelector from '@/hooks/UseSelector';
 import { faPlus, faSmile } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState, useRef, useEffect } from 'react';
@@ -14,8 +13,6 @@ const ChatFooter = () => {
   const { isDarkMode } = useDarkMode();
   const { selectedUser, socket } = useChatStore((state) => state);
   const setMessageToStore = useChatStore((state) => state.setMessages);
-  const userInfo = useAppSelector((state) => state.auth.userInfo);
-  const onlineUsers = useChatStore((state) => state.onlineUsers);
   const messagesFromStore = useChatStore((state) => state.messages);
   const [showFileModal, setFileModal] = useState<boolean>(false);
   const [isLoadingUploading, setIsLoadingUploading] = useState<boolean>(false);

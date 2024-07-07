@@ -11,9 +11,6 @@ const ProfileBackground = () => {
     setOpenEditProfile(!openEditProfile)
   }
 
-  const updatedUsers = () =>{
-
-  }
 
   const user:ProfileDataInterface  = useSelector((state:RootState) => state.auth.userInfo)
   const myPosts:any[]  = useSelector((state:RootState) => state.post.myPosts)

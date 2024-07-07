@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Box, Typography, List, ListItem, ListItemText, IconButton } from '@mui/material';
+import { Modal, Box, Typography, List, IconButton } from '@mui/material';
 import { FaTimes } from 'react-icons/fa';
 
 import { useDarkMode } from "@/Context/DarkModeContext";

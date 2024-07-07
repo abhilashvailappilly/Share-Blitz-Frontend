@@ -2,17 +2,14 @@ import { useState, useEffect } from "react";
 import SearchIcon from "../../icons/SearchIcon"; // Assuming SearchIcon component exists
 import { SearchUser } from "../../../Api/user/userApiMethod";
 import UserList from "../Card/Userlist";
-import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 function Search() {
   const [searchInput, setSearchInput] = useState<string>('');
   const [searchResults, setSearchResults] = useState<any[]>([]); // Adjust type based on your data structure
     const navigate = useNavigate()
-  const onFollow =()=>{
-    toast.info('onfollow')
-  }
-  const seeProfile = (userId : string ,name:string) => {
+ 
+  const seeProfile = (userId : string ) => {
     navigate(`/profile/${userId}`)
   };
   useEffect(() => {
@@ -55,7 +52,7 @@ function Search() {
       <div className="search-results  w-full flex flex-col items-center justify-center mt-4 ">
         {searchResults.length > 0 ? (
           <ul className="user-list list-none w-3/4 ">
-            <UserList users={searchResults} onFollow={onFollow} seeProfile={seeProfile} />
+            <UserList users={searchResults}  seeProfile={seeProfile} />
 
             {/* {searchResults.map((user) => (
               <li key={user.id} className="user-item w-5/6 flex mt-3 bg-white items-center py-2 px-4 rounded-lg hover:bg-gray-100 hover:scale-110">

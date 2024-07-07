@@ -1,10 +1,10 @@
 import {toast} from 'react-toastify'
 
-interface valiationErrorInterface{
-       name:string , userName:string,email:string,mobile:string,password:string,confirmPassword:string
-}
+// interface valiationErrorInterface{
+//        name:string , userName:string,email:string,mobile:string,password:string,confirmPassword:string
+// }
 
-export const userRegistrationValidation = (userData:any,validationError:valiationErrorInterface,setValidationError:any)=>{
+export const userRegistrationValidation = (userData:any,setValidationError:any)=>{
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const mobileRegex = /^[0-9]{10}$/;

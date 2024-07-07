@@ -1,5 +1,4 @@
 import { SearchUser } from '@/Api/user/userApiMethod';
-import { useDarkMode } from '@/Context/DarkModeContext';
 import { CreateGroupChatModalPropsInteface } from '@/Types/User/Chat';
 import ProfileDataInterface from '@/Types/User/userProfile';
 import { debounce } from '@/utils/helpers/Debounce';
@@ -19,7 +18,6 @@ const CreateGroupChatModal = ({ showCreateGroupChatModal, setShowCreateGroupChat
   const [userSuggestions, setUserSuggestions] = useState<ProfileDataInterface[]>([]);
   const [groupParticipants, setGroupParticipants] = useState<ProfileDataInterface[]>([]);
   const userInfo:ProfileDataInterface  = useAppSelector((state:RootState) => state.auth.userInfo)
-  const { isDarkMode } = useDarkMode();
  const {toast} = useToast()
 
   const handleCreateGroupChat = async() => {

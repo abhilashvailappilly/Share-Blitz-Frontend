@@ -20,7 +20,7 @@ const MessagesContainer = () => {
     
     const updateMessagesAsSeen = async()=>{
         try {
-            const response = await UpdateMessagesAsSeen(selectedUser?._id)
+           await UpdateMessagesAsSeen(selectedUser?._id)
         } catch (error) {
             console.log(error)
         }

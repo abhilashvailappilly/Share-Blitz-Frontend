@@ -2,7 +2,6 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { EditUserPost, getPostById } from '../../../Api/user/postApiMethod';
 import NotFound from '../../../Pages/Common/Notfound';
-import { PostI } from '../../../Types/User/Post';
 import { toast } from 'react-toastify';
 import { AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
 import { SearchUser } from '../../../Api/user/userApiMethod';
@@ -12,7 +11,6 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import upload from '../../../hooks/Cloudinary';
 import { HashLoader } from 'react-spinners';
-import { userInfo } from 'os';
 import useAppSelector from '../../../hooks/UseSelector';
 
 interface TaggedUser {
@@ -27,11 +25,10 @@ const EditPost = () => {
   const [userSuggestions, setUserSuggestions] = useState<ProfileDataInterface[]>([]);
   const [file, setFile] = useState<File | null>(null);
   const [filePreview, setFilePreview] = useState<string | null>(null);
-  const [hovering, setHovering] = useState(true);
+  const [hovering] = useState(true);
   const [newHashtag, setNewHashtag] = useState('');
   const { postId } = useParams();
   const [inputFocused, setInputFocused] = useState(false);
-  const [postData, setPostData] = useState<PostI | null>(null);
   const navigate = useNavigate()
 
   const [initialFormValues, setInitialFormValues] = useState({
@@ -60,7 +57,7 @@ const EditPost = () => {
     try {
       const response = await getPostById(postId);
       if (!response.success) return <NotFound />;
-      setPostData(response.postData);
+      // setPostData(response.postData);
       setInitialFormValues({
         caption: response.postData?.caption || '',
         hashtags: response.postData?.hashtags || [],

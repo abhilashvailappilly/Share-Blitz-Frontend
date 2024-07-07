@@ -1,4 +1,3 @@
-import React from 'react'
 import Navbar from '../../../Components/User/Navbar/Navbar'
 import Sidebar2 from '../../../Components/User/Sidebar/Sidebar2'
 import SettingsContainer from '../../../Components/User/Settings/SettingsContainer'

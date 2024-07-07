@@ -1,8 +1,6 @@
 import { useDarkMode } from "../../../Context/DarkModeContext";
 
-interface ListPendingPosts {
-    verificationData : {}
-}
+
 const ListPendingRequest = ({verificationData} : any) => {
     const { isDarkMode } = useDarkMode();
 

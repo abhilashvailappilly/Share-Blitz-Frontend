@@ -12,7 +12,6 @@ const MessageSection = lazy(() => import('./MessageSection'));
 const ChatContainer = () => {
   const { isDarkMode } = useDarkMode();
   // const {onlineUsers} = useSocketContext();
-  const onlineUsers = useChatStore((state) => state.onlineUsers)
   // const [isOnline,setIsOnline] = useState<boolean>(false)
   const selectedUser = useChatStore((state) => state.selectedUser);
   const isSidebarVisible = useChatStore((state) => state.isSidebarVisible);
@@ -37,10 +36,10 @@ const ChatContainer = () => {
   }, [setSelectedUser, setIsSidebarVisible]);
 
 
-  const handleBackClick = useCallback(() => {
-    setIsSidebarVisible(true);
-    setSelectedUser(null);
-  }, [setIsSidebarVisible, setSelectedUser]);
+  // const handleBackClick = useCallback(() => {
+  //   setIsSidebarVisible(true);
+  //   setSelectedUser(null);
+  // }, [setIsSidebarVisible, setSelectedUser]);
 
 
   useEffect(() => {

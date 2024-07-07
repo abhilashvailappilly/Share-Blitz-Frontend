@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { DarkThemeToggle } from 'flowbite-react';
 import classNames from 'classnames';
 import IconTickCircle from '../../icons/VerificationIcon';
 import LockIcon from '../../icons/LockIcon';
@@ -9,7 +7,7 @@ import { useDarkMode } from '../../../Context/DarkModeContext';
 
 
 const SettingsSidebar = () => {
-    const {isDarkMode,toggleDarkMode} = useDarkMode()
+    const {isDarkMode} = useDarkMode()
 
 
   return (

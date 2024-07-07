@@ -1,27 +1,18 @@
 import  { useEffect, useState } from 'react';
-import { getAllReportedPosts, getAllUsers } from '../../../Api/admin/adminApiMethod';
+import { getAllReportedPosts } from '../../../Api/admin/adminApiMethod';
 import TableData from './Table';
 import { useDispatch } from 'react-redux';
 import {HashLoader} from 'react-spinners'
-import { toast } from 'react-toastify';
 import { ReportsInterface } from '../../../Types/Admin/Reports';
 
 
-interface User {
-    _id: string;
-    profileImageUrl: string;
-    userName: string;
-    email: string;
-    isBlocked: boolean;
-    name: string;
-    mobile: string;
-}
+
 
 function ReportManagement() {
     const dispatch = useDispatch();
 
     const [loading, setLoading] = useState<boolean>(true);
-    const [users, setUsers] = useState<User[]>([]);
+    // const [users, setUsers] = useState<User[]>([]);
     const [reports, setReports] = useState<ReportsInterface[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [usersPerPage] = useState<number>(10); 
@@ -66,11 +57,11 @@ function ReportManagement() {
     };
 
     // Pagination logic
-    const indexOfLastUser = currentPage * usersPerPage;
-    const indexOfFirstUser = indexOfLastUser - usersPerPage;
-    const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
+    // const indexOfLastUser = currentPage * usersPerPage;
+    // const indexOfFirstUser = indexOfLastUser - usersPerPage;
+    // const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
 
-    const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+    // const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
     if (loading) {
         return (

@@ -6,21 +6,16 @@ import uploadCloudinary from "../../../hooks/Cloudinary"
 import { useDispatch, useSelector } from "react-redux";
 // import { postCreatePost } from "../../services/apiMethods";
 import { createPost } from "../../../Api/user/authApiMethod";
-import { useNavigate } from "react-router-dom";
 import { FaSpinner } from "react-icons/fa";
 import Loader from "../../icons/Loader";
 
 import "./CreatePost.css";
-import { addCreatedPost,updateUserPosts,setLoadedPosts, addNewUserPosts } from "../../../Store/user/postSlice";
+import { addCreatedPost } from "../../../Store/user/postSlice";
 import { RootState } from "../../../Store/store";
 import { toast } from "react-toastify";
-interface CreatePostProps {
-  setClose: (value: boolean) => void;
-}
 
  
 function CreatePost() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const txtArea = useRef<HTMLTextAreaElement>(null);
   const [error, setError] = useState<string>(""); 

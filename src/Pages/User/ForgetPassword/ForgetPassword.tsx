@@ -157,7 +157,7 @@ const Forgetpassword: React.FC = () => {
               validateOnChange={true}
               validateOnBlur={true}
             >
-              {({ isSubmitting, setFieldValue,setSubmitting  }) => (
+              {({ isSubmitting,  }) => (
                 <Form className="bg-white rounded-md shadow-2xl p-5">
                   <h1 className="text-gray-800 font-bold text-2xl  mb-1">Change password</h1>
                   <p className="text-sm font-normal text-gray-600 mb-8"></p>

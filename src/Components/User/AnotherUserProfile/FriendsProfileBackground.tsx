@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import IconBxEdit from "../../icons/EditIcon";
 import EditProfileModal from "../Modal/EditProfileModal";
 import { useState, useEffect } from "react";
@@ -6,7 +6,6 @@ import { RootState } from "../../../Store/store";
 import ProfileDataInterface from "../../../Types/User/userProfile";
 import { getUser } from "../../../Api/user/authApiMethod";
 import { toast } from "react-toastify";
-import { getUserPosts } from "../../../Api/user/profileApiMethod";
 import { useParams } from "react-router-dom";
 import { FollowUser, UnFollowUser, checkIsFriend } from "../../../Api/user/userApiMethod";
 import Connections from "./Connections";
@@ -16,13 +15,12 @@ const FriendsProfileBackground = () => {
   const userInfo: ProfileDataInterface = useSelector((state: RootState) => state.auth.userInfo);
   const { userId } = useParams<{ userId: string }>();
   const [openEditProfile, setOpenEditProfile] = useState(false);
-  const myPosts: any[] = useSelector((state: RootState) => state.post.myPosts);
   const [image, setImage] = useState<string>(userInfo.profileImageUrl);
   const [isAdmin, setIsAdmin] = useState<Boolean>(false);
   const [isVerified, setIsVerified] = useState<Boolean>(false);
   const [isFriend, setIsFriend] = useState<Boolean>(false);
-  const [isRequested, setIsRequested] = useState<Boolean>(false);
-  const [bio, setBio] = useState("");
+  const [isRequested, _setIsRequested] = useState<Boolean>(false);
+  const [_bio, setBio] = useState("");
   const [profileUserData, setProfileUserData] = useState<{
     _id: string;
     name: string;

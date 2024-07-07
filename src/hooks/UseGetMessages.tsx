@@ -5,7 +5,7 @@ import { useEffect, useState } from "react"
 
 const UseGetMessages = () => {
  const [loading,setLoading] = useState(false)
- const { messages, setMessages, selectedUser,socket } = useChatStore((state) => ({
+ const { messages, setMessages, selectedUser } = useChatStore((state) => ({
     messages: state.messages as Message[],
     setMessages: state.setMessages,
     selectedUser: state.selectedUser,

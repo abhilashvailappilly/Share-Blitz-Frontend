@@ -1,5 +1,5 @@
 import axios from "axios";
-import { userAuthToken ,adminAuthToken,accessToken} from "../utils/constants/localStorage";
+import { accessToken} from "../utils/constants/localStorage";
 import { BASE_URL } from "../utils/constants/url";
 import { toast } from "react-toastify";
 import { RefreshAccessToken } from "../Api/user/authApiMethod";

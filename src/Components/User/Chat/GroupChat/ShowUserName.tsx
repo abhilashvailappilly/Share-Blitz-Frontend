@@ -1,6 +1,6 @@
 import { getUser } from '@/Api/user/authApiMethod';
 import ProfileDataInterface from '@/Types/User/userProfile';
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 
 const ShowUserName = ({userId}:{userId:string}) => {
   const [userData, setUserData] = useState<ProfileDataInterface | null>(null);

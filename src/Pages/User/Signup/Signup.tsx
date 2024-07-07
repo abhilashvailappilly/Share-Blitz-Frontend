@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {toast} from 'react-toastify'
 import { useNavigate,Link } from 'react-router-dom';
 import { userRegistrationValidation } from '../../../utils/validation/user';
@@ -32,7 +32,7 @@ const SignupComponent: React.FC = () => {
     //   confirmPassword:''})
     // },3000)
  
-  const [error,setError] = useState(null);
+  const [error,setError] = useState<any>(null);
   const navigate = useNavigate();
   const {name,userName,email,mobile,password,confirmPassword} = formData;
 
@@ -51,7 +51,7 @@ const SignupComponent: React.FC = () => {
 
     try { 
 
-      if(userRegistrationValidation(formData ,validationError,setValidationError)){
+      if(userRegistrationValidation(formData ,setValidationError)){
         const userResponse = await Register(formData)
         console.log('user response ;',userResponse)
         if(userResponse?.data?.success){
@@ -63,6 +63,7 @@ const SignupComponent: React.FC = () => {
         
       }
     } catch (error) {
+      setError(error)
       console.log(error);
       
     }

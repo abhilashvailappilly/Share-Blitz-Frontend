@@ -2,9 +2,6 @@ import { useVideoCallContext } from '@/Context/VideoCallContext';
 import ProfileDataInterface from '@/Types/User/userProfile';
 import React, { useEffect } from 'react';
 import { FaPhoneSlash } from 'react-icons/fa';
-import { Grid, Paper, Typography } from '@mui/material';
-import VideoCall from '../VideoCall/VideoCall';
-import App from '../VideoCall/main';
 
 
 interface CallingScreenProps {
@@ -13,7 +10,7 @@ interface CallingScreenProps {
 }
 
 const CallingScreen: React.FC<CallingScreenProps> = ({ user, onEndCall }) => {
-  const { callUser, myVideo, stream, callAccepted } = useVideoCallContext();
+  const { callUser, stream, callAccepted } = useVideoCallContext();
 
   useEffect(() => {
     callUser(user._id);

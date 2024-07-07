@@ -14,7 +14,6 @@ const CommentModal = ({ show, setShow, post, user, setComment }: CommentModalPro
   const [isLoading, setIsLoading] = useState<Boolean>(false);
   const [userComment, setUserComment] = useState('');
   const [postData, setPostData] = useState<PostI>(post);
-  const [err, setError] = useState('');
 
   const commentInputRef = useRef<HTMLInputElement>(null);
 

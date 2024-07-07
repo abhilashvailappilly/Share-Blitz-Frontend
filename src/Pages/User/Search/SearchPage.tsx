@@ -1,5 +1,4 @@
 import Navbar from "../../../Components/User/Navbar/Navbar"
-import FriendsProfileContainer from "../../../Components/User/AnotherUserProfile/FriendsProfileContainer"
 import Search from "../../../Components/User/Search/Search"
 import Sidebar2 from "../../../Components/User/Sidebar/Sidebar2"
 

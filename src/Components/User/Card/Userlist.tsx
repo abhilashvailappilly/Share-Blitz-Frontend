@@ -41,30 +41,18 @@ const ProfilePic = styled.img`
   border-radius: 50%;
 `;
 
-const FollowButton = styled.button`
-  margin-left: auto;
-  padding: 5px 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
 
-  &:hover {
-    background-color: #0056b3;
-  }
-`;
 
 type UserListProps = {
   users: ProfileDataInterface[];
   onFollow?: (id: string) => void;
-  seeProfile?: (userId: string, name: string) => void;
+  seeProfile?: (userId: string, ) => void;
 };
 
-const UserList: FC<UserListProps> = ({ users, onFollow, seeProfile }) => {
-  const seeProfileClick = (userId: string, userName: string) => {
+const UserList: FC<UserListProps> = ({ users, seeProfile }) => {
+  const seeProfileClick = (userId: string, ) => {
     if (!seeProfile) return;
-    seeProfile(userId, userName);
+    seeProfile(userId);
   };
 
   return (
@@ -72,7 +60,7 @@ const UserList: FC<UserListProps> = ({ users, onFollow, seeProfile }) => {
       {users.map((user, index) => (
         <UserCard key={index} className='mt-3 items-center py-2 px-4 rounded-lg hover:scale-105 dark:bg-gray-800 dark:hover:bg-gray-700'>
           <ProfilePic src={user.profileImageUrl} alt={`${user.name}'s profile`} />
-          <div className='ml-3 flex flex-col' onClick={() => seeProfileClick(user._id, user.name)}>
+          <div className='ml-3 flex flex-col' onClick={() => seeProfileClick(user._id, )}>
             <span className='font-bold dark:text-white'>{user.name}</span>
             <span className='dark:text-gray-300'>{user.userName}</span>
           </div>

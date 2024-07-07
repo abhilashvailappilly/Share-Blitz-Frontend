@@ -71,16 +71,16 @@ const VideoCallContextProvider: React.FC<ContextProviderProps> = ({ children }) 
     };
   }, [socket]);
 
-const answeredCall1 =async() => {
-    // const currentStream= await getMediaStream();
-    console.log('ans c my',myVideo)
-    // if (myVideo.current) {
-    //   toast('setteed')
-    //   myVideo.current.srcObject = stream;
-    // }
-    toast.success('call accepted');
-    setCallAccepted(true);
-  };
+// const answeredCall1 =async() => {
+//     // const currentStream= await getMediaStream();
+//     console.log('ans c my',myVideo)
+//     // if (myVideo.current) {
+//     //   toast('setteed')
+//     //   myVideo.current.srcObject = stream;
+//     // }
+//     toast.success('call accepted');
+//     setCallAccepted(true);
+//   };
 
   
 

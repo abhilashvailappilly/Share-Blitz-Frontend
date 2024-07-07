@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import {   unfollowUser  } from '../../Api/user/authApiMethod';
+// import {   unfollowUser  } from '../../Api/user/authApiMethod';
 // import { getConnection/ } from '../../Api/user/userApiMethod';
 import { showError } from '../../hooks/errorManagement';
 import { FollowUser, checkIsFriend } from '../../Api/user/userApiMethod';
 import { FollowingsInterface } from '../../Types/User/Connections';
 import { toast } from 'react-toastify';
-import ProfileDataInterface from '../../Types/User/userProfile';
 import { RootState } from '../../Store/store';
 
 interface User {
@@ -24,21 +23,14 @@ interface ConnectionBtnProps {
   setFollowers: React.Dispatch<React.SetStateAction<any>>; // Adjust type as per your state structure
 }
 
-interface ApiResponse {
-    userConnection: {
-      following: string[]; // Adjust type if necessary
-    };
-    followeeConnection: {
-      followers: any[]; // Adjust type if necessary
-    };
-  }
+
   
 
-const ConnectionBtn: React.FC<ConnectionBtnProps> = ({ user, color, width, height, setFollowers }) => {
-  const userInfo: ProfileDataInterface = useSelector((state: RootState) => state.auth.userInfo)
+const ConnectionBtn: React.FC<ConnectionBtnProps> = ({ user, color, width, height }) => {
+  // const userInfo: ProfileDataInterface = useSelector((state: RootState) => state.auth.userInfo)
   const followersData: FollowingsInterface[] = useSelector((state: RootState) => state.connections.followings)
 
-  const [following, setFollowing] = useState<FollowingsInterface[]>([]);
+  // const [following, setFollowing] = useState<FollowingsInterface[]>([]);
   const [isFriend,setIsFriend] = useState<Boolean>(false)
 //   const [error, setError] = useState<string>('');
   const [error, setError] = useState<ErrorObject|null>(null); // Change type to string | ErrorObject

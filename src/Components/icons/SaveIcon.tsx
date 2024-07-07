@@ -9,11 +9,9 @@ import { savedPost } from '../../Types/User/SavedPosts';
 interface SaveIcnProps {
   size: { width: number; height: number };
   post: PostI; 
-  setPost?: React.Dispatch<React.SetStateAction<any>>;
-  setError: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const SaveIcn: React.FC<SaveIcnProps> = ({ size, post, setPost, setError }) => {
+const SaveIcn: React.FC<SaveIcnProps> = ({ size, post,  }) => {
   const user = useSelector((state: any) => state?.user?.userData); 
   const savedPosts = useAppSelector((state) => state.post.savedPosts);
 

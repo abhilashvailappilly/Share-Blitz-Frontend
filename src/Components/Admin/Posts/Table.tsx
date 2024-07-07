@@ -1,8 +1,7 @@
-import React, {  useEffect, useState } from 'react';
+import  {  useEffect, useState } from 'react';
 import { ReportsInterface } from '../../../Types/Admin/Reports';
 import ProfileDataInterface from '../../../Types/User/userProfile';
 import { toast } from 'react-toastify';
-import { HashLoader } from 'react-spinners';
 
 import { GetReportsByPostId, TooglePostIsBlocked, getUserById } from '../../../Api/admin/adminApiMethod';
 import { PostInterface } from '@/Types/Admin/PostManagement';
@@ -17,12 +16,10 @@ import BlockPostModal from '../Modal/BlockPostModal';
 //  }
 interface Props {
     posts: PostInterface;
-    updatedUsers: (userId: string, newStatus: boolean) => void;
     setLoading?: (isLoading: boolean) => void;
 }
 
-function TableData({ posts, updatedUsers,setLoading }: Props) {
-    const [isOpen, setIsOpen] = useState<boolean>(false);
+function TableData({ posts,setLoading }: Props) {
     const [userData , setUserData] = useState<ProfileDataInterface>()
     const [postData , setPostData] = useState<PostInterface>(posts) 
     const [reportData , setReportData] = useState<ReportsInterface[]>([]) 

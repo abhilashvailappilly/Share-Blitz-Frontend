@@ -1,4 +1,3 @@
-import { checkIsFriend } from "../../Api/user/userApiMethod";
 
 const userRoutes={
     followUser:"/user/followUser",

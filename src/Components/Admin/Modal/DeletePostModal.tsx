@@ -1,7 +1,7 @@
 import React from 'react';
 // import { toggleUserBlock } from '../../../services/Admin/apiMethods';
 import { toast } from 'react-toastify';
-import { ChangeActionStatus, DeletePostById, toogleUserStatus } from '../../../Api/admin/adminApiMethod';
+import { ChangeActionStatus, DeletePostById } from '../../../Api/admin/adminApiMethod';
 
 interface Props {
     isOpen: boolean;
@@ -14,10 +14,10 @@ interface Props {
 
 const DeletePostModal: React.FC<Props> = ({ isOpen, closeModal, updatedUsers,isActionTaken,postId, reportId }) => {
 
-    const handleBlockToggle = async(userId: string ,reportId : string) => {
-
+    const handleBlockToggle = async( reportId : string) => {
+      
         updatedUsers(postId,!isActionTaken);
-        const deletePost = await DeletePostById(postId)
+         await DeletePostById(postId)
         const changeActionStaus = await ChangeActionStatus(reportId)
         if(changeActionStaus.success) {
           if(changeActionStaus.updatedStatus){
@@ -90,7 +90,7 @@ const DeletePostModal: React.FC<Props> = ({ isOpen, closeModal, updatedUsers,isA
                       Are you sure you want to Delete the post ?
                     </h3>
                     <button
-                    onClick={() => handleBlockToggle(postId,reportId)}
+                    onClick={() => handleBlockToggle(reportId)}
                       data-modal-hide="popup-modal"
                       type="button"
                       className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"

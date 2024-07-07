@@ -22,11 +22,11 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({ isOpen, onClose }) 
 
 const [name , setName] = useState<string>(user.name)
 const [userName , setUserName] = useState<string>(user.userName) 
-const [profileImageUrl, setProfileImageUrl] = useState<string>(user.profileImageUrl)
-const [mobile,setMobile] = useState<string>(user.mobile)
-const [email,setEmail] = useState<string>(user.email)
-const [bio,setBio] = useState<string>(user.bio)
-const [dob,setDob] = useState<string>(user.dob)
+const [profileImageUrl, setProfileImageUrl] = useState<string>('')
+const [mobile,setMobile] = useState<string>('')
+const [email,setEmail] = useState<string>('')
+const [bio,setBio] = useState<string>('')
+const [dob,setDob] = useState<string>('')
 
 const [image, setImage] = useState<string>("");
 const [error, setError] = useState<string>(""); 
@@ -35,8 +35,17 @@ const [croppedImg, setCroppedImg] = useState<string | null>(null);
 const [profileImage,setProfileImageDisplay] = useState<string | "" > ("")
 const [loading, setLoading] = useState<boolean>(false); // state to set the loading
 const dispatch = useDispatch()
-// const [formError ,setFormError] = useState({name:"",userName:"",mobile:"",image:"",dob:""})
 const [formError, setFormError] = useState<{ [key: string]: string }>({});
+
+useEffect(()=>{
+if(user){
+  setProfileImageUrl(user.profileImageUrl)
+  setMobile(user.mobile)
+  setEmail(user.email)
+  setBio(user.bio)
+  setDob(user?.dob)
+}
+},[user])
 
 const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const img = e.target.files?.[0];

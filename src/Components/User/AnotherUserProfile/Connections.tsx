@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { getUserPosts } from '../../../Api/user/profileApiMethod';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getConnections } from '../../../Api/user/userApiMethod';
 import { toast } from 'react-toastify';
-import FollowersModal from '../Modal/FollowersModal';
 import FollowingsModal from '../Modal/FollowingsModal';
 
 interface user {

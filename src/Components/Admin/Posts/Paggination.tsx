@@ -2,8 +2,8 @@ import { useState } from "react"
 
 export default () => {
 
-    const [pages, setPages] = useState(["1", "2", "3", , "...", "8", "9", "10",])
-    const [currentPage, setCurrentPage] = useState("1")
+    const [pages] = useState(["1", "2", "3", , "...", "8", "9", "10",])
+    const [currentPage] = useState("1")
 
     return (
         <div className="max-w-screen-xl mx-auto mt-12 px-4 text-gray-600 md:px-8">
@@ -16,7 +16,7 @@ export default () => {
                 </a>
                 <ul className="flex items-center gap-1">
                     {
-                        pages.map((item, idx) => (
+                        pages.map((item) => (
                             <li key={item} className="text-sm">
                                 {
                                     item == "..." ? (

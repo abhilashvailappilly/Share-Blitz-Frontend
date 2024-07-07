@@ -1,11 +1,11 @@
-import { GetMessages, GetMessagesByRoom } from "@/Api/user/chatApiMethods"
+import {  GetMessagesByRoom } from "@/Api/user/chatApiMethods"
 import { Message } from "@/Types/User/ZustandStore"
 import { useChatStore } from "@/ZustandStore/chatStore"
 import { useEffect, useState } from "react"
 
 const UseGetMessagesByRoom = () => {
  const [loading,setLoading] = useState(false)
- const { messages, setMessages, selectedUser,socket } = useChatStore((state) => ({
+ const { messages, setMessages,  } = useChatStore((state) => ({
     messages: state.messages as Message[],
     setMessages: state.setMessages,
     selectedUser: state.selectedUser,

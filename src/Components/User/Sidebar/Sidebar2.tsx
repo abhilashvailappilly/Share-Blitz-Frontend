@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { BiBookAlt, BiHelpCircle, BiHome, BiMessage, BiStats, BiTask } from 'react-icons/bi';
+import  { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../../Store/user/userSlice';
@@ -9,11 +8,9 @@ import { FaSignOutAlt } from 'react-icons/fa';
 import IconPicture from '../../icons/PostIcon';
 import ProfileDataInterface from '../../../Types/User/userProfile';
 import { RootState } from '../../../Store/store';
-import SearchIcon from '../../icons/SearchIcon';
 import classNames from 'classnames';
 import IconHome from '../../icons/HomeIcon';
 import IconMessage from '../../icons/MessageIco';
-import { DarkThemeToggle } from 'flowbite-react';
 import IconExplore from '../../icons/ExploreIcon';
 import IconNotifications from '../../icons/NotificationIcon';
 import IconSettings from '../../icons/Settings';
@@ -23,7 +20,7 @@ import { useNotificationStore } from '@/ZustandStore/notificationStore';
 import { GetAllNotifications } from '@/Api/user/notificationApiMethod';
 
 const Sidebar2 = () => {
-  const{isDarkMode,toggleDarkMode} = useDarkMode()
+  const{isDarkMode} = useDarkMode()
    const userData: ProfileDataInterface = useSelector((state: RootState) => state.auth.userInfo);
    const {notifications,setNotifications} = useNotificationStore()
   const dispatch = useDispatch();

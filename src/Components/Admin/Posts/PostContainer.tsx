@@ -3,6 +3,7 @@ import { PostI } from "@/Types/User/Post";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import TableData from "./Table";
+import LoaderCircle from "@/Components/Common/Loader/LoaderCircle";
 
 const PostContainer = () => {
   const [postData, setPostData] = useState<PostI[]>([]);
@@ -30,17 +31,14 @@ const PostContainer = () => {
     }
   };
 
-  const updateUserStatus = (userId: string, newStatus: boolean) => {
-    toast.info("Updated");
-    // Uncomment and update the below code as per your requirements
-    // const updatedPosts = postData.map((post) => {
-    //   if (post.postId === userId) {
-    //     return { ...post, status: newStatus };
-    //   }
-    //   return post;
-    // });
-    // setPostData(updatedPosts);
-  };
+  if(loading){
+    return (
+      <div className="w-full h-screen">
+        <LoaderCircle />
+      </div>
+    )
+  }
+
 
   const totalPages = Math.ceil(totalPosts / postsPerPage);
 
@@ -53,7 +51,7 @@ const PostContainer = () => {
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
               <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700 border border-gray-200 dark:border-gray-700 border-2 rounded-full shadow-2xl bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700  border-gray-200 dark:border-gray-700 border-2 rounded-full shadow-2xl bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
                   <thead className="bg-green-600 text-white font-bold dark:bg-gray-800">
                     <tr>
                       <th className="px-4 py-3.5 text-sm font-bold text-left rtl:text-right dark:text-gray-400">Post</th>
@@ -67,7 +65,7 @@ const PostContainer = () => {
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                     {postData.map((posts: PostI, index: number) => (
-                      <TableData key={index} posts={posts} updatedUsers={updateUserStatus} setLoading={setLoading} />
+                      <TableData key={index} posts={posts}  setLoading={setLoading} />
                     ))}
                   </tbody>
                 </table>

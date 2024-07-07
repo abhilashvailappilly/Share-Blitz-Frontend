@@ -5,7 +5,7 @@ import ProfileDataInterface from "@/Types/User/userProfile";
 import { useChatStore } from "@/ZustandStore/chatStore";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { FaImage, FaImages, FaVideo } from "react-icons/fa";
+import { FaImage,  FaVideo } from "react-icons/fa";
 
 interface ListUsersSidebarInterface {
     user: ProfileDataInterface;
@@ -57,7 +57,7 @@ const ListUsersSidebar = ({ user, isSearching,roomId,lastMessage, doFunction }: 
     }
 
     return (
-        <li
+        <div
             key={user._id}
             onClick={() => doFunction(user)}
             className={`p-2 cursor-pointer mt-1 ${
@@ -128,7 +128,7 @@ const ListUsersSidebar = ({ user, isSearching,roomId,lastMessage, doFunction }: 
                
                
             </div>
-        </li>
+        </div>
     );
 };
 

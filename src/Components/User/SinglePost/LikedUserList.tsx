@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { getUserById } from '../../../Api/admin/adminApiMethod';
 import ProfileDataInterface from '../../../Types/User/userProfile';
 import { useNavigate } from 'react-router-dom';
@@ -89,7 +89,7 @@ const LikedUserList = ({ userId, index }: LikedUserListProps) => {
     };
 
     return (
-        <li
+        <li key={index}
             onClick={handleClick}
             className="flex items-center justify-between border-2 mt-4 border-gray-200 rounded-lg py-4 px-4 transition duration-300 hover:cursor-pointer hover:bg-gray-300 hover:shadow-2xl shadow-xl"
         >

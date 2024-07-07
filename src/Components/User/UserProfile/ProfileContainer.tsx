@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import ProfileBackground from "./ProfileBackground"
 import ProfilePostsContainer from "./ProfilePostsContainer"
-import {useState,useEffect} from 'react'
+import {useEffect} from 'react'
 import ProfileDataInterface from "../../../Types/User/userProfile"
 import { RootState } from "../../../Store/store"
 import { getUserPosts } from "../../../Api/user/profileApiMethod"

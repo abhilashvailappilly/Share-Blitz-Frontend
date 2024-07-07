@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import classNames from 'classnames';
 import { useDarkMode } from '../../../Context/DarkModeContext';
-import { AiFillWechatWork } from 'react-icons/ai';
 import { toast } from 'react-toastify';
 import { ChangePrivacy } from '../../../Api/user/userApiMethod';
 

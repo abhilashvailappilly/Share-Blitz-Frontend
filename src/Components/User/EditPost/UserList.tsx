@@ -1,26 +1,7 @@
-import React, { FC } from 'react';
-import styled, { ThemeProvider } from 'styled-components';
+import  { FC } from 'react';
+import styled from 'styled-components';
 import ProfileDataInterface from '../../../Types/User/userProfile';
-import { toast } from 'react-toastify';
 
-// Define light and dark theme objects
-const lightTheme = {
-  backgroundColor: '#fff',
-  textColor: '#000',
-  borderColor: '#ccc',
-  buttonBackgroundColor: '#007bff',
-  buttonHoverBackgroundColor: '#0056b3',
-  cardHoverBackgroundColor: '#f0f0f0',
-};
-
-const darkTheme = {
-  backgroundColor: '#333',
-  textColor: '#fff',
-  borderColor: '#555',
-  buttonBackgroundColor: '#0056b3',
-  buttonHoverBackgroundColor: '#003f7f',
-  cardHoverBackgroundColor: '#444',
-};
 
 // Styled components
 const UserListWrapper = styled.div`
@@ -52,19 +33,6 @@ const ProfilePic = styled.img`
   border-radius: 50%;
 `;
 
-const FollowButton = styled.button`
-  margin-left: auto;
-  padding: 5px 10px;
-  background-color: ${(props) => props.theme.buttonBackgroundColor};
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: ${(props) => props.theme.buttonHoverBackgroundColor};
-  }
-`;
 
 type UserListProps = {
   users: ProfileDataInterface[];
@@ -72,7 +40,7 @@ type UserListProps = {
   doFunction?: (user: ProfileDataInterface) => void;
 };
 
-const UserList: FC<UserListProps> = ({ users, onFollow, doFunction }) => {
+const UserList: FC<UserListProps> = ({ users, doFunction }) => {
   const seeProfileClick = (user: ProfileDataInterface) => {
     if (doFunction) doFunction(user);
   };

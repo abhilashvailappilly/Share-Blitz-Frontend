@@ -3,8 +3,7 @@
 
 import chatRoutes from "@/Service/Endpoints/chatEndpoints";
 import { apiCall } from "./userApiCall";
-import { useChatStore } from "@/ZustandStore/chatStore";
-import { toast } from "react-toastify";
+
 
 // @dec      get recents chats of the user
 // method    Get

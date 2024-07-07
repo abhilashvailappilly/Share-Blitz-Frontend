@@ -1,5 +1,4 @@
 import ChatMessageLoader from '@/Components/Skeleton/SkeletonChat';
-import UseGetMessages from '@/hooks/UseGetMessages';
 // import SingleMessages from './SingleMessages';
 import { useEffect, useRef, useState } from 'react';
 // import TypingIndicator from './TypingIndicator';
@@ -10,11 +9,10 @@ import UseGetMessagesByRoom from '@/hooks/UseGetMessagesByRoom';
 import LoaderCircle from '@/Components/Common/Loader/LoaderCircle';
 
 const GroupChatMessagesContainer = () => {
-    const { selectedUser,selectedRoom, typing } = useChatStore();
+    const { selectedRoom } = useChatStore();
     const { messages, loading } = UseGetMessagesByRoom();
     const [isLoading,setIsLoading] = useState<boolean>(true)
     const lastMessageRef = useRef<HTMLDivElement | null>(null);
-    const typingRef = useRef<HTMLDivElement | null>(null);
 
     if (!selectedRoom) return null;
 
@@ -22,7 +20,7 @@ const GroupChatMessagesContainer = () => {
     
     const updateMessagesAsSeen = async()=>{
         try {
-            const response = await UpdateMessagesAsSeen(selectedRoom?._id)
+           await UpdateMessagesAsSeen(selectedRoom?._id)
         } catch (error) {
             console.log(error)
         }

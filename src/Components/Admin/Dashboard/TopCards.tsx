@@ -7,7 +7,6 @@ import { Grid, Paper, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 const TopCards = () => {
-    const [cardsData, setCardsData] = useState(null);
     const [postsData, setPostsData] = useState<PostI[]>([]);
     const [usersData, setUsersData] = useState<ProfileDataInterface[]>([]);
     const { onlineUsers } = useChatStore();

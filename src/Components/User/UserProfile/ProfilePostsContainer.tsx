@@ -15,7 +15,6 @@ import { toast } from "react-toastify";
 type ActiveKeys = 'myPosts' | 'taggedPosts' | 'savedPosts';
 
 const ProfilePostsContainer = () => {
-  const myPosts: any = useSelector((state: RootState) => state.post.myPosts);
   const userInfo: ProfileDataInterface = useSelector((state: RootState) => state.auth.userInfo);
   const { userId } = useParams<{ userId: string }>();
   const [profileUserData, setProfileUserData] = useState<ProfileDataInterface>();

@@ -1,7 +1,6 @@
 import { apiCall } from "./userApiCall";
 import userRoutes from "../../Service/Endpoints/authEndpoints";
 import postRoutes from "../../Service/Endpoints/postEndpoints";
-import { toast } from "react-toastify";
 import { refreshToken } from "../../utils/constants/localStorage";
 
 
@@ -226,28 +225,28 @@ export const unlikePost = async ( postId:string) => {
 
  
 
-export const followUser = async ( userId: string,followUserId:string) => {
-    try {
-        console.log(' Follow user')
-        // const res = await apiCall('post',userRoutes.userGlogin,{userId,followUserId},false)
-        // return res
-        return {success:true}
+// export const followUser = async ( userId: string,followUserId:string) => {
+//     try {
+//         console.log(' Follow user')
+//         // const res = await apiCall('post',userRoutes.userGlogin,{userId,followUserId},false)
+//         // return res
+//         return {success:true}
 
-    } catch (error) {
-        console.log(error)
-    }
-}
-export const unfollowUser = async ( userId: string,unFollowUserId:string) => {
-    try {
-        console.log(' unfollow usser')
-        // const res = await apiCall('post',userRoutes.userGlogin,{userId,unFollowUserId},false)
-        // return res
-        return {success:true}
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
+// export const unfollowUser = async ( userId: string,unFollowUserId:string) => {
+//     try {
+//         console.log(' unfollow usser')
+//         // const res = await apiCall('post',userRoutes.userGlogin,{userId,unFollowUserId},false)
+//         // return res
+//         return {success:true}
 
-    } catch (error) {
-        console.log(error)
-    }
-}
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
 
 interface postDataI  {
     userId: string,

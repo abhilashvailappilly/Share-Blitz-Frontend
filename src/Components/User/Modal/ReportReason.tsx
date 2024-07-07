@@ -6,7 +6,6 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { toast } from 'react-toastify';
 
 
 
@@ -16,7 +15,6 @@ interface ReportReasonModalPropsInterface {
 }
 
 export default function ReportReasonModal({submitFunction,cancelFunction} :ReportReasonModalPropsInterface) {
-  const [open, setOpen] = React.useState(true);
 
 
   const handleClose = () => {
@@ -27,7 +25,7 @@ export default function ReportReasonModal({submitFunction,cancelFunction} :Repor
     <React.Fragment>
      
       <Dialog
-        open={open}
+        open={true} // here provide  state with initial true value
         onClose={handleClose}
         PaperProps={{
           component: 'form',

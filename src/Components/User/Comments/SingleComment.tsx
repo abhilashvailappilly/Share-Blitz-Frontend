@@ -1,4 +1,3 @@
-import { FaHeart } from 'react-icons/fa';
 import { Comment } from '../../../Types/User/Comment';
 import { useEffect, useState } from 'react';
 import { getUser } from '../../../Api/user/authApiMethod'; // You need to implement these API methods
@@ -103,52 +102,7 @@ const SingleComment = ({setPostData, postId, isLoading, comment, index }: Single
 
   return (
     <div key={index} > 
-      {/* <div className="w-full h-full border-black border-2 rounded-xl flex items-start mb-4 p-3">
-        <div className="w-12 h-12 rounded-full overflow-hidden mr-3">
-          <img src={userDetails?.profileImageUrl} alt={`${userDetails?.name}'s profile`} className="w-full h-full object-cover" />
-        </div>
-        <div className="flex-1">
-          <div className="flex items-center justify-between">
-            <span className="font-bold mr-2">{userDetails?.name}</span>
-            <span className="text-xs text-gray-500">{getTimeDifference(comment.createdAt.toString())}</span>
-          </div>
-          <div className="text-sm mt-1 flex flex-col">
-            <span>{comment.comment}</span>
-          </div>
-        </div>
-        <button className="ml-3 text-red-500 hover:text-red-600">
-          <FaHeart />
-        </button>
-      </div>
-      <div className="pl-16">
-        // <button onClick={toggleReplies} className="text-blue-500 hover:underline mb-2">
-          {showReplies ? 'Hide Replies' : `Show Replies `}
-        </button>
-        <button onClick={handleReplyClick} className="text-blue-500 hover:underline ml-2">
-          Reply
-        </button>
-        {showReplies && (
-          <div>
-            {replies.map((reply, index) => (
-              <ListReplyComment reply={reply?.reply} userId={reply?.userId} index={index} key={index} />
-            ))}
-          </div>
-        )}
-        {showReplyInput && (
-          <div className="mt-2">
-            <input
-              type="text"
-              value={reply}
-              onChange={handleReplyChange}
-              placeholder="Write a reply..."
-              className="border rounded p-2 w-full"
-            />
-            <button onClick={handleReplySubmit} className="mt-2 bg-blue-500 text-white rounded p-2">
-              Reply
-            </button>
-          </div>
-        )}
-      </div> */}
+      
       <article className="p-6 text-base bg-white border-t border-gray-200 dark:border-gray-700 dark:bg-gray-900">
         <footer className="flex justify-between items-center mb-2">
             <div className="flex items-center">

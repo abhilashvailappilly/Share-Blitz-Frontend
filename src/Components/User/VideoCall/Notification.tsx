@@ -1,6 +1,5 @@
 import { useVideoCallContext } from '@/Context/VideoCallContext'
 import { Button } from '@mui/material'
-import React from 'react'
 
 const Notification = () => {
     const {answerCall , call ,callAccepted} = useVideoCallContext()

@@ -31,7 +31,7 @@ function UserManagement() {
                 setTotal(response.usersData.length);
                 setLoading(false);
             })
-            .catch((error) => {
+            .catch((error) => {console.log(error)
                 setLoading(false);
             });
     }, [dispatch, currentPage, usersPerPage]);
@@ -53,7 +53,7 @@ function UserManagement() {
     const indexOfFirstUser = indexOfLastUser - usersPerPage;
     const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
 
-    const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+    // const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
     if (loading) {
         return (

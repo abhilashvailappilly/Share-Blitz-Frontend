@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import  { useEffect } from 'react'
 import Notification from './Notification';
 import { useDarkMode } from '@/Context/DarkModeContext';
 import { useNotificationStore } from '@/ZustandStore/notificationStore';

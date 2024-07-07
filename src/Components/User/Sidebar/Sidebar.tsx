@@ -1,6 +1,5 @@
-import React from 'react'
-import {BiBookAlt, BiHelpCircle, BiHome, BiMessage, BiStats, BiTask} from 'react-icons/bi'
-import { FaUserCircle , FaPlusCircle,FaSignOutAlt } from "react-icons/fa";
+import {BiBookAlt, BiHome, BiMessage, } from 'react-icons/bi'
+import {  FaPlusCircle,FaSignOutAlt } from "react-icons/fa";
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import './sidebar.css'
@@ -8,10 +7,6 @@ import { logout } from '../../../Store/user/userSlice';
 import { clearLoadedPosts,clearUserPosts } from '../../../Store/user/postSlice';
 import IconUsers from '../../icons/Users';
 
-// interface SidebarProps  {
-//     setShowCreatePost:React.Dispatch<React.SetStateAction<boolean>>;
-//     setShowPost: React.Dispatch<React.SetStateAction<boolean>>;
-// };
 
 
     const Sidebar = ()=>{

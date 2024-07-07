@@ -1,4 +1,3 @@
-import ProfileHeader from "./ProfileHeader"
 // import userImage from ''
 
 const Profile = () => {

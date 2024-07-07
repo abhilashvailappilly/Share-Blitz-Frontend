@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import IconReturnUpBack from "@/Components/icons/BackIcon";
 import { useDarkMode } from "@/Context/DarkModeContext";
 import { useChatStore } from "@/ZustandStore/chatStore";
-import { FaInfo, FaInfoCircle, FaPhoneAlt, FaUserEdit, FaVideo } from "react-icons/fa";
+import { FaInfoCircle} from "react-icons/fa";
 
-import { useToast } from "@/Components/ui/use-toast"
-import { useVideoCallContext } from '@/Context/VideoCallContext';
 import GroupChatDetailsModal from './GroupChatDetailsModal';
 
 
@@ -15,31 +13,11 @@ interface ChatHeaderProps {
 
 const GroupChatHeader: React.FC<ChatHeaderProps> = ({ handleBackClick }) => {
   const { isDarkMode } = useDarkMode();
-  const {isCalling,setIsCalling,callAccepted} = useVideoCallContext()
-  const { selectedUser,selectedRoom, onlineUsers, typing } = useChatStore();
+  const { selectedRoom } = useChatStore();
   const [showGroupDetails,setShowGroupDetails] = useState<boolean>(false)
   // const [isCalling, setIsCalling] = useState(false);
-  const { toast } = useToast()
   if (!selectedRoom ) return null;
 
-//   const isTyping = typing.includes(selectedUser._id);
-//   const isOnline = onlineUsers.includes(selectedUser._id);
-
-  const handleVideoCallClick = () => {
-    // if (!isOnline) {
-    //   toast({
-    //     title: "User is Offline",
-    //     description: "Try again when the user is online",
-    //     // autoClose:"3000",
-    //   })
-      return;
-    // }
-    setIsCalling(true);
-  };
-
-//   const showGroupDetails = () => {
-    
-//   };
 
   return ( 
     <>

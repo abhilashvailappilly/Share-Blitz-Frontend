@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
 interface CommentIcnProps {
   size: { width: number; height: number };
@@ -7,8 +6,7 @@ interface CommentIcnProps {
   setShow:(value:boolean)=>void
 }
 
-const CommentIcn: React.FC<CommentIcnProps> = ({ size, post,setShow }) => {
-  const navigate = useNavigate();
+const CommentIcn: React.FC<CommentIcnProps> = ({ size, setShow }) => {
 
   return (
     <>

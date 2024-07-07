@@ -2,17 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import SinglePost from '../../../Components/User/SinglePost/SinglePost';
 import SuggestionContainer from '../../../Components/User/Container/SuggestionContainer';
 import Suggestion from '../../../Components/User/Profile/Suggestion';
-import Navbar from '../../../Components/User/Navbar/Navbar';
 import './Home.css';
 import { getAllPosts, getSavedPosts } from '../../../Api/user/postApiMethod';
 import { setLoadedPosts, setSavedPosts } from '../../../Store/user/postSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../Store/store';
-import Sidebar2 from '../../../Components/User/Sidebar/Sidebar2';
 import { PostI } from '../../../Types/User/Post';
 import { HashLoader } from 'react-spinners';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import useAppSelector from '@/hooks/UseSelector';
 import { useDarkMode } from '@/Context/DarkModeContext';
 import Layout from '@/Layout';
 
@@ -23,12 +20,10 @@ interface SuggestionI {
 
 const Home2: React.FC = () => {
   const openEditor = useRef<HTMLDivElement>(null);
-  const closeEditor = useRef<HTMLDivElement>(null);
   const [selectedPost, setSelectedPost] = useState<PostI | undefined>();
-  const [loading, setLoading] = useState<boolean>(true);
+  // const [loading, setLoading] = useState<boolean>(true);
   const [pageLoading, setPageLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(true);
-  const userInfo = useAppSelector(state => state.auth.userInfo);
   const { isDarkMode } = useDarkMode();
   const dispatch = useDispatch();
 
@@ -45,12 +40,11 @@ const Home2: React.FC = () => {
   const [loadedPosts, setLoadedPostsState] = useState<PostI[]>([]);
   const [page, setPage] = useState<number>(1);
 
-  const closeLikeModal = useRef<HTMLDivElement>(null);
 
-  const [showPosts, setShowPosts] = useState<boolean>(true);
-  const [showCreatePost, setShowCreatePost] = useState<boolean>(false);
+  
 
   useEffect(() => {
+    console.log(selectedPost)
     setPageLoading(true);
     if (page === 1) fetchPosts(1);
     setPageLoading(false);
@@ -59,7 +53,7 @@ const Home2: React.FC = () => {
 
   const fetchPosts = async (page: number) => {
     try {
-      setLoading(true);
+      // setLoading(true);
       const allPosts = await getAllPosts(page, 3);
       if (allPosts.success) {
         const newPosts = allPosts.postData;
@@ -72,10 +66,10 @@ const Home2: React.FC = () => {
       } else {
         setHasMore(false);
       }
-      setLoading(false);
+      // setLoading(false);
     } catch (error) {
       console.log(error);
-      setLoading(false);
+      
       setHasMore(false);
     }
   };

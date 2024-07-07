@@ -1,6 +1,5 @@
 import { apiCall } from "./adminApiCall";
 import adminRoutes from "../../Service/Endpoints/adminEndpoints";
-import { toast } from "react-toastify";
 
 
 

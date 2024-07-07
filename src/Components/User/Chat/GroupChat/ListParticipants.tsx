@@ -1,9 +1,8 @@
 import { getUser } from '@/Api/user/authApiMethod';
 import ProfileDataInterface from '@/Types/User/userProfile';
-import { ListItem, ListItemText, ListItemAvatar, Avatar, IconButton } from '@mui/material';
+import { ListItem, ListItemText, ListItemAvatar, Avatar } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { FaTrash } from 'react-icons/fa';
-import { toast } from 'react-toastify';
+
 
 interface ListParticipantsInterface {
   userId: string;
@@ -11,7 +10,7 @@ interface ListParticipantsInterface {
 key:number
 }
 
-const ListParticipants = ({ userId, key,onRemove }: ListParticipantsInterface) => {
+const ListParticipants = ({ userId }: ListParticipantsInterface) => {
   const [userData, setUserData] = useState<ProfileDataInterface | null>(null);
 
   useEffect(() => {

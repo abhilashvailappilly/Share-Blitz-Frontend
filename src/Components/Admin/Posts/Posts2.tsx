@@ -14,7 +14,6 @@ interface Props {
 }
 
 const UserTable: React.FC<Props> = ({ users }) => {
-    const [totalReports, setTotalReports] = useState<number>(0);
     const [blockedUsers, setBlockedUsers] = useState<number[]>([]);
 
     const toggleBlockUser = (userId: number) => {

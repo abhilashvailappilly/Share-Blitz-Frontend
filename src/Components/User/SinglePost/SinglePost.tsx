@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useState, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Dropdown from "../../options/Dropdown";
@@ -7,7 +7,6 @@ import CaptionWithShowMore from "../../options/Caption";
 import Heart from "../../options/Heart";
 import SaveIcn from "../../icons/SaveIcon";
 import CommentIcn from "../../icons/CommentIcon";
-import ConnectionBtn from "../../icons/ConnectionBtn";
 import ProfilePic from "../Profile/ProfilePic";
 import NameField from "../Profile/ProfileName";
 import { RootState } from "../../../Store/store";
@@ -27,21 +26,16 @@ interface SinglePostProps {
 
 const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, openEditor }) => {
 
-  console.log("postdatta >......>", postData)
   const cardClasses = "max-w-md mx-auto bg-white dark:bg-gray-900 shadow-md rounded-lg overflow-hidden";
-  const textClasses = "text-zinc-900 dark:text-zinc-100";
-  const buttonClasses = "text-zinc-500 dark:text-zinc-300";
-  const iconClasses = "w-6 h-6";
 
-  const dispatch = useDispatch();
+
   const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.auth.userInfo);
 
-  const [owner, setOwner] = useState<boolean>(false);
+  // const [owner, setOwner] = useState<boolean>(false);
   const [commentModal, setCommentModal] = useState(false);
   const [post, setPost] = useState<PostI>(postData);
   const [showLikeModal, setShowLikeModal] = useState<boolean>(false);
-  const [followers, setFollowers] = useState<string[]>([]);
   const [postUser, setPostUser] = useState<User | null>(null);
   const [error, setError] = useState<string>("");
   const [hover, setHover] = useState<boolean>(false);
@@ -77,7 +71,7 @@ const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, open
     getUser(post?.userId)
       .then((response: { success: Boolean; user: User }) => {
         setPostUser(response?.user);
-        user?._id === response?.user?._id ? setOwner(false) : setOwner(true); // change to true later
+        // user?._id === response?.user?._id ? setOwner(false) : setOwner(true); // change to true later
       })
       .catch((error: Error) => {
         setError(error.message);
@@ -172,7 +166,7 @@ const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, open
               <Heart size={{ width: 34, height: 36 }} color={"red"} post={post} addLike={addLike} />
               <CommentIcn size={{ width: 33, height: 31 }} post={post} setShow={setCommentModal} />
               {user?._id !== post?.userId ? (
-                <SaveIcn size={{ width: 36, height: 37 }} post={post} setError={setError} />
+                <SaveIcn size={{ width: 36, height: 37 }} post={post}  />
               ) : null}
             </div>
             <span

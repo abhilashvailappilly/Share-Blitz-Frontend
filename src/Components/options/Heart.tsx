@@ -5,6 +5,7 @@ import { likePost,unlikePost } from '../../Api/user/postApiMethod';
 import { showError } from '../../hooks/errorManagement';
 import { RootState } from '../../Store/store';
 import { toast } from 'react-toastify';
+import { PostI } from '@/Types/User/Post';
 
 interface ErrorObject {
   message?: string;
@@ -16,7 +17,7 @@ interface Like {
 interface HeartProps {
   size: { width: number; height: number };
   color: string;
-  post: any;
+  post: PostI;
   
   addLike: (newLike: Like[] | []) => void;
 }
