@@ -100,7 +100,7 @@ const CommentModal = ({ show, setShow, post, user, setComment }: CommentModalPro
                 <img src={user?.profileImageUrl} className="w-full h-full object-cover" alt="" />
               </div>
               <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">{user?.name}</h3>
-              <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">{user?.userName}</h3>
+              {/* <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">{user?.userName}</h3> */}
             </div>
             <button onClick={handleClose} className="text-gray-500 mr-5 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-400 w-3 h-3 text-2xl font-bold">
               X

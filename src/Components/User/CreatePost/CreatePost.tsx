@@ -178,7 +178,6 @@ const EditPost = () => {
   };
 
   const setSelectedImg =()=>{
-    toast.info('set selcted img')
     setShowCrop(!showCrop)
 
   }
