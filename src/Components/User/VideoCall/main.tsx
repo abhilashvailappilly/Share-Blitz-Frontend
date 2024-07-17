@@ -1,13 +1,13 @@
 import React from 'react';
-import VideoCall from './VideoCall';
 import VideoCallingNotification from './VideoCallingNotification';
+import ZehoCloud from './ZehoVideo';
 
 const VideoCallContainer: React.FC = () => {
-  // const { selectedUser, onlineUsers, typing } = useChatStore();
 
   return (
     <div>
-      <VideoCall />
+      {/* <VideoCall /> */}
+      <ZehoCloud/>
       <VideoCallingNotification/>
     </div>
   );
