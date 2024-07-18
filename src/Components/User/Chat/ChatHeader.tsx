@@ -2,7 +2,7 @@ import React from "react";
 import IconReturnUpBack from "@/Components/icons/BackIcon";
 import { useDarkMode } from "@/Context/DarkModeContext";
 import { useChatStore } from "@/ZustandStore/chatStore";
-import { FaPhoneAlt, FaVideo } from "react-icons/fa";
+import {  FaVideo } from "react-icons/fa";
 import CallingScreen from "../VideoCall/CallingScreen";
 // import { useToast } from '@/components/ui/use-toast';
 // import { useToast } from '@/components/ui/use-toast';
@@ -92,7 +92,6 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ handleBackClick }) => {
 						className="w-8 h-8 cursor-pointer"
 						onClick={handleVideoCallClick}
 					/>
-					<FaPhoneAlt className="w-6 h-6" />
 				</div>
 			</div>
 			{isCalling && isOnline && !callAccepted && (

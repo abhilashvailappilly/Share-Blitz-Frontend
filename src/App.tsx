@@ -1,7 +1,7 @@
 
 import './App.css';
 import {BrowserRouter as Router,Routes,Route} from 'react-router-dom'
-import { ToastContainer } from "react-toastify";
+import {  ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 
@@ -14,11 +14,15 @@ import { Toaster } from './Components/ui/toaster';
 import { useDarkMode } from './Context/DarkModeContext';
 
 
+
 function App() {
   const { isDarkMode } = useDarkMode();
+
+  
+
+
   return (
    <>
-
    <ToastContainer  position="top-right"
         autoClose={5000}
         hideProgressBar={false}
@@ -36,7 +40,6 @@ function App() {
               <Route path='*' element={<NotFound />} />
           </Routes>
     </Router>
-  {/* </ToastContainer> */}
    </>
   );
 }

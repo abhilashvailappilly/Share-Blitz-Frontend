@@ -37,7 +37,7 @@ export const UserRoute = () =>{
                 <Route path='post/editPost/:postId' element={<EditPostPage />} />
                 <Route path='explore' element={<Explore />} />
                 <Route path='message' element={<MessagesPage />} />
-                {/* <Route path='video' element={<VideoCall />} /> */}
+                {/* <Route path='video' element={<PushNotification />} /> */}
                 <Route path='notifications' element={<NotificationPage />} />
                 <Route path='settings/*' element={<SettingsPage />} />
       

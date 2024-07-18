@@ -44,10 +44,7 @@ const ChatFooter = () => {
     setMessage(prev => ({ ...prev, text: value }));
   };
 
-  // const handleEmojiSelect = (emoji: any) => {
-  //   setMessage(prev => ({ ...prev, text: prev.text + emoji.native }));
-  //   setShowEmojiPicker(false);
-  // };
+
   const handleEmojiClick = (emojiData: EmojiClickData) => {
     setMessage(prev => ({ ...prev, text: prev.text + emojiData.emoji }));
     setShowEmojiPicker(false);
@@ -236,7 +233,7 @@ const ChatFooter = () => {
       
 
 {showEmojiPicker && (
-    <div className='absolute bottom-20 mb-2 left-0 rounded-lg transform translate-x-1/2 p-2 bg-white shadow-lg  border'>
+    <div className='absolute bottom-20 mb-4 w-screen  flex justify-center  rounded-lg transform  p-2  shadow-lg  border'>
       <EmojiPicker onEmojiClick={handleEmojiClick} />
     </div>
   )}

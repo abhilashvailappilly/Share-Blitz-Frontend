@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 import App from "./Components/User/VideoCall/main";
 import { useChatStore } from "./ZustandStore/chatStore";
 import { useVideoCallContext } from "./Context/VideoCallContext";
+import useListenMessages from "./hooks/UseListenMessages";
 
 interface LayoutProps {
     children: ReactNode;
@@ -12,6 +13,7 @@ interface LayoutProps {
   const Layout: React.FC<LayoutProps> = ({ children }) => {
     const {selectedUser ,selectedRoom} = useChatStore()
     const {callAccepted} = useVideoCallContext()
+    useListenMessages()
   return (
    
     <div className="flex flex-col min-h-screen">

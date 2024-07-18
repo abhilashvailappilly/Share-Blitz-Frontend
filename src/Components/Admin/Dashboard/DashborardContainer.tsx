@@ -6,7 +6,7 @@ import {
   Title,
   Tooltip,
   Legend,
-  ArcElement
+  ArcElement 
 } from 'chart.js';
 import TopCards from './TopCards';
 import Graphs from './Graphs';

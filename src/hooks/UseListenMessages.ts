@@ -7,6 +7,8 @@ import { GetRecentChats } from "@/Api/user/chatApiMethods"
 // import CustomMessageToast from "@/Components/icons/ToastMessage"
 import { useNotificationStore } from "@/ZustandStore/notificationStore"
 import { Notification } from "@/Types/User/Notifications"
+import { sendPushNotification } from "@/utils/helpers/sendPushNotification"
+import { getUser } from "@/Api/user/authApiMethod"
 
 const useListenMessages = ()=>{
 
@@ -69,11 +71,28 @@ const useListenMessages = ()=>{
         setMessages([...updatedUsers]);
 
     };
-    const handleNewNotification = (newNotification:Notification ) => {
+    const handleNewNotification = async (newNotification:Notification ) => {
         // toast(
         //   "new notification received"
         // );
         setNotifications([...notifications,newNotification])
+        try {
+            if(newNotification.type == "NEWMESSAGE") { 
+            if(!newNotification.senderId) return
+             const userData = await getUser(newNotification?.senderId)
+             console.log("user data",userData)
+             if(!userData.success) return 
+             sendPushNotification({
+                title: userData?.user?.name,
+                body: newNotification.message,
+                icon: userData?.user.profileImageUrl,
+                // onClick: 
+              })
+            }
+        } catch (error) {
+            console.log(error)
+        }
+      
     };
     const handleMessagesMarkedAsRead=()=>{
         fetchRecentChats()
