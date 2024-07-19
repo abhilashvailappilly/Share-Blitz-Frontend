@@ -47,7 +47,7 @@ const MessageSection = () => {
   return (
     <>
     {(!isSidebarVisible || window.innerWidth >= 768) && (selectedUser || selectedRoom)? (
-        <div className={`w-full md:w-3/4 h-full flex flex-col ${isSidebarVisible &&  (selectedUser || selectedRoom)? 'hidden md:flex' : 'flex'} ${isDarkMode ? 'bg-gray-800' : 'bg-emerald-200'}`}>
+        <div className={`w-full md:w-3/4 h-full flex flex-col ${isSidebarVisible &&  (selectedUser || selectedRoom)? 'hidden md:flex' : 'flex'} ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
          
       {   selectedUser && 
        <>

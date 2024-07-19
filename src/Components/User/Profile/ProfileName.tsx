@@ -7,7 +7,6 @@ interface NameFieldProps {
 }
 
 const NameField: React.FC<NameFieldProps> = ({ name, styleProp, doFunction }) => {
-  console.log('name field ;',name)
   return (
     <>
       <span onClick={doFunction} className={styleProp}>{name}</span>

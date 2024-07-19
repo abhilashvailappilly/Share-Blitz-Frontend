@@ -131,14 +131,7 @@ const SingleComment = ({setPostData, postId, isLoading, comment, index }: Single
                         onClick={deleteCommentClick}
                             className="block py-2 px-4 mt-3 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Delete</a>
                     </li>
-                    {/* <li>
-                        <a href="#"
-                            className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Remove</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Report</a>
-                    </li> */}
+                 
                 </ul>
             </div>
         </footer>
@@ -173,7 +166,7 @@ const SingleComment = ({setPostData, postId, isLoading, comment, index }: Single
               value={reply}
               onChange={handleReplyChange}
               placeholder="Write a reply..."
-              className="border rounded p-2 w-full"
+              className="border rounded-sm p-2 w-full dark:bg-gray-800 bg-white"
             />
             <button onClick={handleReplySubmit} className="mt-2 bg-blue-500 text-white rounded p-2">
               Reply

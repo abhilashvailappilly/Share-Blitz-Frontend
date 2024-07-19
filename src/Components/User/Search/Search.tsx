@@ -35,7 +35,7 @@ function Search() {
   }, [searchInput]);
 
   return (
-    <div className=" mt-5 w-full h-1/4 flex flex-col justify-between items-center p-2 bg-white search-container">
+    <div className=" mt-5 w-full h-1/4 flex flex-col justify-between items-center p-2 bg-white dark:bg-gray-900 search-container">
       {/* Search Input */}
       <div className="search-input-container flex items-center">
         <input

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import SinglePost from '../../../Components/User/SinglePost/SinglePost';
+import SinglePost from '../../../Components/User/Home/SinglePost';
 import SuggestionContainer from '../../../Components/User/Container/SuggestionContainer';
 import Suggestion from '../../../Components/User/Profile/Suggestion';
 import './Home.css';
@@ -12,36 +12,30 @@ import { HashLoader } from 'react-spinners';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useDarkMode } from '@/Context/DarkModeContext';
 import Layout from '@/Layout';
+import ProfileDataInterface from '@/Types/User/userProfile';
+import { FetchSuggestedUsers } from '@/Api/user/userApiMethod';
 
-interface SuggestionI {
-  name: string;
-  profilePic: string;
-}
+
 
 const Home2: React.FC = () => {
   const openEditor = useRef<HTMLDivElement>(null);
   const [selectedPost, setSelectedPost] = useState<PostI | undefined>();
-  // const [loading, setLoading] = useState<boolean>(true);
   const [pageLoading, setPageLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(true);
+  const [suggestedUser,setSuggestedUsers] = useState<ProfileDataInterface[]>([])
   const { isDarkMode } = useDarkMode();
   const dispatch = useDispatch();
 
-  const suggestions: SuggestionI[] = [
-    { name: "test user", profilePic: "https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg" },
-    { name: "test user", profilePic: "https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg" },
-    { name: "test user", profilePic: "https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg" },
-    { name: "test user", profilePic: "https://buffer.com/library/content/images/2023/10/free-images.jpg" },
-    { name: "test user", profilePic: "https://buffer.com/library/content/images/2023/10/free-images.jpg" },
-    { name: "test user", profilePic: "https://buffer.com/library/content/images/2023/10/free-images.jpg" },
-  ];
+
 
   const loadedPostsFromRedux: PostI[] = useSelector((state: RootState) => state?.post?.loadedPosts);
   const [loadedPosts, setLoadedPostsState] = useState<PostI[]>([]);
   const [page, setPage] = useState<number>(1);
 
 
-  
+  useEffect(()=> {
+    fetchSuggestedUsers()
+  },[])
 
   useEffect(() => {
     console.log(selectedPost)
@@ -51,6 +45,17 @@ const Home2: React.FC = () => {
     fetchSavedPosts();
   }, []);
 
+     const fetchSuggestedUsers = async()=>{
+      try {
+        const response = await FetchSuggestedUsers()
+        if(response.success){
+          setSuggestedUsers(response?.users)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+     }
+      
   const fetchPosts = async (page: number) => {
     try {
       // setLoading(true);
@@ -66,7 +71,6 @@ const Home2: React.FC = () => {
       } else {
         setHasMore(false);
       }
-      // setLoading(false);
     } catch (error) {
       console.log(error);
       
@@ -104,9 +108,8 @@ const Home2: React.FC = () => {
   return (
     <>
      <Layout>
-     <div className={`flex bg-gray-900 ${isDarkMode ? 'dark' : ''}`}>
-        {/* <Navbar />
-        <Sidebar2 /> */}
+     <div className=' flex dark:bg-gray-900 bg-white'>
+   
 
         <div className="md:ml-auto">
           <div
@@ -143,9 +146,9 @@ const Home2: React.FC = () => {
         </div>
 
         <div className="hidden lg:block md:hidden mr-auto ml-auto">
-          {suggestions?.length && (
+          {suggestedUser?.length && (
             <SuggestionContainer>
-              {suggestions.map((suggestedUser, index) => (
+              {suggestedUser.map((suggestedUser, index) => (
                 <Suggestion user={suggestedUser} key={index} />
               ))}
             </SuggestionContainer>

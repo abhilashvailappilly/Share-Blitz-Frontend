@@ -60,7 +60,7 @@ const ChatContainer = () => {
   }, [selectedUser]);
 
   return (
-    <div className={`w-full h-screen ${isDarkMode ? 'bg-gray-800' : 'bg-emerald-200'} flex`}>
+    <div className={`w-full h-screen ${isDarkMode ? 'bg-gray-800' : 'bg-white'} flex`}>
       {isSidebarVisible && (
       <Suspense fallback={<div className='w-full h-screen flex  justify-center items-center'><LoaderSpinner/></div>}>
        <ChatSidebar onUserSelect={handleUserSelect} />

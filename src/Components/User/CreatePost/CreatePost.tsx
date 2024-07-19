@@ -190,7 +190,7 @@ if(isLoading){
   )
 }
   return (
-    <div className="w-full mb-28 ml-2  min-h-screen  bg-gray-200 dark:bg-slate-600 flex flex-col justify-center items-center">
+    <div className="w-full mb-28 ml-2  min-h-screen  bg-gray-200 dark:bg-slate-800 flex flex-col justify-center items-center">
        {showCrop && filePreview ? (
         <CropImage
           imgUrl={filePreview}
@@ -208,7 +208,7 @@ if(isLoading){
   onSubmit={handleSubmit}
 >
   {({ values, setFieldValue }) => (
-    <Form className="bg-white dark:bg-gray-800 p-6  rounded shadow-md w-3/4 flex flex-col md:flex-row">
+    <Form className="bg-white dark:bg-gray-950 p-6  rounded shadow-md w-3/4 flex flex-col md:flex-row">
       <div className="w-full md:w-1/2 pr-4">
         <div className="mb-4">
           <label className="block text-gray-700 dark:text-gray-300  font-bold">Caption</label>

@@ -229,7 +229,7 @@ const GroupChatFooter = () => {
               <div
                 onClick={() => videoInputRef.current?.click()}
                 className={`p-2 cursor-pointer hover:bg-gray-600 hover:rounded-md hover:text-white ${isDarkMode ? 'bg-gray-800 text-white border-gray-600' : 'bg-white text-black border-gray-300'}`}>
-                Videoo
+                Video
               </div>
             </div>
           )}
@@ -237,10 +237,10 @@ const GroupChatFooter = () => {
       </div>
       
 
-{showEmojiPicker && (
-    <div className='absolute bottom-20 mb-2 left-0 rounded-lg transform translate-x-1/2 p-2 bg-white shadow-lg  border'>
-      <EmojiPicker onEmojiClick={handleEmojiClick} />
-    </div>
+  {showEmojiPicker && (
+      <div className='absolute bottom-20 mb-4 w-screen  flex justify-center  rounded-lg transform  p-2  shadow-lg  border'>
+        <EmojiPicker onEmojiClick={handleEmojiClick} />
+      </div>
   )}
       <input
         type="file"

@@ -133,3 +133,18 @@ export const SubmitPaymentDetails = async (paymentId:string,plan:string) => {
     }
 }
 
+// @dec      Submit verification
+// method    Post
+export const FetchSuggestedUsers = async () => {
+    try {
+       
+    const res = await apiCall('get',userRoutes.suggestedUsers,{},false)
+
+    return res.data
+    } catch (error:any) {
+        console.log('Error:', error);
+
+    }
+}
+
+

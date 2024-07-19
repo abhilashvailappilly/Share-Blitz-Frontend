@@ -1,5 +1,5 @@
 import Modal from 'react-modal';
-import LikedUserList from '../SinglePost/LikedUserList';
+import LikedUserList from '../Home/LikedUserList';
 
 interface PostLikesModalInterface {
   likesData: any;
@@ -9,8 +9,6 @@ interface PostLikesModalInterface {
 const PostLikesModal = ({ likesData, closeModal }: PostLikesModalInterface) => {
   const handleClose = () => {
     closeModal(false);
-    console.log('...li...', likesData);
-    likesData.likes.forEach((like: any) => console.log('...li...', like));
   };
 
   return (

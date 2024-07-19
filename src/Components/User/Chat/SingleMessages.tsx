@@ -20,8 +20,8 @@ const SingleMessages: React.FC<SingleMessagesInterface> = ({  message }) => {
     const selectedUser = useChatStore((state) => state.selectedUser);
     const fromMe = userInfo?._id === message.senderId;
     const [showOptions, setShowOptions] = useState<boolean>(false);
-    const [editText, setEditText] = useState<string>(message.text); // State for edit text
-    const [editModalOpen, setEditModalOpen] = useState<boolean>(false); // State for edit modal visibility
+    const [editText, setEditText] = useState<string>(message.text); 
+    const [editModalOpen, setEditModalOpen] = useState<boolean>(false); 
     const formattedTime = moment(message.updatedAt).format('hh:mm A');
     const { messages, setMessages ,selectedRoom} = useChatStore();
     const [isShake,setIsShake] = useState<boolean>(false)
@@ -54,11 +54,11 @@ const SingleMessages: React.FC<SingleMessagesInterface> = ({  message }) => {
     }
 
     const handleEdit = async () => {
-        const response = await EditMessage(message._id, selectedUser?._id as string, editText); // Use editText state
+        const response = await EditMessage(message._id, selectedUser?._id as string, editText); 
         if (response.success) {
             toast.success("Message edited");
             message.isEdited=true
-            setMessages(messages.map(msg => msg._id === message._id ? { ...msg, text: editText } : msg)); // Update message in local state
+            setMessages(messages.map(msg => msg._id === message._id ? { ...msg, text: editText } : msg)); 
         } else {
             toast.error("Failed to edit message");
         }

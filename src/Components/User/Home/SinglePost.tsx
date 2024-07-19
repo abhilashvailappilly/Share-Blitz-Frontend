@@ -17,6 +17,7 @@ import { Like } from "../../../Types/User/Post";
 import PostLikesModal from "../Modal/PostLikesModal";
 import { Comment, User } from "../../../Types/User/Comment";
 import useNavigateToProfile from "../../../hooks/UseNavigateToProfile";
+import { Paper } from "@mui/material";
 
 interface SinglePostProps {
   setSelectedPost: React.Dispatch<React.SetStateAction<PostI | undefined>>;
@@ -66,7 +67,6 @@ const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, open
   }, []);
 
   useEffect(() => {
-    console.log("useeffect post id ............................................")
     console.log(post.userId)
     getUser(post?.userId)
       .then((response: { success: Boolean; user: User }) => {
@@ -82,10 +82,10 @@ const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, open
     if (error) {
       toast.error(error, {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 4000,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: true,
+        pauseOnHover: false,
         draggable: true,
         progress: undefined,
         theme: "dark",
@@ -108,9 +108,10 @@ const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, open
 
   return (
     <>
+    
       <div className={`overflow-y-auto p-4 h-5/6 mt-5 bg-white w-full select-none border shadow-xl border-white dark:bg-gray-900`}>
-        <div className={`h-full sm:h-[600px] bg-white dark:bg-gray-900 p-2 rounded-md relative lg:w-[40rem] flex flex-col ${cardClasses}`}>
-          <div className="w-full h-16 flex bg-gray-900 p-2 gap-3 self-center">
+        <Paper  sx={{ boxShadow: 4  }} className={`h-full sm:h-[600px] bg-white dark:bg-gray-900 p-2 rounded-md relative lg:w-[40rem] flex flex-col ${cardClasses}`}>
+          <div className="w-full h-16 flex dark:bg-gray-900 bg-white p-2 gap-3 self-center">
             <div className="bg-white ml-1 w-11 h-11 rounded-full self-center cursor-pointer" onClick={seeProfile}>
               <ProfilePic
                 styleProp={"rounded-full"}
@@ -127,17 +128,7 @@ const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, open
                 styleProp={"font-bold text-black dark:text-white"}
               />
             </div>
-            {/* {owner ? (
-              <div className="font-thin font-mono self-center rounded-lg w-16 h-5">
-                <ConnectionBtn
-                  user={postUser as User}
-                  width={20}
-                  height={5}
-                  color={"white"}
-                  setFollowers={setFollowers}
-                />
-              </div>
-            ) : null} */}
+           
             <div className="self-center ml-auto cursor-pointer">
               <Dropdown post={post} postUser={postUser} openEditor={openEditor} setSelectedPost={setSelectedPost} />
             </div>
@@ -147,11 +138,11 @@ const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, open
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
           >
-            <img src={post.imageUrl} alt="" className="object-cover w-full h-full" draggable={false} />
+            <img src={post.imageUrl} loading="lazy"  alt="image" className="object-cover w-full h-full" draggable={false} />
             {hover && post.taggedUsers.length > 0 && (
-              <div className="absolute inset-20  h-3/4  bg-black bg-opacity-5 flex flex-wrap justify-center items-center">
+              <div className="absolute inset-20  h-3/4  bg-black bg-opacity-5 flex flex-wrap justify-center items-center ">
                 {post.taggedUsers.map(user => (
-                  <div key={user.userId.toString()} onClick={() => viewProfile(user.userId as string)} className="text-white m-1  bg-black bg-opacity-70 p-1 rounded-lg">
+                  <div key={user.userId.toString()} onClick={() => viewProfile(user.userId as string)} className="text-white m-1  bg-black bg-opacity-70 p-1 rounded-tl-xl rounded-bl-xl rounded-br-xl">
                     {user.userName}
                   </div>
                 ))}
@@ -161,7 +152,7 @@ const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, open
           <div className="m-2">
             <CaptionWithShowMore text={post.caption} styleProps={"text-black dark:text-white text-base "} />
           </div>
-          <div className="mt-1 flex flex-col bg-gray-900">
+          <div className="mt-1 flex flex-col dark:bg-gray-900 bg-white">
             <div className="p-2 text-xl flex gap-5 mt-0 font-bold">
               <Heart size={{ width: 34, height: 36 }} color={"red"} post={post} addLike={addLike} />
               <CommentIcn size={{ width: 33, height: 31 }} post={post} setShow={setCommentModal} />
@@ -182,7 +173,7 @@ const SinglePost: React.FC<SinglePostProps> = ({ postData, setSelectedPost, open
               View all {post?.commentsDetails?.comments.length} comments
             </span>
           </div>
-        </div>
+        </Paper>
       </div>
       {commentModal && postUser && (
         <CommentModal user={postUser} post={post} show={commentModal} setShow={setCommentModal} setComment={setComment} />

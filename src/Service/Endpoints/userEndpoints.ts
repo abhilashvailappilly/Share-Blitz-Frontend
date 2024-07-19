@@ -8,7 +8,8 @@ const userRoutes={
     changePrivacy:'user/changePrivacy',
     submitVerification:'user/submitVerification',
     isRequestedVerification:'user/isRequestedVerification',
-    submitPaymentDetails:'user/submitPaymentDetails'
+    submitPaymentDetails:'user/submitPaymentDetails',
+    suggestedUsers:'user/suggestedUsers'
 }
 
 export default userRoutes;
