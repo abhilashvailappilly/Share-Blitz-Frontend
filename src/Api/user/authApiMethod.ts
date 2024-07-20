@@ -164,7 +164,7 @@ export const LoginUser = async (loginData :UserLoginData) => {
  export const Gsignup = async (name: string,userName:string, email: string, picture: string) => {
                 try {
                     const res = await apiCall('post',userRoutes.userGsignup,{name,userName,email,picture},false)
-                    return res
+                    return res.data
                 } catch (error) {
                     console.log(error)
                 }
@@ -175,7 +175,7 @@ export const LoginUser = async (loginData :UserLoginData) => {
 export const Glogin = async ( email: string) => {
     try {
         const res = await apiCall('post',userRoutes.userGlogin,{email},false)
-        return res
+        return res.data
     } catch (error) {
         console.log(error)
     }

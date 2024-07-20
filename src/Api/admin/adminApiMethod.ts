@@ -160,9 +160,15 @@ export const TooglePostIsBlocked = async (postId:string ) => {
     }
 }
 
-export const GetAllPosts = async ( limit  : number) => {
+export const GetAllPosts = async ( limit  : number,searchInput: string) => {
     try {
-        const res = await apiCall('get',`${adminRoutes.getAllPosts}/${limit}` ,{},false)
+        const query = new URLSearchParams({
+            search: searchInput,
+            limit: limit.toString(),
+        }).toString();
+        
+        // Make the API call with the query string
+        const res = await apiCall('get', `${adminRoutes.getAllPosts}?${query}`, {}, false);
         return res.data
 
     } catch (error) {

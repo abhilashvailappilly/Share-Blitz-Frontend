@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../Store/store';
 import Modal from 'react-modal';
 
-// Set the app element for accessibility
 Modal.setAppElement('#root');
 interface LikedUserListProps {
     userId: string;
@@ -91,7 +90,7 @@ const LikedUserList = ({ userId, index }: LikedUserListProps) => {
     return (
         <li key={index}
             onClick={handleClick}
-            className="flex items-center justify-between border-2 mt-4 border-gray-200 rounded-lg py-4 px-4 transition duration-300 hover:cursor-pointer hover:bg-gray-300 hover:shadow-2xl shadow-xl"
+            className="flex items-center justify-between border-2 mt-4 border-gray-200 rounded-lg py-4 px-4 transition duration-300 hover:cursor-pointer hover:bg-gray-300 dark:hover:text-black hover:shadow-2xl shadow-xl"
         >
             {userData && (
                 <>
@@ -102,9 +101,9 @@ const LikedUserList = ({ userId, index }: LikedUserListProps) => {
                             className="w-10 h-10 rounded-full mr-4"
                         />
                         <div>
-                            <strong className="text-gray-800">{userData.name}</strong>
+                            <strong className="text-gray-800 dark:text-white dark:hover:text-black">{userData.name}</strong>
                             <br />
-                            <span className="text-gray-500">{userData.userName}</span>
+                            <span className="text-gray-500 dark:text-white dark:hover:text-black">{userData.userName}</span>
                         </div>
                     </div>
                     {!isFriend && !isOwner && (

@@ -36,9 +36,7 @@ const GroupChatFooter = () => {
   };
 
   const handleInputBlur = () => {
-    // if (socket) {
-    //   socket.emit('stoppedTyping', selectedUser?._id);
-    // }
+  
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,10 +44,7 @@ const GroupChatFooter = () => {
     setMessage(prev => ({ ...prev, text: value }));
   };
 
-  // const handleEmojiSelect = (emoji: any) => {
-  //   setMessage(prev => ({ ...prev, text: prev.text + emoji.native }));
-  //   setShowEmojiPicker(false);
-  // };
+
   const handleEmojiClick = (emojiData: EmojiClickData) => {
     setMessage(prev => ({ ...prev, text: prev.text + emojiData.emoji }));
     setShowEmojiPicker(false);
@@ -107,15 +102,7 @@ const GroupChatFooter = () => {
       );
 
       if (response.success) {
-        toast.success("Message sent successfully!", {
-          position: "top-left",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: true,
-          progress: undefined,
-        });
+       
 
         setMessageToStore([...messagesFromStore, response.data.message]);
       } else {

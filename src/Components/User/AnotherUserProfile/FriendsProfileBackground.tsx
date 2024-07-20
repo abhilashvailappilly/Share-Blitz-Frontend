@@ -6,10 +6,11 @@ import { RootState } from "../../../Store/store";
 import ProfileDataInterface from "../../../Types/User/userProfile";
 import { getUser } from "../../../Api/user/authApiMethod";
 import { toast } from "react-toastify";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FollowUser, UnFollowUser, checkIsFriend } from "../../../Api/user/userApiMethod";
 import Connections from "./Connections";
 import IconTickCircle from "../../icons/BlueTick";
+import { useChatStore } from "@/ZustandStore/chatStore";
 
 const FriendsProfileBackground = () => {
   const userInfo: ProfileDataInterface = useSelector((state: RootState) => state.auth.userInfo);
@@ -21,15 +22,9 @@ const FriendsProfileBackground = () => {
   const [isFriend, setIsFriend] = useState<Boolean>(false);
   const [isRequested, _setIsRequested] = useState<Boolean>(false);
   const [_bio, setBio] = useState("");
-  const [profileUserData, setProfileUserData] = useState<{
-    _id: string;
-    name: string;
-    userName: string;
-    profileImageUrl: string;
-    bio: string;
-    isPrivate: Boolean;
-  } | null>(null);
-
+  const [profileUserData, setProfileUserData] = useState<ProfileDataInterface | null>(null);
+const navigate = useNavigate()
+const {setSelectedUser} = useChatStore()
   if (!userId) {
     return <div>User ID is missing</div>;
   }
@@ -105,6 +100,11 @@ const FriendsProfileBackground = () => {
     }
   };
 
+  const handleClickMessage = async () =>{
+    setSelectedUser(profileUserData);
+    navigate('/message')
+  }
+
   return (
     <>
       <div className="bg-white dark:bg-gray-800 border-2 border-black w-full h-screen/2 rounded-tl-[30px] flex flex-col items-center transition-colors duration-300 relative">
@@ -158,7 +158,7 @@ const FriendsProfileBackground = () => {
                         </div>
                       )}
 
-                      <div className="w-36 h-10 mt-3 ml-3 hover:scale-110 hover:cursor-pointer transition-transform bg-gray-200 dark:bg-gray-600 flex justify-center items-center font-bold border-2 border-gray-400 dark:border-gray-600 rounded-xl ">
+                      <div onClick={handleClickMessage} className="w-36 h-10 mt-3 ml-3 hover:scale-110 hover:cursor-pointer transition-transform bg-gray-200 dark:bg-gray-600 flex justify-center items-center font-bold border-2 border-gray-400 dark:border-gray-600 rounded-xl ">
                         <h2>Message</h2>
                       </div>
                     </>

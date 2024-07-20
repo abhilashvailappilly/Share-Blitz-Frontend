@@ -21,7 +21,7 @@ function UserList() {
   return (
     <div className="flex">
       <Sidebar />
-      <div className="flex-1 overflow-x-hidden">
+      <div  className="flex-1 overflow-x-hidden ">
         <UserManagement />
       </div>
     </div>

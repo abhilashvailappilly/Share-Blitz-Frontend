@@ -104,7 +104,7 @@ function TableData({ posts,setLoading }: Props) {
             <td className="py-4 px-4 whitespace-nowrap ">
                 <div className="flex items-center">
                     <img src={postData?.imageUrl || "" } 
-                    alt="Profile" className="h-10 w-10" /> 
+                    alt="Profile" loading='lazy' className="h-10 w-10" /> 
                     <div className="ml-4">
                         {/* <div className="text-sm font-medium text-gray-900 dark:text-white">{userData?.name}</div> */}
                         {/* <div className="text-sm text-gray-500 dark:text-gray-400">{report.postId}</div> */}

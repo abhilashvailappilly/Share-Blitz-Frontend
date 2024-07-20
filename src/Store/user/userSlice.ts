@@ -17,6 +17,8 @@ const authSlice = createSlice({
             state.userInfo = null
             localStorage.removeItem('userInfo')
             localStorage.removeItem('userToken')
+            localStorage.removeItem('accessToken')
+            localStorage.removeItem('refreshToken')
         },
         setAdminCredentials: (state, action) => {
             state.adminInfo = action.payload
